@@ -4,7 +4,9 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      dropShadow:{'3xl': '0 35px 35px rgba(255, 99, 71, 0.4)',}
+    }
   },
   plugins: [],
 }
