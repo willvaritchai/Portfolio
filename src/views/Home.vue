@@ -2,18 +2,18 @@
 
 </script>
  
-<template>
-<div>
+<template >
+<div >
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative overflow-hidden bg-no-repeat bg-cover " style="background-image: url(../../public/bg_Home.png)"> <!-- This is the bg of my image. -->
-  <div class="max-w-7xl mx-auto">
-    <div class="relative z-10 pb-8 bg-white  sm:pb-16 md:pb-20  lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32"> <!-- #ddd6fe -->
+<div   class=" relative overflow-hidden bg-no-repeat bg-cover " style="background-image: url(../../public/bg_Home.png)"> <!-- This is the bg of my image. -->
+  <div  class="max-w-7xl mx-auto">
+    <div data-aos="zoom-out" class="relative z-10 pb-8 bg-white  sm:pb-16 md:pb-20  lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32"> <!-- #ddd6fe -->
       <!-- <svg class="hidden lg:block absolute right-0 inset-y-0 h-full w-20 text-white transform translate-x-1/2" fill="currentcolor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <polygon points="50,0 100,0 50,100 0,100" />
       </svg> -->
 
-      <div>
+      <div >
         <div class=" relative shadow-md shadow-gray-300 pb-4 sm:px-6 lg:px-8">
           <nav class="pt-4  relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
             <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
@@ -77,7 +77,7 @@
       </div>
 
 <!-- body-section -->
-      <main class="mt-44 mx-auto max-w-7xl px-4 sm:mt-44 sm:px-10 md:mt-14 lg:mt-20 lg:px-8 xl:mt-20">
+      <main   class="mt-44 mx-auto max-w-7xl px-4 sm:mt-44 sm:px-10 md:mt-14 lg:mt-20 lg:px-8 xl:mt-20">
         <div class="sm:text-center lg:text-left text-center">
           <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             <span class="block  xl:inline bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">HELLO WILL !</span><hr class="my-4 border-gray-300">
@@ -93,15 +93,16 @@
       </main>
     </div>
   </div>
-  <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
-    <img class="h-58 w-58 object-cover sm:h-54 sm:w-54  md:h-full md:w-full lg:w-54 lg:h-54 " src="../assets/images/my-pic.png" alt="myPic.png">
+  <div data-aos="fade-up" class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
+    <img  class="h-58 w-58 object-cover sm:h-54 sm:w-54  md:h-full md:w-full lg:w-54 lg:h-54 " src="../assets/images/my-pic.png" alt="myPic.png">
   </div>
 
   
 </div>
-  <div class="overflow-hidden bg-no-repeat bg-cover h-screen w-screen " style="background-image: url(../../public/bg_Home.png)">
+
   <!-- section: About me -->
-    <div>
+  <div   class="relative overflow-hidden bg-no-repeat bg-cover h-screen  " style="background-image: url(../../public/bg_Home.png)">
+    <div data-aos="fade-left" data-aos-delay="300">
       <span>My name is <b>Will</b></span>
     </div>
   </div>
