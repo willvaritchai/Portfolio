@@ -1,0 +1,10 @@
+<div class="text-3xl   px-10">
+    <div class="text-center text-red-600">
+        this is Home page <br>(โปรดอย่าลืม login "Local instance MySQL" ด้วย username, password จาก application.properties ที่ back ของคุณ) !!!
+    </div>
+        <div *ngFor="let item of userListMock">
+            <li>
+                {{item.name+' | '+item.email}}
+            </li>
+        </div>
+</div>
