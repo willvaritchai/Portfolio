@@ -1,0 +1,383 @@
+<style scoped>
+    .noto-san {
+        font-family: "Noto Sans Thai" !important;
+    }
+</style>
+<div *ngIf="checkAuthorize">
+
+    <div *ngIf="type != 'thread'">
+        <!-- input & filter -->
+        <input-search (searchOutput)="searching()" (searchValue)="onSearchValChange($event)"></input-search>
+        <div class="mb-4">
+            <mat-chip-listbox (ngModelChange)="filterChange($event)" [(ngModel)]="filter" multiple="false"
+                aria-label="event-list-filter">
+                <mat-chip-option [ngClass]="{'pointer-events-none': filter == 'all'}" color="warn" value="all"><span
+                        class="noto-san">ทั้งหมด</span>
+                </mat-chip-option>
+                <mat-chip-option [ngClass]="{'pointer-events-none': filter == 'free'}" color="warn" value="free">
+                    <span class="noto-san">ค่าโดยสารฟรี</span>
+                </mat-chip-option>
+                <mat-chip-option [ngClass]="{'pointer-events-none': filter == 'faculty'}" color="warn" value="faculty">
+                    <span class="noto-san">คณะเดียวกัน</span>
+                </mat-chip-option>
+                <mat-chip-option [ngClass]="{'pointer-events-none': filter == 'mutual'}" color="warn" value="mutual">
+                    <span class="noto-san">มีเพื่อนร่วมกัน</span>
+                </mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+        <div *ngIf="isLoading" class="flex justify-center items-center mt-10">
+            <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+        </div>
+        <div *ngIf="eventList.length!=0">
+
+            <div class="mx-auto border rounded-lg mb-4" *ngFor="let events of eventList"
+                [ngStyle]="{'opacity': (events.status !== 1 && type == 'event') || (type=='threads' && events.status == 1) ? '0.5' : '1'}">
+                <!-- event -->
+                <div class="-ml-1 mr-2 space-x-3 my-4">
+                    <div class="relative">
+                        <div class="absolute top-0 right-0 flex text-right text-[#F04E23] space-x-2 font-bold"
+                            style="font-size: 10px;">
+                            <!-- money icon -->
+                            <mat-icon class="text-[#F04E23] pr-1" [svgIcon]="'general_icons:cost'"
+                                style="height: 16px; width: 16px;"></mat-icon>
+                            {{events.costs == 0 ? 'ฟรี':events.costs}}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-auto border-b">
+                        <div class="flex flex-auto space-x-2 mb-2">
+                            <div class="my-auto">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        *ngIf="(events.status == 1 && type == 'event') || (type=='threads' && events.status == 0)">
+                                        <img (click)="go('/account/other-profile', events.encrypt_id)"
+                                            *ngIf="events.download_url"
+                                            class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                                            [src]="events.download_url" alt="user_profile" />
+                                        <mat-icon (click)="go('/account/other-profile', events.encrypt_id)"
+                                            *ngIf="!events.download_url" class="cursor-pointer hover:drop-shadow"
+                                            style="width: 40px; height: 40px;"
+                                            [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                    </div>
+                                    <div
+                                        *ngIf="(events.status != 1 && type == 'event') || (type=='threads' && events.status == 1)">
+                                        <img *ngIf="events.download_url" class="object-cover w-10 h-10 rounded-full"
+                                            [src]="events.download_url" alt="user_profile" />
+                                        <mat-icon *ngIf="!events.download_url" style="width: 40px; height: 40px;"
+                                            [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <div class="text-base flex flex-grow items-center font-bold">
+                                    {{events.fullname}}
+                                    <!-- confirm icon -->
+                                    <mat-icon style="width: 16px; height: 16px;" #tempRefV="matTooltip"
+                                        (click)="tempRefV.toggle()" [matTooltip]="verifiedUserMessage"
+                                        [svgIcon]="'general_icons:check'"></mat-icon>
+                                </div>
+                                <div class="flex flex-auto text-sm text-gray-400 space-x-3">
+                                    <div *ngIf="events.friendtype && userId!=events.user_id ">
+                                        <span *ngIf="events.friendtype=='friend'">เป็นเพื่อนกับคุณ</span>
+                                        <span *ngIf="events.friendtype=='mutualfriend'">มีเพื่อนร่วมกัน
+                                            {{events.mutalfriend}}
+                                            คน</span>
+                                    </div>
+                                    <div *ngIf="events.rate != null && events.total != null"
+                                        class="flex justify-center text-center">
+                                        <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                                            style="height: 1rem;"></mat-icon>
+                                        <span>{{events.rate}} ({{events.total}})</span>
+                                    </div>
+                                    <div class="flex justify-center text-center"
+                                        *ngIf="events.rate == null && events.total == null && type == 'event'">
+                                        <span>ผู้ขับขี่ใหม่</span>
+                                    </div>
+                                    <div class="h-4">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="grid grid-cols-2">
+                <div class="">
+                    <div class="flex flex-auto space-x-1">
+                        <mat-icon class="stroke-black text-white my-auto" [svgIcon]="'heroicons_solid:academic-cap'"
+                            style="height: 3rem;"></mat-icon>
+                        <div class="flex flex-col">
+                            <label class="text-sm text-gray-400">คณะของผู้โพส</label>
+                            {{events.faculty_name}}
+                        </div> -->
+
+                    </div>
+                    <div class="my-2 border-b">
+                        <div class="text-base font-bold">
+                            <p>{{events.event_name}}</p>
+                        </div>
+                        <div class="grid grid-cols-2 my-2">
+                            <div class="flex flex-auto space-x-1 mr-2">
+                                <mat-icon style="min-width: 24px; min-height: 24px;"
+                                    [svgIcon]="'general_icons:location'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <label class=" text-gray-400" style="font-size: 8px;">ตำแหน่งเริ่มต้น</label>
+                                    <p class="break-words font-bold text-xs">{{events.start_point}}</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto space-x-1 ml-2">
+                                <mat-icon style="min-width: 24px; min-height: 24px;"
+                                    [svgIcon]="'general_icons:person'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <label class=" text-gray-400" style="font-size: 8px;">จำนวนที่นั่ง</label>
+                                    <p class="break-words font-bold text-xs">{{events.seats}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 my-2">
+                            <div class="flex flex-auto space-x-1 mr-2">
+                                <mat-icon style="min-width: 24px; min-height: 24px;"
+                                    [svgIcon]="'general_icons:flag'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <label class=" text-gray-400" style="font-size: 8px;">ตำแหน่งจุดปลายทาง</label>
+                                    <p class="break-words font-bold text-xs">{{events.dest_point}}</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto space-x-1 ml-2">
+                                <mat-icon style="min-width: 24px; min-height: 24px;"
+                                    [svgIcon]="'general_icons:departure'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <label class=" text-gray-400" style="font-size: 8px;">เวลาออกเดินทาง</label>
+                                    <div class="flex flex-row" *ngIf="events.timeLeft != 'Expired'">
+                                        <div *ngIf="events.hour > 24 || (events.hour == 24 && events.minute > 0)">
+                                            <p class=" font-bold text-xs mr-1">
+                                                {{events.departure_time | customDateFormat}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="events.hour < 24 || (events.hour == 24 && events.minute == 0)">
+                                            <p class=" font-bold text-xs mr-1">
+                                                อีก&nbsp;{{events.hour}}&nbsp;ชั่วโมง&nbsp;
+                                                <span *ngIf="events.minute != 0">{{events.minute}}&nbsp;นาที</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="events.timeLeft == 'Expired'">
+                                        <p class="break-words font-bold text-xs">กำลังจะออกเดินทาง</p>
+                                    </div>
+                                    <!-- <p class="break-words font-bold text-xs">{{events.timeLeft}}</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                        <div class="">
+                            <div class="flex flex-auto space-x-1">
+                                <mat-icon style="width: 24px; height: 24px;"
+                                    [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                <div class="flex flex-col text-xs font-bold">
+                                    <label class=" text-gray-400" style="font-size: 8px;">คณะของผู้โพสต์</label>
+                                    {{events.faculty_name}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="flex justify-end">
+                <a mat-button class="items-center">
+                    <span class="ml-3 text-[#F04E23]"> รายละเอียดเพิ่มเติม </span>
+                </a>
+            </div> -->
+                        <div class="flex items-center justify-end">
+                            <button type="button"
+                                (click)="type == 'event'?  detail(events.encryptEvent) : go('/threads/detail',events.thread_id)"
+                                [disabled]="(events.status !== 1 && type == 'event') || (type=='threads' && events.status == 1)"
+                                class="border border-[#F04E23] text-[#F04E23] rounded-lg p-1 font-bold text-xs">
+                                รายละเอียด</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div (click)="paginationTrigger()" *ngIf="pagination?.isExistList && !isPaginateLoading"
+                class="mx-auto border rounded-lg mb-4 hover:drop-shadow cursor-pointer">
+                <div class="my-2 text-center text-[#3686FF] text-xs">
+                    แสดงเพิ่มเติม
+                </div>
+            </div>
+            <div *ngIf="isPaginateLoading" class="flex justify-center items-center mt-10">
+                <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+            </div>
+        </div>
+
+        <!-- ส่วนแจ้ง Passenger ว่าสามารถสร้างกระทู้ได้ เงื่อนไขการแสดงคือ แสดงต่อจาก Event list สุดท้าย, แสดงเฉพาะ role passenger -->
+        <!-- thread ของตัวเองต้องไม่มี -->
+        <div *ngIf="eventList.length > 0 && roleId == 1 && userCookie?.check_thread == 0"
+            class="flex flex-col justify-center text-center mb-4">
+            <mat-icon class="mx-auto" style=" width: 228px; height: 152px !important;"
+                [svgIcon]="'general_icons:inform-threads'"></mat-icon>
+            <div class="break-words px-4 ">
+                <h1 class="text-lg font-bold mb-2">ไม่เจอโพสต์ที่คุณกำลังมองหา?</h1>
+                <p class="">คุณสามารถเขียนข้อมูลการเดินทางของคุณเพื่อรอให้ฝั่งผู้ขับขี่มาตอบรับการเดินทางของคุณได้</p>
+            </div>
+            <div class="mt-2">
+                <button [routerLink]="['/thread/create']" type="button" class="hover:drop-shadow  flex mx-auto">
+                    <div class="mt-1">
+                        <svg id="create-post" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_1869_10154" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="24" height="24">
+                                <rect width="24" height="24" fill="#D9D9D9" />
+                            </mask>
+                            <path
+                                d="M11 13V16C11 16.2833 11.0958 16.5208 11.2875 16.7125C11.4792 16.9042 11.7167 17 12 17C12.2833 17 12.5208 16.9042 12.7125 16.7125C12.9042 16.5208 13 16.2833 13 16V13H16C16.2833 13 16.5208 12.9042 16.7125 12.7125C16.9042 12.5208 17 12.2833 17 12C17 11.7167 16.9042 11.4792 16.7125 11.2875C16.5208 11.0958 16.2833 11 16 11H13V8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8V11H8C7.71667 11 7.47917 11.0958 7.2875 11.2875C7.09583 11.4792 7 11.7167 7 12C7 12.2833 7.09583 12.5208 7.2875 12.7125C7.47917 12.9042 7.71667 13 8 13H11ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z"
+                                fill="#F04E23" />ะ้
+                        </svg>
+                    </div>
+
+                    <!-- เมื่อ passenger กดปุ่มสร้างกระทู้ พาไปยังหน้า create-thread-page -->
+                    <div class="text-[#F04E23] rounded-lg p-1 font-bold text-base ">
+                        สร้างโพสต์กระทู้การเดินทาง
+                    </div>
+                </button>
+
+            </div>
+        </div>
+
+
+        <div class="my-72" *ngIf="eventList.length == 0 && !isLoading">
+            <div class="">
+                <div class="flex my-auto flex-col justify-center items-center ">
+                    <div class="flex justify-center items-center">
+                        <mat-icon class="my-2" style="width: 50px; height: 50px;"
+                            [svgIcon]="'general_icons:no-event'"></mat-icon>
+                    </div>
+                    <div class="my-2 text-sm text-gray-400">
+                        ดูเหมือนว่ายังไม่มีใครโพสต์การเดินทาง...
+                    </div>
+                    <div *ngIf="roleId!=1 && type != 'threads'">
+                        <div class="flex flex-row justify-center">
+                            <!-- <mat-icon class="stroke-[#F04E23] text-white" (click)="createEvent()" 
+                        style="width: 20px; height: 20px;" [svgIcon]="'heroicons_solid:plus-circle'"></mat-icon> -->
+                            <svg (click)="createEvent()" id="create-post" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <mask id="mask0_1869_10154" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0"
+                                    y="0" width="24" height="24">
+                                    <rect width="24" height="24" fill="#D9D9D9" />
+                                </mask>
+                                <path
+                                    d="M11 13V16C11 16.2833 11.0958 16.5208 11.2875 16.7125C11.4792 16.9042 11.7167 17 12 17C12.2833 17 12.5208 16.9042 12.7125 16.7125C12.9042 16.5208 13 16.2833 13 16V13H16C16.2833 13 16.5208 12.9042 16.7125 12.7125C16.9042 12.5208 17 12.2833 17 12C17 11.7167 16.9042 11.4792 16.7125 11.2875C16.5208 11.0958 16.2833 11 16 11H13V8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8V11H8C7.71667 11 7.47917 11.0958 7.2875 11.2875C7.09583 11.4792 7 11.7167 7 12C7 12.2833 7.09583 12.5208 7.2875 12.7125C7.47917 12.9042 7.71667 13 8 13H11ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z"
+                                    fill="#F04E23" />
+
+                            </svg>
+                            <button type="button" (click)="createEvent()"
+                                class="text-[#F04E23] rounded-lg p-1 font-bold text-xs">
+                                สร้างโพสต์การเดินทาง</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="type == 'thread'" class="mb-40">
+        <div *ngIf="eventList.length > 0" class="text-xs font-bold mt-4 mb-2">
+            โพสต์การเดินทางของคุณ
+        </div>
+        <div class="mx-auto border rounded-lg mb-4" *ngFor="let events of eventList">
+            <!-- event -->
+            <div class="-ml-1 mr-2 space-x-3 my-4">
+                <div class="relative">
+                    <div class="absolute top-0 right-0 flex text-right text-[#F04E23] space-x-2 font-bold"
+                        style="font-size: 10px;">
+                        <!-- money icon -->
+                        <mat-icon class="text-[#F04E23] pr-1" [svgIcon]="'general_icons:cost'"
+                            style="height: 16px; width: 16px;"></mat-icon>
+                        {{events.costs == 0 ? 'ฟรี':events.costs}}
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="text-base font-bold">
+                        <p>{{events.event_name}}</p>
+                    </div>
+                    <div class="grid grid-cols-1 my-2">
+                        <div class="flex flex-auto space-x-1 mr-2">
+                            <mat-icon style="min-width: 24px; min-height: 24px;"
+                                [svgIcon]="'general_icons:location'"></mat-icon>
+                            <div class="flex flex-col">
+                                <label class=" text-gray-400" style="font-size: 8px;">ตำแหน่งเริ่มต้น</label>
+                                <p class="break-words font-bold text-xs">{{events.start_point}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 my-2">
+                        <div class="flex flex-auto space-x-1 mr-2">
+                            <mat-icon style="min-width: 24px; min-height: 24px;"
+                                [svgIcon]="'general_icons:flag'"></mat-icon>
+                            <div class="flex flex-col">
+                                <label class=" text-gray-400" style="font-size: 8px;">ตำแหน่งจุดปลายทาง</label>
+                                <p class="break-words font-bold text-xs">{{events.dest_point}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="grid grid-cols-2 my-2">
+                        <div class="flex flex-auto space-x-1 mr-2">
+                            <mat-icon style="min-width: 24px; min-height: 24px;"
+                                [svgIcon]="'general_icons:person'"></mat-icon>
+                            <div class="flex flex-col">
+                                <label class=" text-gray-400" style="font-size: 8px;">จำนวนที่นั่ง</label>
+                                <p class="break-words font-bold text-xs">{{events.seats}}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-row space-x-1 ml-2">
+                            <mat-icon style="min-width: 24px; min-height: 24px;"
+                                [svgIcon]="'general_icons:departure'"></mat-icon>
+                            <div class="flex flex-col">
+                                <label class=" text-gray-400" style="font-size: 8px;">เวลาออกเดินทาง</label>
+                                <div class="flex flex-row" *ngIf="events.timeLeft != 'Expired'">
+                                    <div *ngIf="events.hour > 24 || (events.hour == 24 && events.minute > 0)">
+                                        <p class=" font-bold text-xs mr-1">
+                                            {{events.departure_time | customDateFormat}}
+                                        </p>
+                                    </div>
+                                    <div *ngIf="events.hour < 24 || (events.hour == 24 && events.minute == 0)">
+                                        <p class=" font-bold text-xs mr-1">
+                                            อีก&nbsp;{{events.hour}}&nbsp;ชั่วโมง&nbsp;
+                                            <span *ngIf="events.minute != 0">{{events.minute}}&nbsp;นาที</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div *ngIf="events.timeLeft == 'Expired'">
+                                    <p class="break-words font-bold text-xs">กำลังจะออกเดินทาง</p>
+                                </div>
+                                <!-- <p class="break-words font-bold text-xs">{{events.timeLeft}}</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" mt-4 -ml-4">
+                    <!-- <div class="">
+                    <div class="flex flex-auto space-x-1">
+                        <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:faculty'"></mat-icon>
+                        <div class="flex flex-col text-xs font-bold">
+                            <label class=" text-gray-400" style="font-size: 8px;">คณะของผู้โพสต์</label>
+                            {{events.faculty_name}}
+                        </div>
+                    </div>
+                </div> -->
+                    <div>
+                        <button *ngIf="events.status == 1" type="button" (click)="goChat(events.event_id)"
+                            class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white px-5 py-2  font-semibold text-sm w-full">
+                            เข้าสู่หน้าแชท</button>
+                    </div>
+                    <div [ngClass]="{'mt-2': events.status == 1}">
+                        <button type="button" (click)="go('/thread/detail',events.thread_id)"
+                            class="w-full border border-[#F04E23] text-[#F04E23] rounded-lg p-1 font-bold text-xs">
+                            รายละเอียด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="mx-auto pb-28 my-5 flex flex-col shadow-xl rounded-md min-h-screen" style="max-width:550px;">
+  <div *ngIf="checkAuthorize" class="mx-4">
+    <button (click)="back()" class="hover:drop-shadow active:drop-shadow">
+      <div class="flex flex-row">
+        <mat-icon [svgIcon]="'general_icons:arrow-left-black'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+    <div *ngIf="url == '/threads/detail' " class="mx-2">
+      <p class="text-xs font-bold mb-3">สมาชิกร่วมการเดินทาง</p>
+      <member [members]="members" [userId]="userId"></member>
+    </div>
+    <div class="mx-2">
+      <detail [members]="members" [detail]="threadDetail" [type]="'detail'" [extraType]="'thread'"></detail>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<form [formGroup]="editDetailFormGroup">
+    <div *ngFor="let vList of vehicleList">
+        <div (click)="!autoFilledData || (autoFilledData && autoFilledData?.seats + 1 <= vList.seats) ? vehicleSelected(vList) : tempT.toggle()"
+            class="mt-4 p-2 border border-[#D9D9D9] cursor-pointer" [ngClass]="{'opacity-50 cursor-not-allowed': autoFilledData && autoFilledData?.seats + 1 > vList.seats ,
+            'bg-[#F04E23] rounded-top-lg':vList.vehicle_id == this.editDetailFormGroup.get('vehicle_id')?.value,
+             'rounded-lg': vList.vehicle_id != this.editDetailFormGroup.get('vehicle_id')?.value}" #tempT="matTooltip"
+            [matTooltipPosition]="'above'"
+            [matTooltipDisabled]="!autoFilledData || (autoFilledData && autoFilledData?.seats + 1 <= vList.seats)"
+            [matTooltip]="'ไม่สามารถเลือกได้ เนื่องจากจำนวนที่นั่งต้องพร้อมรองรับผู้ขับขี่ด้วย'">
+            <div class="flex justify-between">
+                <div class="flex flex-row">
+                    <img [src]="vList?.vehicle_download" alt="vehicle" class="border rounded-lg"
+                        style="max-width: 107px; max-height: 60px;" />
+                    <div class="ml-2 -mt-1.5">
+                        <span class="bg-white w-14 font-bold border border-[#D9D9D9] rounded-md "
+                            style="font-size: 10px; padding: 0px 4px;">
+                            {{vList.license_plate}}
+                        </span>
+                        <span
+                            [ngClass]="{'text-white':vList.vehicle_id == this.editDetailFormGroup.get('vehicle_id')?.value}">
+                            <div class="font-bold text-xs">{{vList.brand}}&nbsp;{{vList.model}}
+                            </div>
+                            <div class="text-xs">{{vList.seats}} ที่นั่ง • {{vList.create_date |
+                                customDateFormat}}</div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- seat-option -->
+        <div *ngIf="vList.vehicle_id == this.editDetailFormGroup.get('vehicle_id')?.value"
+            class="  border-[#F04E23] border rounded-lg rounded-t-none">
+            <!-- radio-seat-type -->
+            <div class="flex flex-row justify-center mt-4 mb-4">
+                <div class="flex items-center  mr-2 hover:drop-shadow">
+                    <input [formControlName]="'seat_type'" id="passenger" type="radio" [value]="0"
+                        class="accent-[#F04E23] h-4 w-4 border-gray-300 text-red-50  cursor-pointer "
+                        aria-labelledby="passenger" aria-describedby="passenger">
+                    <label for="passenger" class=" cursor-pointer   font-bold text-xs ml-2 mt-0.5 block" [ngClass]="{'text-[#F04E23]': editDetailFormGroup.get('seat_type')?.value == 0, 
+                'text-black': editDetailFormGroup.get('seat_type')?.value != 0}">
+                        รับเต็มจำนวนที่นั่ง
+                    </label>
+                </div>
+                <div class="flex items-center hover:drop-shadow">
+                    <input [formControlName]="'seat_type'" id="driver" type="radio" [value]="1"
+                        class="h-4 w-4 accent-[#F04E23] border-gray-300  cursor-pointer" aria-labelledby="driver"
+                        aria-describedby="driver">
+                    <label for="driver" class=" text-black font-bold text-xs ml-2 mt-0.5 block cursor-pointer"
+                        [ngClass]="{'text-[#F04E23]': editDetailFormGroup.get('seat_type')?.value == 1, 
+                'text-black': editDetailFormGroup.get('seat_type')?.value != 1}">
+                        จำกัดจำนวนที่นั่ง
+                    </label>
+                </div>
+            </div>
+            <!-- when select: 'จำกัดจำนวนที่นั่ง' -->
+            <div *ngIf="editDetailFormGroup.get('seat_type')?.value == 1" class="flex flex-auto flex-col  mt-5 mx-2">
+                <div class="flex flex-auto space-x-4 mb-3">
+                    <div class="my-auto">
+                        <mat-icon class="my-auto" [svgIcon]="'general_icons:person'"
+                            style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center">
+                        <div class="relative z-0 w-full group">
+                            <input preventUpDownScroll noPaste inputNumberOnly numOnlytype="seats"
+                                [numOnlyMax]="this.editDetailFormGroup.get('vehicle_selected_obj')?.value?.seats"
+                                formControlName="seats" type="number"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " required />
+
+                            <label for="seats"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                จำนวนที่นั่ง</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

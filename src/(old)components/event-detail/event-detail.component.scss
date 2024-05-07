@@ -1,0 +1,69 @@
+// @import "~ng-pick-datetime/assets/style/picker.min.css";
+
+.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex {
+  background-color: #F6F8FB !important;
+}
+
+.mat-form-field-appearance-fill.mat-focused.mat-form-field-wrapper.mat-form-field-flex {
+  background-color: #F6F8FB!important;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: rgba(255,255,255,0);
+}
+
+.mat-warn{
+  --mat-option-selected-state-label-text-color: #fff;
+}
+
+
+.example-trigger {
+  display: inline-block;
+}
+
+/* mat-slider css */
+::ng-deep mat-slider {
+  width: 310px !important; /* Adjust the width as needed */
+}
+.mat-mdc-slider{
+  --mdc-slider-handle-color: #F04E23 !important;
+  --mdc-slider-active-track-color: #F04E23 !important
+}
+// ---------------------------------------
+
+/* Change the color of the checked radio button */
+::ng-deep .mat-mdc-radio-checked .mdc-radio__background {
+  // background-color: white !important; /* Set your desired color */
+  color: white !important; /* Set your desired color */
+}
+
+::ng-deep .mat-tooltip {
+  text-align: center !important;/* Center the text */
+}
+
+// mat-radio-button was clicked is white background
+// ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+//   background-color: #fff;
+// }
+
+// :host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+//   border-color:rgb(66, 134, 244); 
+// }
+
+// :host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle{
+//   color:rgb(66, 134, 244);
+//   background-color:rgb(66, 134, 244) ;
+// }
+
+// :host ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+//     background-color:rgb(255, 37, 37,.26)
+// }

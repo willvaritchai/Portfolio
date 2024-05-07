@@ -1,0 +1,233 @@
+<div class="mx-auto shadow-xl px-2 rounded-md min-h-screen" style="max-width:550px;">
+    <div *ngIf="otherUserData" class="mx-4 ">
+        <!-- other-user profile -->
+        <div class="flex pt-6 mb-6">
+            <div class="flex justify-left mr-4 ">
+                <mat-icon *ngIf="!otherUserData?.download_url" style="width: 80px; height: 80px;"
+                    [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                <img *ngIf="otherUserData?.download_url" [src]="otherUserData?.download_url" alt="profile"
+                    class="object-cover rounded-full  border" style="width: 80px; height: 80px;" />
+            </div>
+            <div class=" mx-auto grid grid-cols-3 gap-x-10">
+                <div class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">{{otherUserData?.count_friend}}</span>
+                    <span class="text-[#B5B5B5] text-sm">เพื่อน</span>
+                </div>
+
+                <button #tempRefT="matTooltip" (click)="tempRefT.toggle()" [matTooltip]="tripCountMessage"
+                    class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">{{otherUserData?.count_travel}}</span>
+                    <span class="text-[#B5B5B5] text-sm">การเดินทาง</span>
+
+                </button>
+                <div class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">{{otherUserData?.count_mutual}}</span>
+                    <span class="text-[#B5B5B5] text-sm">เพื่อนร่วมกัน</span>
+                </div>
+            </div>
+        </div>
+        <!-- input -->
+        <div>
+            <div class="text-2xl font-bold w-full">{{otherUserData?.fullname}}
+                <span *ngIf="otherUserData?.role_id != 1">
+                    <mat-icon #tempRefV="matTooltip" (click)="tempRefV.toggle()" [matTooltip]="verifiedUserMessage"
+                        class="w-8 h-8" [svgIcon]="'general_icons:check'"></mat-icon>
+                </span>
+            </div>
+            <div class="mt-2  flex flex-auto"
+                [ngClass]="{'mb-4':otherUserData?.role_id == 1, 'mb-2':otherUserData?.role_id != 1}">
+                <mat-icon class="mt-0.5 mr-1" style="width: 10px; height: 10px;"
+                    [svgIcon]="'general_icons:faculty'"></mat-icon>
+                <div class="text-xs flex flex-col">
+                    {{otherUserData?.faculty_name}} {{otherUserData?.branch_name}}
+                </div>
+            </div>
+            <div *ngIf="otherUserData?.role_id != 1" class="flex relative z-0 mb-4 w-full group text-xs">
+                <mat-icon class="text-[#FCB72B] " [svgIcon]="'heroicons_solid:star'"
+                    style="width: 12px; height: 12px;"></mat-icon>
+                <span class="font-bold">{{otherUserData?.rate}}
+                    <span class="text-[#B5B5B5] font-normal">(คะแนนจาก {{otherUserData?.total}} คน)
+                    </span>
+                </span>
+            </div>
+            <!-- <div class="relative z-0 mb-6 w-full group">
+                <input readonly type="email" name="floating_email"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0  border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="floating_email"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    อีเมล</label>
+            </div> -->
+            <div class="flex flex-col-2 gap-x-4">
+                <button
+                    (click)="addFriend({friend_status: 'pending',friend_id: otherUserData.user_id, user_id: userData.user_id})"
+                    *ngIf="otherUserData?.check_friend == 0"
+                    class="mr-2 bg-[#F04E23] w-full rounded-xl  text-sm font-bold text-white">
+                    เพิ่มเพื่อน
+                </button>
+                <button (click)="cancel({user_id: userData.user_id, friend_id: otherUserData.user_id})"
+                    *ngIf="otherUserData?.check_friend == 1"
+                    class="mr-2 bg-[#B5B5B5] w-full rounded-xl  text-sm font-bold text-white">
+                    ยกเลิกคำขอ
+                </button>
+                <button *ngIf="otherUserData?.check_friend == 2" disabled
+                    class="mr-2 bg-[#F04E23] w-full rounded-xl  text-sm font-bold text-white">
+                    <mat-icon style="width: 24px; height: 24px;" class="mr-1 flex align-middle fill-white"
+                        [svgIcon]="'general_icons:my-friend-white'"></mat-icon>
+                    เป็นเพื่อนกับคุณ
+                </button>
+                <button [matMenuTriggerFor]="option" class="flex mx-auto my-auto px-2 py-2 rounded-xl border border-[#F04E23] hover:drop-shadow 
+                cursor-pointer bg-white ">
+                    <mat-icon matPrefix class="w-6 h-6" [svgIcon]="'general_icons:menu-orange'"></mat-icon>
+                </button>
+                <mat-menu #option="matMenu" xPosition="before">
+                    <button (click)="deleteFriend({user_id: userData.user_id, friend_id: otherUserData.user_id})"
+                        *ngIf="otherUserData?.check_friend == 2" mat-menu-item>
+                        <mat-icon style="width: 24px; height: 24px;"
+                            [svgIcon]="'general_icons:delete-friend'"></mat-icon>
+                        <span class="text-sm">ลบเพื่อน</span>
+                    </button>
+                    <button (click)="go('/report',otherUserData?.encrypt_id)" mat-menu-item>
+                        <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:report-user'"></mat-icon>
+                        <span class="text-sm">รายงานผู้ใช้</span>
+                    </button>
+                </mat-menu>
+                <!-- <button class="flex mx-auto my-auto px-2 py-2 rounded-xl border border-[#E12424] 
+                cursor-pointer bg-white">
+                    <mat-icon class="w-8 h-8" [svgIcon]="'general_icons:emergency-con'"></mat-icon>
+                </button> -->
+            </div>
+        </div>
+        <!-- display friendlist section -->
+        <div class="mt-6 pb-24">
+            <mat-tab-group animationDuration="0ms" class=" overflow-y-auto h-[500px]" color="warn">
+                <mat-tab class="noto-san" label="เพื่อนทั้งหมด">
+                    <div class="max-w-2xl mx-auto mt-4 ">
+                        <div class=" bg-white rounded-lg  ">
+                            <div class="flow-root">
+                                <!-- class="divide-y" หากอยากให้มี underline ใต้แต่ละ list -->
+                                <ul role="list" class="divide-gray-200"
+                                    *ngFor="let friendList of otherUserData?.friendList">
+                                    <li class="mb-2 ">
+                                        <div class="mx-4">
+                                            <div class=" flex items-center space-x-3">
+                                                <div class="flex-shrink-0">
+                                                    <img (click)="go('/account/other-profile', friendList.encrypt_id)"
+                                                        *ngIf="friendList.download_url" [src]="friendList.download_url"
+                                                        class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                                                        alt="user_profile" />
+                                                    <mat-icon
+                                                        (click)="go('/account/other-profile', friendList.encrypt_id)"
+                                                        *ngIf="!friendList.download_url"
+                                                        class="cursor-pointer hover:drop-shadow"
+                                                        style="width: 40px; height: 40px;"
+                                                        [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="text-xs font-bold text-[#272727] truncate ">
+                                                        <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                                                        <!-- {{requestList.fullname}} -->
+                                                        {{friendList.fullname}}
+                                                    </p>
+                                                    <p *ngIf="friendList.my_id"
+                                                        class="text-xs font-normal text-[#272727] break-normal ">
+                                                        <mat-icon style="width: 10px; height: 10px;"
+                                                            [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                                                        เป็นเพื่อนกับคุณ
+                                                    </p>
+                                                    <p *ngIf="!friendList.my_id && friendList.count_mutual > 0"
+                                                        class="text-xs font-normal text-[#272727] break-normal ">
+                                                        <mat-icon style="width: 10px; height: 10px;"
+                                                            [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                                        มีเพื่อนร่วมกัน {{friendList.count_mutual}} คน
+                                                    </p>
+                                                    <p class="text-xs font-normal text-[#272727] break-normal ">
+                                                        <mat-icon style="width: 10px; height: 10px;"
+                                                            [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                                        <!-- {{requestList.faculty_name}} -->
+                                                        {{friendList.faculty_name}}
+                                                    </p>
+
+                                                </div>
+
+                                                <div
+                                                    *ngIf="friendList.user_id != userData?.user_id && friendList.my_id != userData.user_id">
+                                                    <button *ngIf="friendList.check_friend == 0"
+                                                        (click)="addFriend({friend_status: 'pending', user_id: userData.user_id, friend_id: friendList.user_id}, friendList)"
+                                                        class="h-8 w-16 mx-auto my-auto rounded-xl bg-[#F04E23] font-bold text-white"
+                                                        style="font-size: 10px;">
+                                                        เพิ่มเพื่อน
+                                                    </button>
+                                                    <button *ngIf="friendList.check_friend == 1"
+                                                        (click)="cancel({user_id: userData.user_id, friend_id: friendList.user_id},  friendList)"
+                                                        class="h-8 w-16 mx-auto my-auto rounded-xl bg-[#B5B5B5] font-bold text-white"
+                                                        style="font-size: 10px;">
+                                                        ยกเลิกคำขอ
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[#B5B5B5] font-bold text-xs text-center mt-4"
+                        *ngIf="otherUserData?.friendList.length == 0">
+                        ไม่พบข้อมูล
+                    </div>
+                </mat-tab>
+                <mat-tab class="noto-san" label="เพื่อนร่วมกัน">
+                    <div class="max-w-2xl mx-auto mt-4 ">
+                        <div class=" bg-white rounded-lg  ">
+                            <div class="flow-root">
+                                <!-- class="divide-y" หากอยากให้มี underline ใต้แต่ละ list -->
+                                <ul role="list" class="divide-gray-200" *ngFor="let mutual of mutualList">
+                                    <li class="mb-2 ">
+                                        <div class="mx-4">
+                                            <div class=" flex items-center space-x-3">
+                                                <div class="flex-shrink-0">
+                                                    <img (click)="go('/account/other-profile', mutual.encrypt_id)"
+                                                        *ngIf="mutual.download_url" [src]="mutual.download_url"
+                                                        class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                                                        alt="user_profile" />
+                                                    <mat-icon (click)="go('/account/other-profile', mutual.encrypt_id)"
+                                                        *ngIf="!mutual.download_url" style="width: 40px; height: 40px;"
+                                                        class="cursor-pointer hover:drop-shadow"
+                                                        [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="text-xs font-bold text-[#272727] truncate ">
+                                                        <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                                                        <!-- {{requestList.fullname}} -->
+                                                        {{mutual.fullname}}
+                                                    </p>
+                                                    <p class="text-xs font-normal text-[#272727] break-normal ">
+                                                        <mat-icon style="width: 10px; height: 10px;"
+                                                            [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                                                        เป็นเพื่อนกับคุณ
+                                                    </p>
+                                                    <p class="text-xs font-normal text-[#272727] break-normal ">
+                                                        <mat-icon style="width: 10px; height: 10px;"
+                                                            [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                                        <!-- {{requestList.faculty_name}} -->
+                                                        {{mutual.faculty_name}}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[#B5B5B5] font-bold text-xs text-center mt-4" *ngIf="mutualList?.length == 0">
+                        ไม่พบข้อมูล
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>

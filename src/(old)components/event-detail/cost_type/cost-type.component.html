@@ -1,0 +1,93 @@
+<style scoped>
+    .noto-san {
+        font-family: "Noto Sans Thai" !important;
+    }
+</style>
+
+<form [formGroup]="editDetailFormGroup">
+    <div class="flex flex-auto flex-col">
+        <mat-radio-group aria-label="Select an option" class="flex flex-col justify-start" formControlName="cost_type">
+            <!-- type: 0 -->
+            <div class="mt-2 mb-4" [ngClass]="{'border rounded-lg  bg-[#F04E23]' : editDetailFormGroup.get('cost_type')?.value == 0,
+                'border rounded-lg ' : editDetailFormGroup.get('cost_type')?.value != 0}">
+                <mat-radio-button class="m-1" [value]="0">
+                    <div class="flex flex-col my-3 mx-3"
+                        [ngClass]="{'text-[#FFFFFF]': editDetailFormGroup.get('cost_type')?.value == 0}">
+                        <p class="font-bold text-sm noto-san">
+                            ไม่คิดค่าโดยสาร</p>
+                        <p *ngIf="extraType != 'thread'" class="text-xs noto-san">
+                            ผู้โดยสารสามารถร่วมการเดินทางได้โดยไม่ต้องจ่ายค่าโดยสารใดๆ</p>
+                        <p *ngIf="extraType == 'thread'" class="text-xs noto-san">
+                            ต้องการร่วมการเดินทางโดยไม่ต้องจ่ายค่าโดยสารใดๆ</p>
+                    </div>
+                </mat-radio-button>
+            </div>
+            <!-- type: 1 -->
+            <button #tempT="matTooltip" [matTooltipPosition]="'above'"
+                (click)="!distance || distance < 1 ? tempT.toggle() : null"
+                [matTooltipDisabled]="!(!distance || distance < 1)"
+                [matTooltip]="'ไม่สามารถเลือกเมนูนี้ได้ ไม่พบข้อมูลสถานที่บน Google Maps หรือระยะทางไม่ถึง 1 กิโลเมตร'">
+                <div [ngClass]="{'opacity-50 pointer-events-none': !distance || distance < 1}">
+                    <div [ngClass]="{'border rounded-lg  bg-[#F04E23]' : editDetailFormGroup.get('cost_type')?.value == 1, 
+                'border rounded-lg ' : editDetailFormGroup.get('cost_type')?.value != 1}">
+                        <mat-radio-button class="m-1 " [value]="1">
+                            <div class="flex flex-col my-3 mr-12"
+                                [ngClass]="{'text-[#FFFFFF]': editDetailFormGroup.get('cost_type')?.value == 1}">
+                                <p class="font-bold text-sm noto-san flex">ใช้ค่าโดยสารที่แนะนำ
+                                    <!-- กดแล้วแสดง dialog ของ trip suggestion -->
+                                    <mat-icon (click)="openDialog()"
+                                        [ngClass]="{'stroke-[#FFFFFF]': editDetailFormGroup.get('cost_type')?.value == 1}"
+                                        [svgIcon]="'general_icons:fyi-icon'" style="height: 14px; width: 14px;"
+                                        class="ml-1"></mat-icon>
+                                </p>
+
+                                <p class="text-xs text-left noto-san">
+                                    ระบบคำนวนค่าโดยสารให้อัตโนมัติโดยยึดตามเรทราคากลางและข้อมูลการเดินทาง</p>
+                            </div>
+                        </mat-radio-button>
+                    </div>
+                    <div *ngIf="editDetailFormGroup.get('cost_type')?.value == 1"
+                        class="mb-2 border rounded-lg rounded-t-none ">
+                        <div class="text-center my-2 font-bold text-xs">
+                            ค่าโดยสาร&nbsp;<span class="text-[#F04E23]">
+                                <span class="text-base">{{editDetailFormGroup.get('costs')?.value ?
+                                    editDetailFormGroup.get('costs')?.value?.toLocaleString() : 0}}</span>&nbsp;
+                                <span class="text-xs">บาท</span>
+                            </span>
+                        </div>
+                        <!-- <div class="mx-2">
+                        <mat-slider [disabled]="disabled" [max]="max" [min]="min" [step]="step">
+                            <input matSliderThumb formControlName="costs" #slider>
+                        </mat-slider>
+                    </div>
+                    <div class="flex flex-row justify-between text-xs font-bold mx-4 mb-2">
+                        <div>
+                            0 บาท
+                        </div>
+                        <div>
+                            100 บาท
+                        </div>
+                    </div> -->
+                    </div>
+                </div>
+            </button>
+            <!-- type: 2 -->
+            <div class="mt-4 mb-2" [ngClass]="{'border rounded-lg  bg-[#F04E23]' : editDetailFormGroup.get('cost_type')?.value == 2,
+            'border rounded-lg ': editDetailFormGroup.get('cost_type')?.value != 2}">
+                <mat-radio-button class="m-1 " [value]="2">
+                    <div class="flex flex-col my-3 mx-3"
+                        [ngClass]="{'text-[#FFFFFF]': editDetailFormGroup.get('cost_type')?.value == 2}">
+                        <p class="font-bold text-sm noto-san">ตั้งค่าโดยสารเอง</p>
+                        <p class="text-xs noto-san">สามารถตั้งราคาค่าโดยสารได้อย่างอิสระ</p>
+                        <div class="relative z-0 w-full group" *ngIf="editDetailFormGroup.get('cost_type')?.value == 2">
+                            <input noPaste formControlName="costs" type="number" name="costs"
+                                class="noto-san font-bold block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " required inputNumberOnly [numOnlyMax]="1000" preventUpDownScroll />
+                        </div>
+                    </div>
+                </mat-radio-button>
+            </div>
+            <!-- <mat-radio-button class="m-1" value="2">ตั้งค่าโดยสารเอง</mat-radio-button> -->
+        </mat-radio-group>
+    </div>
+</form>

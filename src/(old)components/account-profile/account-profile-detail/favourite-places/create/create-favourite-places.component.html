@@ -1,0 +1,15 @@
+<div class="mx-auto  my-5 flex flex-col shadow-xl rounded-md" style="max-width:550px;">
+  <div class="mx-4">
+    <button (click)="go('/account/favourite-routes')" class="hover:drop-shadow active:drop-shadow">
+      <div class="flex flex-row">
+        <mat-icon [svgIcon]="'general_icons:arrow-left-black'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+    <div class="mx-2">
+      <detail [detail]="eventDetail" [type]="'create'" [extraType]="'fav'" [vehicleList]="vehicle"></detail>
+    </div>
+  </div>
+</div>

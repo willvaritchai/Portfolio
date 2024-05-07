@@ -1,0 +1,109 @@
+<div class="mx-auto shadow-xl pb-20 min-h-screen" [ngClass]="{'pb-24' : socialType == 'search' }"
+    style="max-width:550px;">
+    <div class="mx-4 ">
+        <div class="text-2xl pt-7 pb-2 font-bold">
+            <span *ngIf="socialType != 'search'">คนที่คุณอาจจะรู้จัก</span>
+            <span *ngIf="socialType == 'search'">ค้นหาเพื่อน</span>
+        </div>
+        <!-- input&filter -->
+        <input-search (searchOutput)="searching()" (searchValue)="onSearchValChange($event)"></input-search>
+        <div *ngIf="isLoading" class="flex justify-center items-center mt-10">
+            <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+        </div>
+        <!-- friend-suggestion -->
+        <!-- This is an example component -->
+        <div class=" mx-auto">
+            <div class="  bg-white rounded-lg  ">
+                <div class="flow-root">
+                    <!-- class="divide-y" หากอยากให้มี underline ใต้แต่ละ list -->
+                    <ul role="list" class="divide-gray-200 " *ngFor="let social of socialList">
+                        <li class="pb-3 ">
+                            <div class="mx-auto">
+                                <div class=" flex items-center space-x-3">
+                                    <div class="flex-shrink-0"
+                                        [ngClass]="{'cursor-pointer': url != '/social-network/friends/suggestion'}">
+                                        <img (click)="url != '/social-network/friends/suggestion' ? go('/account/other-profile', social.encrypt_id) : null"
+                                            *ngIf="social.download_url" class="object-cover w-10 h-10 rounded-full"
+                                            [src]="social.download_url" alt="user_profile" />
+                                        <mat-icon
+                                            (click)="url != '/social-network/friends/suggestion' ? go('/account/other-profile', social.encrypt_id) : null"
+                                            *ngIf="!social.download_url" style="width: 40px; height: 40px;"
+                                            [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-bold text-[#272727] truncate ">
+                                            <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                                            {{social.fullname}}
+                                        </p>
+                                        <p *ngIf="socialType == 'search' && social.mutualFriend.length > 0"
+                                            class="text-xs font-normal text-[#272727] truncate ">
+                                            <mat-icon style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                            มีเพื่อนร่วมกัน {{social.mutualFriend.length}} คน
+                                        </p>
+                                        <p class="text-xs font-normal text-[#272727] break-normal ">
+                                            <mat-icon style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                            {{social.faculty_name}}
+                                        </p>
+                                        <p *ngIf="socialType != 'search'"
+                                            class="text-xs font-normal text-[#272727] break-normal ">
+                                            <mat-icon style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:branch'"></mat-icon>
+                                            {{social.branch_name}}
+                                        </p>
+                                    </div>
+                                    <!-- <div (click)="addFriend(social.user_id)"
+                                class="inline-flex items-center text-base font-semibold text-gray-900 ">
+                                เพิ่มเพื่อน
+                                </div> -->
+                                    <div>
+                                        <button *ngIf="social.my_id == null && social.friend_id == null"
+                                            (click)="manageFriend(social,'add')"
+                                            class="h-8 w-20 rounded-xl bg-[#F04E23] font-bold text-white"
+                                            style="font-size: 10px;">
+                                            เพิ่มเพื่อน
+                                        </button>
+                                        <button *ngIf="social.my_id != null && social.friend_id != null"
+                                            (click)="manageFriend(social,'cancel')"
+                                            class="h-8 w-20 rounded-xl bg-[#B5B5B5] font-bold text-white"
+                                            style="font-size: 10px;">
+                                            ยกเลิกคำขอ
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                    <div *ngIf="socialList.length <= 0 && !isLoading" class="my-2 text-sm text-gray-400 text-center">
+                        ไม่พบข้อมูลจากการค้นหา
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div (click)="paginationTrigger()" *ngIf="pagination?.isExistList && !isPaginateLoading && !isLoading"
+            class="mx-auto border rounded-lg mb-4 hover:drop-shadow cursor-pointer">
+            <div class="my-2 text-center text-[#3686FF] text-xs">
+                แสดงเพิ่มเติม
+            </div>
+        </div>
+        <div *ngIf="isPaginateLoading" class="flex justify-center items-center mt-10">
+            <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+        </div>
+
+        <!-- button -->
+        <div *ngIf="socialType != 'search'" class="fixed  inset-x-1 flex mx-auto max-w-[550px] bg-white bottom-0">
+            <div class="flex justify-center flex-col-4 w-full bg-white  space-x-4  my-2">
+                <div >
+                    <button (click)="go('/home')" style="width: 358px;"
+                        class="h-12 rounded-2xl bg-[#F04E23] text-base font-bold text-white">
+                        ต่อไป
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

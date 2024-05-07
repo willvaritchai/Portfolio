@@ -1,0 +1,441 @@
+<style scoped>
+    .tab-indent {
+        padding-left: 1em;
+        /* Adjust as needed */
+    }
+</style>
+<div class=" h-44  " style="height: 100%;">
+    <div class=" flex flex-col flex-auto overflow-hidden overflow-y-auto p-4"  *ngIf="receivedData?.type != 'seepic'">
+
+        <!-- หน้าแก้ไขบัญชี -->
+        <div *ngIf="receivedData == 'edit_account'">
+            <div class="font-bold text-xl text-center mb-4">
+                แก้ไขข้อมูลบัญชี
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะบันทึกข้อมูลนี้หรือไม่?
+            </div>
+        </div>
+        <!-- user-mangement: delete_account -->
+        <div *ngIf="receivedData == 'delete_account'">
+            <div class="font-bold text-xl text-center mb-4">
+                ลบบัญชีผู้ใช้งาน
+            </div>
+            <div class="text-base text-center mb-8">
+                เมื่อดำเนินการแล้วจะไม่สามารถย้อนกลับมาแก้ไขได้
+            </div>
+        </div>
+        <!-- หน้าแก้ไขบัญชี:การ logout -->
+        <div *ngIf="receivedData == 'logout'">
+            <div class="font-bold text-xl text-center mb-4">
+                ออกจากระบบ
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะออกจากระบบหรือไม่?
+            </div>
+        </div>
+        <!-- การ login ด้วย email (หากไม่พบ email) -->
+        <div *ngIf="receivedData == 'login-email'">
+            <div class="font-bold text-xl text-center mb-4">
+                ไม่พบบัญชี
+            </div>
+            <div class="text-base text-center mb-8">
+                กรุณาติดต่อผู้ดูแลระบบโดยตรง
+            </div>
+        </div>
+
+        <!-- favRoute -->
+        <div *ngIf="receivedData == 'fav'">
+            <div class="font-bold text-xl text-center mb-4">
+                บันทึกข้อมูล
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะบันทึกข้อมูลนี้หรือไม่?
+            </div>
+        </div>
+
+        <!-- แก้ไขโพสต์การเดินทาง -->
+        <div *ngIf="receivedData == 'edit-event'">
+            <div class="font-bold text-xl text-center mb-4">
+                แก้ไขโพสต์การเดินทาง
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะแก้ไขโพสต์การเดินทางนี้หรือไม่?
+            </div>
+        </div>
+        <!-- ลบโพสต์การเดินทาง, delete-fav, delete-contact -->
+        <div *ngIf="receivedData == 'delete-event' || receivedData == 'delete-fav' || receivedData == 'delete-contact'">
+            <div class="font-bold text-xl text-center mb-4">
+                {{receivedData == 'delete-event' ? 'ลบโพสต์การเดินทาง':'ลบข้อมูล'}}
+            </div>
+            <div class="text-base text-center mb-8">
+                เมื่อดำเนินการแล้วจะไม่สามารถย้อนกลับมาแก้ไขได้
+            </div>
+        </div>
+        <!-- สร้างโพสต์การเดินทาง && สร้าง thread -->
+        <div *ngIf="receivedData == 'create-event' || receivedData == 'create-thread'">
+            <div class="font-bold text-xl text-center mb-4">
+                สร้างโพสต์การเดินทาง
+            </div>
+            <div *ngIf="receivedData == 'create-event'" class="text-base text-center mb-8">
+                คุณยืนยันที่จะสร้างโพสต์การเดินทางนี้หรือไม่
+            </div>
+            <div *ngIf="receivedData == 'create-thread'" class="text-base text-center mb-8">
+                คุณยืนยันที่จะสร้างโพสต์การเดินทางนี้หรือไม่?<br>
+                เมื่อดำเนินการแล้วไม่สามารถแก้ไขได้
+            </div>
+        </div>
+        <!-- driver accept request -->
+        <div *ngIf="receivedData == 'driver-accept'">
+            <div class="text-center mb-4">
+                <mat-icon style="width: 128px; height: 120px;" [svgIcon]="'general_icons:accpet-request'"></mat-icon>
+            </div>
+            <div class="font-bold text-base text-center mb-4">
+                ตอนนี้คุณมีเพื่อนร่วมการเดินทางแล้ว!
+            </div>
+            <div class="text-sm text-center mb-8">
+                <p>ระหว่างก่อนออกเดินทางกรุณาติดต่อและพูดคุยกับ</p>
+                <p>สมาชิกการเดินทางได้ผ่านกลุ่มแชท</p>
+            </div>
+        </div>
+        <!-- driver denied request -->
+        <div *ngIf="receivedData == 'driver-denied'">
+            <div class="font-bold text-base text-center mb-4">
+                กรุณาระบุเหตุผลการปฎิเสธถึงผู้โดยสาร
+            </div>
+            <!-- <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะสร้างโพสต์การเดินทางนี้หรือไม่
+            </div> -->
+            <div class="relative z-0 w-full group mb-8">
+                <textarea type="text" [(ngModel)]="detail" name="event_detail"
+                    class="h-40 block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-[#E6E7E8] border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder="ระบุข้อความในนี้"></textarea>
+                <!-- <label for="event_detail"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    รายละเอียดเพิ่มเติม</label> -->
+            </div>
+        </div>
+        <!-- cancel request -->
+        <div *ngIf="receivedData == 'cancel-request'">
+            <div class="font-bold text-xl text-center mb-4">
+                ยกเลิกคำขอร่วมการเดินทาง
+            </div>
+            <div class="text-sm text-center mb-8">
+                คุณยืนยันที่จะยกเลิกคำขอร่วมการเดินทางนี้หรือไม่
+            </div>
+        </div>
+
+        <!-- denied detail -->
+        <div *ngIf="receivedData.receivedData == 'denied-detail'">
+            <div class="flex flex-auto space-x-4 mb-3">
+                <div class="my-auto">
+                    <mat-icon style="width: 40px; height: 40px;" [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="text-xs flex flex-grow items-center font-bold">
+                        {{receivedData.dialogData.fullname}}
+                        <mat-icon *ngIf="receivedData.dialogData.role_id==2" [svgIcon]="'general_icons:check'"
+                            style="height: 16px; width: 16px;"></mat-icon>
+                    </div>
+                    <div *ngIf="receivedData.dialogData.friendtype" class="flex flex-auto text-xs space-x-3">
+                        <div
+                            *ngIf="receivedData.dialogData.friendtype && receivedData.userId!=receivedData.dialogData.user_id ">
+                            <mat-icon *ngIf="receivedData.dialogData.friendtype=='friend'" class="mt-0.5 mr-0.5"
+                                style="width: 10px; height: 10px;" [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                            <mat-icon *ngIf="receivedData.dialogData.friendtype=='mutualfriend'" class="mt-0.5 mr-0.5"
+                                style="width: 10px; height: 10px;" [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                            <span *ngIf="receivedData.dialogData.friendtype=='friend'">เป็นเพื่อนกับคุณ</span>
+                            <span *ngIf="receivedData.dialogData.friendtype=='mutualfriend'">มีเพื่อนร่วมกัน
+                                {{receivedData.dialogData.mutalfriend}} คน</span>
+                        </div>
+                        <div class="flex justify-center text-center" *ngIf="receivedData.dialogData.role_id==2">
+                            <div class="flex justify-center text-center"
+                                *ngIf="receivedData.dialogData.rate != null && receivedData.dialogData.total != null">
+                                <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                                    style="height: 1rem;"></mat-icon>
+                                <span>{{receivedData.dialogData.rate}} ({{receivedData.dialogData.total}})</span>
+                            </div>
+                            <div class="flex justify-center text-center text-xs"
+                                *ngIf="receivedData.dialogData.rate == null && receivedData.dialogData.total == null">
+                                <span>ผู้ขับขี่ใหม่</span>
+                            </div>
+                            <!-- <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                                style="height: 1rem;"></mat-icon>
+                            <span>{{events.rate}} ({{events.total}})</span> -->
+                        </div>
+                    </div>
+                    <div class="flex flex-auto text-xs  space-x-3">
+                        <mat-icon class="mt-0.5 mr-0.5" style="width: 10px; height: 10px;"
+                            [svgIcon]="'general_icons:faculty'"></mat-icon>
+                        {{receivedData.dialogData.faculty_name}}
+                    </div>
+                </div>
+            </div>
+            <div class="font-bold text-xl mb-4">
+                ข้อความจากผู้ขับขี่
+            </div>
+            <div class="text-sm mb-8 text-[#5B5B5B]">
+                "{{receivedData.dialogData.detail}}"
+            </div>
+            <div class="text-sm text-[#5B5B5B] text-center">
+                *หากกดปุ่มแล้ว ข้อมูลทั้งหมดจะถูกลบออก
+            </div>
+        </div>
+
+        <!-- driver_register -->
+        <div *ngIf="receivedData == 'driver_register'">
+            <div class="font-bold text-xl text-center mb-4">
+                บันทึกข้อมูล
+            </div>
+            <div class="text-base text-center mb-8">
+                เมื่อดำเนินการแล้วไม่สามารถแก้ไขได้<br>
+                คุณยืนยันที่จะบันทึกข้อมูลนี้หรือไม่?
+            </div>
+        </div>
+
+        <!-- cancel_register -->
+        <div *ngIf="receivedData == 'cancel_register'">
+            <div class="font-bold text-xl text-center mb-4">
+                ยกเลิกคำขอการสมัคร
+            </div>
+            <div class="text-base text-center mb-8">
+                ข้อมูลยานพาหนะจะถูกลบทั้งหมด<br>
+                เมื่อดำเนินการแล้วไม่สามารถย้อนกลับมาแก้ไขได้
+            </div>
+        </div>
+
+        <!-- delete_license -->
+        <div *ngIf="receivedData == 'delete_license'">
+            <div class="font-bold text-xl text-center mb-4">
+                ลบข้อมูลใบอนุญาต
+            </div>
+            <div class="text-base text-center mb-8">
+                ข้อมูลยานพาหนะจะถูกลบทั้งหมด<br>
+                เมื่อดำเนินการแล้วไม่สามารถย้อนกลับมาแก้ไขได้
+            </div>
+        </div>
+
+        <!-- denied_approval -->
+        <div *ngIf="receivedData.data == 'denied_approval'">
+            <div class="font-bold text-xl text-center mb-4">
+                ไม่ผ่านการอนุมัติ
+            </div>
+            <div class="text-base  mb-8">
+                <pre style="font-family:'Noto Sans Thai'">{{receivedData.denied_detail}}</pre>
+            </div>
+            <div class="text-center text-[#E12424] text-sm mb-2">
+                *หากกดปุ่มแล้ว ข้อมูลทั้งหมดนี้จะถูกลบออก
+            </div>
+        </div>
+
+        <!-- add_vehicle -->
+        <div *ngIf="receivedData == 'add_vehicle'">
+            <div class="font-bold text-xl text-center mb-4">
+                บันทึกข้อมูลยานพาหนะ
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะบันทึกข้อมูลนี้หรือไม่?
+            </div>
+        </div>
+
+        <!-- admin_approval -->
+        <div *ngIf="receivedData == 'admin_approval'" class="pb-10">
+            <div class="font-bold text-xl text-left ">
+                อนุมัติคำขอ
+            </div>
+            <div class="text-xl text-left mt-4">
+                เลือกสถานะคำขอสำหรับเคสนี้
+            </div>
+            <div>
+                <select (change)="onChangeAppOption()" [(ngModel)]="approvalStatus"
+                    class="w-full border rounded-lg cursor-pointer" name="options" id="options">
+                    <option disabled value="เลือกสถานะ" hidden>เลือกสถานะ</option>
+                    <option class="cursor-pointer" *ngFor="let appOpt of approvalOptionList"
+                        [value]="appOpt.approval_status">
+                        {{ appOpt.status }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="approvalStatus == 2">
+                <div class="mt-4 mb-4 text-xl">
+                    ข้อความการปฏิเสธคำขอถึงผู้สมัคร
+                </div>
+                <textarea type="text" [(ngModel)]="deniedDetail" name="denied_detail"
+                    class="h-40 block py-2.5 px-2 w-full rounded-lg text-base  bg-[#F6F8FB] border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder="โปรดระบุข้อความ"></textarea>
+            </div>
+        </div>
+
+
+
+        <!-- delete_vehicle -->
+        <div *ngIf="receivedData == 'delete_vehicle'">
+            <div class="font-bold text-xl text-center mb-4">
+                ลบข้อมูลยานพาหนะ
+            </div>
+            <div class="text-base text-center mb-8">
+                เมื่อดำเนินการแล้วไม่สามารถย้อนกลับมาแก้ไขได้
+            </div>
+        </div>
+
+        <!-- report -->
+        <div *ngIf="receivedData == 'report'">
+            <div class="font-bold text-xl text-center mb-4">
+                รายงานผู้ใช้
+            </div>
+            <div class="text-base text-center mb-8">
+                คุณยืนยันที่จะรายงานผู้ใช้รายนี้หรือไม่?
+            </div>
+        </div>
+
+        <!-- done -->
+        <div *ngIf="receivedData == 'done'" class="flex flex-col">
+            <mat-icon class="mx-auto my-2" style="width: 120px; height: 120px;"
+                [svgIcon]="'general_icons:done-check'"></mat-icon>
+            <div class="font-bold text-xl text-center mb-4">
+                บันทึกข้อมูลสำเร็จ
+            </div>
+            <div class="text-base text-center mb-8">
+                ขอบคุณที่เป็นส่วนหนึ่งของการสร้างชุมชนที่ดีขึ้น
+            </div>
+        </div>
+
+        <!-- noti_driver_app -->
+        <div *ngIf="receivedData == 'noti_driver_app'">
+            <div class="font-bold text-xl text-center mb-4">
+                ผลการสมัครผู้ขับขี่
+            </div>
+            <div class="text-sm text-center mb-8">
+                เราได้ตรวจสอบข้อมูลการสมัครของคุณแล้ว<br>
+                กดปุ่มยืนยันเพื่อดูผลการสมัคร
+            </div>
+        </div>
+
+        <!-- delete_friend -->
+        <div *ngIf="receivedData == 'delete_friend'">
+            <div class="font-bold text-xl text-center mb-4">
+                ลบเพื่อน
+            </div>
+            <div class="text-base text-center mb-8">
+                เมื่อดำเนินการแล้วจะไม่สามารถแก้ไขได้
+            </div>
+        </div>
+
+        <!-- distance -->
+        <div *ngIf="receivedData == 'distance'">
+            <div class="font-bold text-xl text-center mb-4">
+                ระยะทางคืออะไร?
+            </div>
+            <p class="text-sm text-center mb-8 break-words	">
+                ระยะทางมาจากผลลัพธ์ที่ได้จากการคำนวณ Latitude, Longitude เป็นระยะทางที่ใกล้ที่สุดของการใช้เส้นทางตาม
+                Google Maps</p>
+        </div>
+
+
+        <!-- cost_suggestion tip -->
+        <div *ngIf="receivedData == 'cost_suggestion'">
+            <div class="flex justify-center">
+                <mat-icon [svgIcon]="'general_icons:trip-sugg-dialog'" style="height: 80px; width: 104px;"></mat-icon>
+            </div>
+            <div class="font-bold text-xl mt-4 mb-2">
+                ค่าโดยสารที่แนะนำคิดจากอะไร?
+            </div>
+            <div class="text-sm mb-8 text-[#5B5B5B]">
+                ระบบจะนำเอาค่าจากตำแหน่งเริ่มต้นของคุณและตำแหน่งจุดปลายทาง
+                มาลบกันเพื่อให้ได้ออกมาเป็นค่าระยะการเดินทางทั้งหมดมาคิดรวมกับ
+                สูตรอัตราของระบบ ข้อมูลเพิ่มเติมเกี่ยวกับอัตราของระบบดังนี้
+                <ul class="tab-indent">
+                    <li>
+                        • ระยะทางตั้งแต่ 1 ถึง 9 กม.ละ 3 บาท
+                    </li>
+                    <li>• ระยะทางตั้งแต่ 10 ถึง 19 กม.ละ 3.5 บาท</li>
+                    <li>• ระยะทางตั้งแต่ 20 ถึง 39 กม.ละ 4 บาท</li>
+                    <li>• ระยะทางตั้งแต่ 40 กม.ขึ้นไป กม.ละ 4.5</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- errorAcceptThread -->
+        <div *ngIf="receivedData?.type == 'errorAcceptThread'">
+            <div class="font-bold text-xl text-center mb-4">
+                ไม่สามารถตอบรับการเดินทางนี้ได้
+            </div>
+            <p class="text-sm text-center mb-8 break-words	">
+                <span *ngIf="receivedData?.message.includes('ไม่เพียงพอต่อจำนวนที่นั่ง')">
+                    เนื่องจากยานพานหนะของคุณ<br>ไม่เพียงพอต่อจำนวนที่นั่ง
+                </span>
+                <span *ngIf="receivedData?.message.includes('การเดินทางที่กำลังดำเนินอยู่')">
+                    เนื่องจากคุณมีโพสต์<br>การเดินทางที่กำลังดำเนินอยู่
+                </span>
+            </p>
+        </div>
+        <div *ngIf="receivedData?.type == 'seepic'">
+            <img [src]="receivedData?.message" alt="vehicle" class="border rounded-lg"
+                                    style="max-width: 100%; max-height: 100%;" />
+        </div>
+
+        <!--✅button-->
+        <form class="flex flex-row">
+            <div *ngIf="receivedData != 'login-email'" class="flex items-end justify-center space-x-6 w-full ">
+                <button type="button" (click)="closeDialog()"
+                    *ngIf="receivedData?.data != 'denied_approval' && receivedData != 'driver-accept'  && receivedData.receivedData != 'denied-detail' && receivedData != 'done' && receivedData != 'noti_driver_app' && receivedData != 'distance' && receivedData != 'cost_suggestion' && receivedData?.type != 'errorAcceptThread'"
+                    class="h-14 hover:drop-shadow w-40  rounded-xl  text-base font-bold text-[#F04E23] bg-white border-[#F04E23] border">
+                    ยกเลิก
+                </button>
+                <button type="button" (click)="confirm()"
+                    *ngIf="receivedData?.data != 'denied_approval' && receivedData != 'driver-accept' && receivedData.receivedData != 'denied-detail' && receivedData != 'driver-denied' && receivedData != 'admin_approval' && receivedData != 'noti_driver_app' && receivedData != 'distance' && receivedData != 'cost_suggestion' && receivedData?.type != 'errorAcceptThread'"
+                    class="h-14 w-40 hover:drop-shadow rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    ยืนยัน
+                </button>
+                <!-- ยืนยัน สำหรับ admin-approval -->
+                <button type="button" (click)="adminConfirmApproval()" *ngIf="receivedData == 'admin_approval'"
+                    class="h-14 w-40  rounded-xl  text-base font-bold text-white "
+                    [disabled]="(!deniedDetail && approvalStatus == 2) || (approvalStatus != 1 && approvalStatus != 2)"
+                    [ngClass]="{'bg-[#B5B5B5]': (!deniedDetail && approvalStatus == 2) || (approvalStatus != 1 && approvalStatus != 2),
+                'bg-[#F04E23] hover:drop-shadow': !((!deniedDetail && approvalStatus == 2) || (approvalStatus != 1 && approvalStatus != 2))}">
+                    ยืนยัน
+                </button>
+                <button type="button" (click)="send()" *ngIf="receivedData == 'driver-denied'"
+                    class="h-14 w-40 hover:drop-shadow rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    ส่ง
+                </button>
+                <button type="button" (click)="confirm()" *ngIf="receivedData == 'driver-accept'"
+                    class="h-14 w-40 hover:drop-shadow rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    เข้าสู่หน้าแชท
+                </button>
+                <button type="button" (click)="confirm()"
+                    *ngIf="receivedData?.receivedData == 'denied-detail' || receivedData?.data == 'denied_approval' || receivedData?.type == 'errorAcceptThread'"
+                    class="h-14 w-full rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    {{receivedData != 'errorAcceptThread' ? 'เข้าใจแล้ว':'รับทราบ'}}
+                </button>
+                <!-- ประกาศผลสมัคร driver -->
+                <button type="button" (click)="confirm()" *ngIf="receivedData == 'noti_driver_app'"
+                    class="h-9 w-full rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    ยืนยัน
+                </button>
+                <!-- distance: ระยะทางคืออะไร? or cost_suggestion คืออะไร -->
+                <button type="button" (click)="confirm()"
+                    *ngIf="receivedData == 'distance' || receivedData == 'cost_suggestion'"
+                    class="h-9 w-full rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    เข้าใจแล้ว
+                </button>
+            </div>
+            <!-- สำหรับ admin, test-user -->
+            <div *ngIf="receivedData == 'login-email' " class="flex items-end justify-center space-x-6 w-full px-8">
+                <button type="button" (click)="closeDialog()"
+                    class="h-14 w-40 hover:drop-shadow rounded-xl  text-base font-bold text-[#F04E23] bg-white border-[#F04E23] border">
+                    ตกลง
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <div class=" flex flex-col flex-auto overflow-hidden overflow-y-auto p-1" *ngIf="receivedData?.type == 'seepic'">
+        <div>
+        <img [src]="receivedData?.message" alt="vehicle" class="border rounded-lg"
+                                style="max-width: 100%; max-height: 100%;" />
+    </div>
+    
+    </div>
+</div>

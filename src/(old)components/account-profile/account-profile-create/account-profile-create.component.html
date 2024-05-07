@@ -1,0 +1,172 @@
+<style scoped>
+    input[type='radio']:after {
+        accent-color: red !important;
+    }
+</style>
+<div class="mx-auto shadow-xl px-2 rounded-md" style="max-width:550px;">
+    <div class="mx-4 " [ngClass]="{'pb-28': accountPage == '/account/detail'}">
+        <div *ngIf="accountPage != '/account/detail'">
+            <div class="text-2xl pt-7 pb-2 font-bold">สร้างบัญชีใช้งาน</div>
+            <div class="text-base text-[#5B5B5B]">กรุณากรอกข้อมูลทั้งหมดในฟิลด์ที่บังคับ เพื่อดำเนินการ
+                สร้างบัญชีใช้งานในระบบ
+            </div>
+        </div>
+        <!-- แก้ไขรูป -->
+        <div class="pt-6 mb-6">
+            <div class="flex justify-center">
+                <mat-icon *ngIf="!profilePic" style="width: 120px; height: 120px;"
+                    [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                <img *ngIf="profilePic" [src]="profilePic" alt="Your Alt Text" class="object-cover w-32 h-32 rounded-full border" />
+            </div>
+            <div class="text-xs pt-2  text-center font-bold text-[#3686FF]">
+                <button class="hover:drop-shadow" (click)="profile.click()">แก้ไขรูปโปรไฟล์</button>
+                <input #profile type="file" class="hidden" accept="image/*" (change)="changeFile($event)">
+            </div>
+            <div class="mt-4 ">
+                <!-- <mat-radio-group class="flex justify-center space-x-2" required [formControlName]="'status'">
+                    <mat-radio-button class="font-bold text-xs text-black">
+                        ใช้งาน
+                    </mat-radio-button>
+                    <mat-radio-button class="font-bold text-xs">
+                        ไม่ใช้งาน
+                    </mat-radio-button>
+                </mat-radio-group> -->
+                <div *ngIf="accountPage == '/account/detail'" [formGroup]="accountFormGroup">
+                    <div class="flex flex-row justify-center space-x-4">
+                        <div class="flex items-center mb-4">
+                            <input id="passenger" type="radio" name="roles" value="passenger"
+                                class="accent-[#F04E23] h-4 w-4 border-gray-300 text-red-50" aria-labelledby="passenger"
+                                aria-describedby="passenger">
+                            <label for="passenger" class=" text-black font-bold text-xs ml-2 mt-0.5 block">
+                                ผู้โดยสาร
+                            </label>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <input id="driver" type="radio" name="roles" value="driver"
+                                class="h-4 w-4 accent-[#F04E23] border-gray-300 " aria-labelledby="driver"
+                                aria-describedby="driver">
+                            <label for="driver" class=" text-black font-bold text-xs ml-2 mt-0.5 block">
+                                ผู้ขับขี่
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- input -->
+        <div [formGroup]="accountFormGroup">
+            <!-- <div class="relative z-0 mb-6 w-full group">
+                <input formControlName="fullname" type="text" name="floating_fullname"
+                    class="block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="floating_fullname"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ชื่อจริง นามสกุล</label>
+            </div> -->
+            <!-- <div class="relative z-0 mb-6 w-full group">
+                <input formControlName="firstname" type="text" name="floating_firstname"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="floating_fullname"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ชื่อจริง</label>
+            </div>
+            <div class="relative z-0 mb-6 w-full group">
+                <input formControlName="lastname" type="text" name="floating_lastname"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="floating_lastname"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    นามสกุล</label>
+            </div> -->
+            <div class="relative z-0 mb-6 w-full group">
+                <input readonly formControlName="fullname" type="text" name="floating_fullname"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 focus:outline-none focus:ring-0"
+                    placeholder=" " required />
+                <label for="floating_fullname"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ชื่อจริง นามสกุล</label>
+            </div>
+            <div class="relative z-0 mb-6 w-full group">
+                <input readonly formControlName="email" type="email" name="floating_email"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 focus:outline-none focus:ring-0"
+                    placeholder=" " required />
+                <label for="floating_email"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    อีเมล</label>
+            </div>
+
+            <div class="relative z-0 mb-6 w-full group">
+                <input matInput type="text" name="floating_faculty" [formControlName]="'faculty_name'"
+                    [matAutocomplete]="faculty"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder="" required />
+                <label for="floating_faculty"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    คณะที่คุณอยู่</label>
+                <mat-autocomplete #faculty="matAutocomplete" [displayWith]="displayFaculty">
+                    <mat-option *ngFor="let faculty of filteredFaculties | async" [value]="faculty">
+                        {{ faculty.faculty_name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+            <div class="relative z-0 mb-6 w-full group">
+                <input type="text" name="floating_branch" formControlName="branch_name" [matAutocomplete]="branch"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder="" required />
+                <label for="floating_branch" [ngClass]="{'text-[#5B5B5B] opacity-50': disableBranch}"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    สาขาที่คุณอยู่</label>
+                <mat-autocomplete #branch="matAutocomplete" [displayWith]="displayBranch">
+                    <mat-option *ngFor="let branch of filteredBranches | async" [value]="branch">
+                        {{ branch.branch_name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+
+            <div class="mt-6 relative z-0 w-full group">
+                <input formControlName="tel" type="text" name="floating_tel" (input)="onInputPhone($event)"
+                    [maxLength]="10"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="floating_tel"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    เบอร์โทร</label>
+            </div>
+
+            <div class="relative z-0 mt-6 w-full group">
+                <input matInput type="text" name="otherContact" [formControlName]="'other_contact'"
+                    [matAutocomplete]="otherContact"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder="" required />
+                <label for="otherContact"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ช่องทางติดต่ออื่นๆ</label>
+                <mat-autocomplete #otherContact="matAutocomplete" [displayWith]="displayOtherContactFilter">
+                    <mat-option *ngFor="let oContact of filteredOtherContact | async" [value]="oContact">
+                        {{ oContact }}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+
+            <div class="relative z-0 mt-6 w-full group">
+                <input formControlName="contact_info" type="text" name="contactInfo"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="contactInfo" [ngClass]="{'text-[#5B5B5B] opacity-50': disableContactInfo}"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ข้อมูลการติดต่อ</label>
+            </div>
+
+            <!-- button -->
+            <div *ngIf="accountPage != '/account/detail'" class="pt-20 pb-6">
+                <!-- component -->
+                <button class="focus:bg-[#F04E23]" [disabled]="disableBtn"
+                    [ngClass]="{'bg-[#B5B5B5]':disableBtn, 'bg-[#F04E23]':!disableBtn}" (click)="createAcc()"
+                    class="h-12 w-full rounded-2xl bg-[#F04E23] text-base font-bold text-white">
+                    ต่อไป
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

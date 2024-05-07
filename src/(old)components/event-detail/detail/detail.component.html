@@ -1,0 +1,807 @@
+<style scoped>
+    .rounded-top-lg {
+        border-top-left-radius: 0.5rem !important;
+        border-top-right-radius: 0.5rem !important;
+    }
+
+    .noto-san {
+        font-family: "Noto Sans Thai" !important;
+    }
+</style>
+
+<form>
+    <div [ngClass]="{'mt-4': extraType != 'fav'}">
+        <div [formGroup]="editDetailFormGroup">
+            <div class="flex flex-auto">
+                <p *ngIf="type != 'create'" class="flex flex-auto items-center text-xs font-bold">
+                    ข้อมูลการเดินทางและค่าโดยสาร</p>
+                <p *ngIf="type == 'create' && extraType != 'fav' "
+                    class="flex flex-auto font-bold text-sm items-center ">
+                    คุณจะเดินทางจากที่ไหนไปที่ไหน?</p>
+                <div class="flex flex-auto items-center justify-end" *ngIf="type != 'create' && isOwner == true">
+                    <button type="button" class="text-xs font-bold" [ngClass]="{'border border-[#F04E23] text-[#F04E23] rounded-lg w-11 h-6': type == 'detail', 
+                        'border border-[#B5B5B5] text-[#B5B5B5] rounded-lg w-11 h-6' : type != 'detail'}"
+                        (click)="edit(eventId)" [disabled]="type=='edit'">
+                        แก้ไข</button>
+                </div>
+            </div>
+            <!-- การแก้ไขถูกจำกัด: มี member ร่วมเดินทาง -->
+            <div *ngIf="type == 'edit' && members?.length > 1"
+                class="mt-2 border-t-4 border-[#FACA15] rounded-md  p-2 shadow-md" role="alert">
+                <div class="flex">
+                    <div class="py-1"><svg class="fill-current h-6 w-6 text-[#FACA15] mr-4"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                        </svg></div>
+                    <div>
+                        <p class="font-bold text-base">การแก้ไขถูกจำกัดเนื่องจากมีผู้ร่วมการเดินทางแล้ว</p>
+                        <p class="mt-2 text-sm">
+                            คุณสามารถแก้ไขข้อมูลบางส่วนได้ตามที่ฟีลด์ที่ระบุไว้ด้านล่าง อย่างไรก็ตามหากมี
+                            การเปลี่ยนแปลงใดๆ สามารถแจ้งผู้ร่วมการเดินทางได้โดยตรงหรือผ่านกลุ่มแชท</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-auto flex-col  mt-5">
+                <div *ngIf="!(type == 'edit' && members?.length > 1)" class="flex flex-auto space-x-4 mb-3">
+                    <div class="my-auto">
+                        <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:location'"></mat-icon>
+                    </div>
+                    <div class="flex flex-auto flex-col my-auto">
+                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                            <!-- <div [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'"> -->
+                            <label class="text-xs">ตำแหน่งเริ่มต้นการเดินทาง</label>
+                            <p class="break-words my-2 text-xs font-bold">{{detail?.start_point}}</p>
+                        </div>
+                        <!-- <div *ngIf="type == 'edit' || type == 'create'">
+                          <mat-form-field class="example-full-width my-auto" color="warn">
+                            <mat-label class="text-gray-400">ตำแหน่งเริ่มต้นการเดินทาง</mat-label>
+                            <input matInput placeholder="Ex. Pizza" value="Sushi">
+                          </mat-form-field>
+                        </div> -->
+                        <div class="flex flex-auto items-center justify-center"
+                            *ngIf="(type == 'edit' && members?.length == 1) || type == 'create'">
+                            <div class="relative z-0 w-full group">
+                                <input #startField formControlName="start_point" type="text" name="start_point"
+                                    [ngClass]="{'border-none':autoFilled}" [readOnly]="autoFilled"
+                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                    placeholder=" " required />
+                                <label for="floating_fullname"
+                                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    ระบุตำแหน่งเริ่มต้นของคุณ</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!(type == 'edit' && members?.length > 1)" class="flex flex-auto space-x-4 mb-3">
+                    <div class="my-auto">
+                        <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:flag'"></mat-icon>
+                    </div>
+                    <div class="flex flex-col my-auto" *ngIf="type == 'detail'">
+                        <div class="flex flex-col">
+                            <label class="text-xs">ตำแหน่งจุดปลายการเดินทาง</label>
+                            <p class="break-words my-2 text-xs font-bold">{{detail?.dest_point}}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center mt-4"
+                        *ngIf="(type == 'edit' && members?.length == 1) || type == 'create'">
+                        <div class="relative z-0 w-full group">
+                            <input #destField formControlName="dest_point" type="text" name="dest_point"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " [ngClass]="{'border-none':autoFilled}" [readOnly]="autoFilled"
+                                required />
+                            <label for="dest_point"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                ระบุตำแหน่งจุดปลายทางของคุณ</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- หากผู้ใช้กรอก location ที่หาค่า distance ออกมาได้จะแสดงส่วนนี้ -->
+                <div *ngIf="((type == 'edit' && members?.length == 1) || type == 'create') && !autoFilled"
+                    class="mx-auto mb-3">
+                    <div *ngIf="editDetailFormGroup.get('distance')?.value" class="mx-auto my-2">
+                        <div class="text-[#F04E23] flex">
+                            <mat-icon [svgIcon]="'general_icons:navigation'" class="mx-1"
+                                style="height: 24px; width: 24px;"></mat-icon>
+                            <div class="text-base">ระยะทาง
+                                {{editDetailFormGroup.get('distance')?.value.toLocaleString() | clearKM}} กิโลเมตร</div>
+                        </div>
+                        <!-- กดแล้วแสดง dialog -->
+                        <button (click)="openDialog('distance')"
+                            class="flex mx-auto text-[#3686FF] text-xs mb-2 hover:drop-shadow">เรียนรู้เพิ่มเติม</button>
+                    </div>
+
+                    <!-- หากหา distance ไม่เจอจะแสดงส่วนนี้ -->
+                    <div *ngIf="!editDetailFormGroup.get('distance')?.value" class="mx-auto my-2 text-center">
+                        <div class="text-[#B5B5B5] flex">
+                            <mat-icon [svgIcon]="'general_icons:no-location'" class="mx-1"
+                                style="height: 24px; width: 24px;"></mat-icon>
+                            <div class="text-base mb-2">ไม่พบข้อมูลเส้นทางบน Google Maps</div>
+                        </div>
+                    </div>
+                </div>
+                <div hidden>
+                    <app-map-display [from]="fromValue" [to]="toValue"></app-map-display>
+                </div>
+                <div class="flex flex-auto space-x-4 mb-3" *ngIf="type == 'detail' && extraType == 'thread'">
+                    <div class="my-auto">
+                        <mat-icon [svgIcon]="'general_icons:person'" style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+                    <div class="flex flex-col my-auto" *ngIf="type == 'detail'">
+                        <div class="flex flex-col">
+                            <label class="text-xs">จำนวนผู้โดยสาร</label>
+                            <p class="break-words my-2 text-xs font-bold">{{detail?.seats}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!(['fav','editFav'].includes(extraType))"
+                    [ngClass]="{'mt-4' : type == 'create' && autoFilled}" class="flex flex-auto space-x-4 mb-3">
+                    <div class="my-auto">
+                        <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:departure'"></mat-icon>
+                    </div>
+                    <div class="flex flex-col my-auto" *ngIf="type == 'detail' || (type == 'create' && autoFilled)">
+                        <div class="flex flex-col">
+                            <label class="text-xs">เวลาออกเดินทาง</label>
+                            <!-- <p class="break-words my-2 text-xs font-bold">วันที่ {{detail?.departure_time | date: 'dd'}}
+                                เวลา
+                                {{detail?.departure_time | date: 'HH.mm'}}</p> -->
+                            <p *ngIf="!autoFilled" class="break-words my-2 text-xs font-bold">{{detail?.departure_time |
+                                customDateFormat}}
+                            </p>
+                            <p *ngIf="autoFilled" class="break-words my-2 text-xs font-bold">
+                                {{editDetailFormGroup.get('departure_time')?.value| customDateFormat}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center"
+                        *ngIf="type == 'edit' || (type == 'create' && !autoFilled)">
+                        <div class="relative z-0 w-full group">
+                            <!-- <input formControlName="departure_time" type="text" name="departure_time"
+                        class="block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                        placeholder=" " required /> -->
+
+                            <!-- <input formControlName="departure_time" type="datetime-local" name="departure_time" 
+                        [owlDateTime]="fromdatepicker" [owlDateTimeTrigger]="fromdatepicker" [selectMode]="'single'"
+                        class="block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                        placeholder=" " required />
+                        <owl-date-time #fromdatepicker></owl-date-time> -->
+
+                            <input noPaste readonly (keydown)="preventInput($event)"
+                                formControlName="new_departure_time"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                name="departure_time" [min]="minDate" (dateTimeChange)="setFormatDate($event)"
+                                [owlDateTimeTrigger]="dt" [owlDateTime]="dt" />
+                            <owl-date-time #dt></owl-date-time>
+
+                            <!-- <mat-error
+                                    *ngIf="workflowFormGroup.get('start_date').hasError('required')">
+                                    กรุณากรอกวันเริ่มต้น
+                                </mat-error> -->
+                            <label for="departure_time"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                เวลาออกเดินทาง</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-auto space-x-4 mb-3" *ngIf="type == 'detail'">
+                    <div class="my-auto">
+                        <mat-icon [svgIcon]="'general_icons:dark-cost'" style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+
+                    <div class="flex flex-col my-auto">
+                        <div class="flex flex-col">
+                            <label class="text-xs">ค่าโดยสาร</label>
+                            <p class="break-words my-2 text-xs font-bold">{{detail?.costs}}
+                                บาท</p>
+                        </div>
+                    </div>
+                    <!-- <div class="flex flex-auto items-center justify-center">
+                        <div class="relative z-0 w-full group">
+                            <input formControlName="costs" type="number" name="costs"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " required inputNumberOnly [numOnlyMax]="1000" preventUpDownScroll
+                                noPaste />
+
+                            <label for="costs"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                ระบุค่าโดยสารต่อที่นั่ง</label>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="flex flex-auto space-x-4 mb-3 mt-4"
+                    *ngIf="((type == 'edit' && members?.length == 1) || type == 'create') && extraType != 'thread'">
+                    <div class="my-auto">
+                        <mat-icon class="stroke-black text-white my-auto" [svgIcon]="'heroicons_solid:chat-alt'"
+                            style="height: 3rem;"></mat-icon>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center">
+                        <div class="relative z-0 w-full group">
+                            <input [readOnly]="autoFilled" [ngClass]="{'border-none':autoFilled}"
+                                formControlName="event_name" type="text" name="event_name"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " required />
+
+                            <label for="event_name"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                ตั้งชื่อให้กับโพสต์การเดินทาง</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- extraType: thread >> จำนวนผู้โดยสาร -->
+                <div class="flex flex-auto space-x-4 mb-3 mt-4"
+                    *ngIf="((type == 'edit' && members?.length == 1) || type == 'create') && extraType == 'thread'">
+                    <div class="my-auto">
+                        <mat-icon class="text-white my-auto" [svgIcon]="'general_icons:person'"
+                            style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center">
+                        <div class="relative z-0 w-full group">
+                            <input noPaste inputNumberOnly preventUpDownScroll [numOnlyMax]="6" formControlName="seats"
+                                type="number" name="seats"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" " required />
+
+                            <label for="seats"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                จำนวนผู้โดยสาร</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-auto space-x-4 mt-4">
+                    <div class="my-auto">
+                        <mat-icon [svgIcon]="'general_icons:chat'" style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+                    <div class="flex flex-col my-auto" *ngIf="type == 'detail'">
+                        <div class="flex flex-col">
+                            <label class="text-xs">รายละเอียดเพิ่มเติม</label>
+                            <p *ngIf="extraType != 'thread'" class="break-words my-2 text-xs font-bold">
+                                {{detail?.event_detail}}</p>
+                            <p *ngIf="extraType == 'thread'" class="break-words my-2 text-xs font-bold">
+                                {{detail?.thread_detail}}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto items-center justify-center" *ngIf="type == 'edit' || type == 'create'">
+                        <div class="relative z-0 w-full group">
+                            <textarea [readOnly]="autoFilled" [ngClass]="{'border-none':autoFilled}" maxlength="150"
+                                formControlName="event_detail" type="text" name="event_detail"
+                                class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                placeholder=" "></textarea>
+
+                            <label for="event_detail"
+                                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                รายละเอียดเพิ่มเติม</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-auto space-x-4 mt-7 mb-3" *ngIf="type == 'create' && autoFilled">
+                    <div class="my-auto">
+                        <mat-icon [svgIcon]="'general_icons:dark-cost'" style="height: 24px; width: 24px;"></mat-icon>
+                    </div>
+
+                    <div class="flex flex-col my-auto">
+                        <div class="flex flex-col">
+                            <label class="text-xs">ค่าโดยสารต่อที่นั่ง</label>
+                            <p class="break-words my-2 text-xs font-bold">
+                                {{editDetailFormGroup.get('costs')?.value}}
+                                บาท</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- cost_type & vehicle_selection -->
+        <div [formGroup]="editDetailFormGroup">
+            <div class=" mt-6" *ngIf="(type == 'create' && !autoFilled) || (type == 'edit' && members?.length == 1)">
+                <p class="font-bold text-sm">คิดค่าโดยสารครั้งนี้เท่าไหร่?</p>
+                <!-- cost_type component: -->
+                <cost-type [extraType]="'thread'" (costTypeOutput)="onEventEmit($event)"
+                    [distance]="editDetailFormGroup.get('distance')?.value"
+                    [inputFormGroup]="editDetailFormGroup.getRawValue()">
+                </cost-type>
+            </div>
+            <div class="mt-6" *ngIf="extraType != 'thread'">
+                <!-- <p class="font-semibold">กรุณาเลือกยานพาหนะ</p> -->
+                <!-- <div *ngFor="let vehicle of vehicleList">
+                    <div class="my-5 border rounded-xl">
+                        <div class="my-3 mx-3 flex flex-auto">
+                            <div>
+                                <img class="flex  w-[100px] h-14" src="/assets/avatars/delorean.jpg"
+                                    alt="profile">
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div>
+                    <p class="font-bold text-sm" *ngIf="type == 'detail' || (type == 'edit' && members?.length == 1)">
+                        ข้อมูลยานพาหนะ</p>
+                    <p class="font-bold text-sm" *ngIf="type == 'create' && extraType != 'thread'">กรุณาเลือกยานพาหนะ
+                    </p>
+
+                    <div *ngIf="type == 'create' || (type == 'edit' && members?.length == 1) ">
+                        <!-- 🚕🚗🚜 vehicle-collections [create, edit] -->
+                        <vehicle-collections [detail]="detail" [type]="type" [extraType]="extraType"
+                            [vehicleList]="vehicleList" [userId]="userId"
+                            [inputFormGroup]="editDetailFormGroup.getRawValue()" (vehicleOutput)="onEventEmit($event)">
+                        </vehicle-collections>
+                    </div>
+
+                    <!-- 🚌 event-detail: vehicle-detail -->
+                    <div *ngIf="type == 'detail' && extraType != 'thread'"
+                        class="mt-4 mb-4 p-2 border rounded-lg border-[#D9D9D9] ">
+                        <div class="flex justify-between">
+                            <div class="flex flex-row">
+                                <img [src]="eventDetail?.vehicle_download" (click)="fullpic('seepic',eventDetail?.vehicle_download)" alt="vehicle" class="border rounded-lg"
+                                    style="max-width: 107px; max-height: 60px;" />
+                                <div class="ml-2 -mt-1.5">
+                                    <span class="bg-white w-14 font-bold border border-[#D9D9D9] rounded-md "
+                                        style="font-size: 10px; padding: 0px 4px;">
+                                        {{eventDetail.license_plate}}
+                                    </span>
+                                    <span>
+                                        <div class="font-bold text-xs">{{eventDetail.brand}}&nbsp;{{eventDetail.model}}
+                                        </div>
+                                        <div class="text-xs">เหลือ {{eventDetail.seats}} ที่นั่ง</div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="vehicleList?.length == 0 && type == 'create'"
+                        class="mt-2 text-center text-base font-bold text-red-500">
+                        คุณยังไม่ได้สมัครเป็นผู้ขับขี่
+                    </div>
+
+                    <!-- 🚕 vehicle-form -->
+                    <!-- <div class="flex flex-auto flex-col mt-5 ">
+
+                        <div class="flex flex-auto gap-x-20">
+                            <div class="flex flex-auto ">
+                                <div class="flex flex-auto space-x-4 mb-3">
+                                    <div class="my-auto">
+                                        <mat-icon [svgIcon]="'general_icons:vehicle'"
+                                            style="height: 24px; width: 24px;"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col my-auto" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col ">
+                                                <label class="text-xs text-[#5B5B5B]">ยี่ห้อ</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.brand}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input formControlName="brand" type="text" name="brand"
+                                                    class="block py-2.5 px-0 w-full text-sm font-bold text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " />
+                                                <label for="brand"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    ยี่ห้อ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto w-1/2">
+                                <div class="flex flex-auto space-x-4 mb-3">
+                                    <div class="my-auto">
+                                        <mat-icon [svgIcon]="'general_icons:vehicle-model'"
+                                            style="height: 24px; width: 24px;"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col">
+                                                <label class="text-xs text-[#5B5B5B]">รุ่น</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.model}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input formControlName="model" type="text" name="model"
+                                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " />
+                                                <label for="model"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    รุ่น</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-auto  gap-x-20">
+                            <div class="flex flex-auto ">
+                                <div class="flex flex-auto space-x-4 mb-3">
+                                    <div class="my-auto">
+                                        <mat-icon [svgIcon]="'general_icons:vehicle-type'"
+                                            style="height: 24px; width: 24px;"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col">
+                                                <label class="text-xs text-[#5B5B5B]">ประเภทยานพาหนะ</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.vehicle_type}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input matInput formControlName="vehicle_type" type="text"
+                                                    (keydown)="vTypeKeyDown($event)" name="vehicleType"
+                                                    [matAutocomplete]="vehicleType"
+                                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " />
+                                                <label for="vehicleType"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    ประเภทยานพาหนะ</label>
+                                                <mat-autocomplete #vehicleType="matAutocomplete"
+                                                    [displayWith]="displayVehicleTypes">
+                                                    <mat-option *ngFor="let vType of filteredVehicleType | async"
+                                                        [value]="vType">
+                                                        {{ vType }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto w-1/2">
+                                <div class="flex flex-auto space-x-4 mb-5">
+                                    <div class="my-auto">
+                                        <mat-icon [svgIcon]="'general_icons:vehicle-color'"
+                                            style="height: 24px; width: 24px;"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col">
+                                                <label class="text-xs text-[#5B5B5B]">สียานพาหนะ</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.vehicle_color}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input formControlName="vehicle_color" type="text" name="vehicle_color"
+                                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " />
+                                                <label for="vehicle_color"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    สียานพาหนะ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-auto  gap-x-20">
+                            <div class="flex flex-auto ">
+                                <div class="flex flex-auto space-x-4 mb-3">
+                                    <div class="my-auto">
+                                        <mat-icon [svgIcon]="'general_icons:vehicle-license'"
+                                            style="height: 24px; width: 24px;"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col">
+                                                <label class="text-xs text-[#5B5B5B]">ทะเบียน</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.license}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input formControlName="license" type="text" name="license"
+                                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " />
+                                                <label for="license"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    ทะเบียน</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto w-1/2">
+                                <div class="flex flex-auto space-x-4 mb-5">
+                                    <div class="my-auto">
+                                        <mat-icon style="width: 24px; height: 24px;"
+                                            [svgIcon]="'general_icons:person'"></mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex flex-col" *ngIf="type == 'detail'">
+                                            <div class="flex flex-col">
+                                                <label class="text-xs text-[#5B5B5B]">จำนวนที่นั่ง</label>
+                                                <p class="break-words my-2 text-xs font-bold">{{detail.seats}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto items-center justify-center"
+                                            *ngIf="type == 'edit' || type == 'create'">
+                                            <div class="relative z-0 w-full group">
+                                                <input formControlName="seats" type="text" name="seats"
+                                                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                                    placeholder=" " (keydown)="numberOnly($event)" />
+                                                <label for="seats"
+                                                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                                    จำนวนที่นั่ง</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+                <div *ngIf="type == 'detail' && extraType != 'thread'">
+                    <p class="font-bold text-xs">ข้อมูลติดต่อ</p>
+                    <div class="flex flex-auto flex-col mt-5">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon [svgIcon]="'general_icons:mail'"
+                                    style="height: 24px; width: 24px;"></mat-icon>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex flex-col">
+                                    <label class="text-xs">อีเมล</label>
+                                    <p class="break-words my-2 text-xs font-bold">{{detail?.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon [svgIcon]="'general_icons:call'"
+                                    style="height: 24px; width: 24px;"></mat-icon>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex flex-col">
+                                    <label class="text-xs">เบอร์โทร</label>
+                                    <p class="break-words my-2 text-xs font-bold">{{detail?.tel}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon [svgIcon]="'general_icons:globe'"
+                                    style="height: 24px; width: 24px;"></mat-icon>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex flex-col">
+                                    <label class="text-xs">ช่องทางการติดต่ออื่นๆ</label>
+                                    <p class="break-words my-2 text-xs font-bold">{{detail?.other_contact}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-auto space-x-4">
+                            <div class="my-auto">
+                                <mat-icon [svgIcon]="'general_icons:mobile'"
+                                    style="height: 24px; width: 24px;"></mat-icon>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex flex-col">
+                                    <label class="text-xs">ข้อมูลการติดต่อ</label>
+                                    <p class="break-words my-2 text-xs font-bold">{{detail?.contact_info}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- <div *ngIf="type != 'create'">
+            <p class="font-semibold">ข้อมูลยานพาหนะ</p>
+            <div class="flex flex-auto flex-col mt-5">
+                <div class="flex flex-auto items-center justify-center"> -->
+        <!-- <img class="w-16 h-16 rounded-full" src="{{ detail.location-marker_img_path || '/assets/avatars/delorean.jpg' }}" alt="profile"> -->
+        <!-- <img class="flex flex-auto rounded-xl" src="/assets/avatars/delorean.jpg" alt="profile">
+                </div>
+                <div class="flex flex-auto mt-5">
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">ยี่ห้อ</label>
+                                    <p class="break-words my-2">{{detail.brand}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">รุ่น</label>
+                                    <p class="break-words my-2">{{detail.model}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-auto mt-5">
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">ประเภทยานพาหนะ</label>
+                                    <p class="break-words my-2">{{detail.vehicle_type}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">สียานพาหนะ</label>
+                                    <p class="break-words my-2">{{detail.vehicle_color}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-auto mt-5">
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">ทะเบียน</label>
+                                    <p class="break-words my-2">{{detail.license}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto w-1/2">
+                        <div class="flex flex-auto space-x-4 mb-5">
+                            <div class="my-auto">
+                                <mat-icon class="stroke-black text-white my-auto"
+                                    [svgIcon]="'heroicons_solid:location-marker'" style="height: 3rem;"></mat-icon>
+                            </div>
+                            <div
+                                [ngClass]="type == 'detail' ? 'flex flex-auto flex-col':'flex flex-auto flex-col border-b border-black'">
+                                <div class="flex flex-col">
+                                    <label class="text-sm text-gray-400">จำนวนที่นั่ง</label>
+                                    <p class="break-words my-2">เหลือ {{detail.seats}} ที่นั่ง</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="mt-8 mb-4" *ngIf="type == 'edit'">
+        <div class="flex flex-auto items-center justify-center">
+            <!-- bin icon -->
+            <!-- <mat-icon [svgIcon]="'heroicons_solid:trash'" class="stroke-[#E12424] text-white"></mat-icon> -->
+            <mat-icon [svgIcon]="'heroicons_solid:trash'" class="text-[#E12424]"></mat-icon>
+            <span class="text-[#E12424] font-semibold text-sm cursor-pointer"
+                (click)="deleteEvent(eventId)">ลบโพสต์การเดินทาง</span>
+        </div>
+    </div>
+    <div class="mt-8 mb-4" *ngIf="extraType == 'editFav'">
+        <div class="flex flex-auto items-center justify-center">
+            <!-- bin icon -->
+            <!-- <mat-icon [svgIcon]="'heroicons_solid:trash'" class="stroke-[#E12424] text-white"></mat-icon> -->
+            <mat-icon [svgIcon]="'heroicons_solid:trash'" class="text-[#E12424]"></mat-icon>
+            <span class="text-[#E12424] font-semibold text-sm cursor-pointer"
+                (click)="deleteEvent(eventId,'fav')">ลบข้อมูลเส้นทางประจำ</span>
+        </div>
+    </div>
+    <div class="mb-24 mt-8 flex flex-auto " *ngIf="type != 'detail'">
+        <div *ngIf="!['fav','editFav'].includes(extraType)"
+            class="flex flex-auto border border-[#F04E23] rounded-lg text-[#F04E23] mx-2 cursor-pointer"
+            (click)="cancel()">
+            <span class="flex flex-auto items-center justify-center text-[#F04E23] my-5 font-semibold"
+                *ngIf="type == 'edit'">ยกเลิก</span>
+            <span class="flex flex-auto items-center justify-center text-[#F04E23] my-5 font-semibold"
+                *ngIf="type == 'create'">กลับสู่หน้าแรก</span>
+        </div>
+        <!-- <div class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white mx-2 cursor-pointer"
+            (click)="save()" *ngIf="type == 'edit'">
+            <span
+                class="flex flex-auto items-center justify-center bg-[#F04E23] text-white my-5 font-semibold">บันทึก</span>
+        </div> -->
+        <button [disabled]="disableBtn"
+            [ngClass]="{'bg-[#B5B5B5]': disableBtn,'bg-[#F04E23] cursor-pointer hover:drop-shadow':!disableBtn}"
+            class="flex flex-auto item-center justify-center  rounded-lg text-white mx-2 "
+            (click)="extraType == 'fav' || extraType == 'editFav' ? save('fav'):save()"
+            *ngIf="type == 'edit' || extraType == 'fav' || extraType == 'editFav'">
+            <span class="flex flex-auto items-center justify-center  text-white my-5 font-semibold">บันทึก</span>
+        </button>
+        <!-- create-event -->
+        <button [disabled]="disableBtn"
+            [ngClass]="{'bg-[#B5B5B5]': disableBtn,'bg-[#F04E23] cursor-pointer hover:drop-shadow':!disableBtn}"
+            class="flex flex-auto items-center justify-center  rounded-lg text-white mx-2 " (click)="create()"
+            *ngIf="type == 'create' && vehicleList?.length > 0 && !extraType">
+            <span class="flex flex-auto items-center justify-center  text-white my-5 font-semibold">สร้าง</span>
+        </button>
+        <!-- create-thread -->
+        <button (click)="create('thread')" *ngIf="type == 'create' && extraType == 'thread'" [disabled]="disableBtn"
+            [ngClass]="{'bg-[#B5B5B5]': disableBtn,'bg-[#F04E23] cursor-pointer hover:drop-shadow':!disableBtn}"
+            class="flex flex-auto items-center justify-center  rounded-lg text-white mx-2 ">
+            <span class="flex flex-auto items-center justify-center  text-white my-5 font-semibold">สร้าง</span>
+        </button>
+        <div class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white mx-2 cursor-pointer"
+            (click)="go('/driver-register/driver-profile')" *ngIf="type == 'create' && vehicleList?.length == 0">
+            <span
+                class="flex flex-auto items-center justify-center bg-[#F04E23] text-white my-5 font-semibold">สมัครเป็นผู้ขับขี่</span>
+        </div>
+    </div>
+    <!-- thread-detail :: เฉพาะ passenger ที่เป็น thread's owner -->
+    <div *ngIf="extraType == 'thread' && userCookie.role_id == 1 && detail?.status == 0" class="mt-4">
+        <button (click)="deleteEvent(detail?.thread_id,'thread')" type="button" class="hover:drop-shadow  flex mx-auto">
+            <div class="-mt-0.5 mr-1">
+                <mat-icon style="width: 16px; height: 16px;" [svgIcon]="'heroicons_outline:trash'"
+                    class="text-[#E12424]"></mat-icon>
+            </div>
+            <!-- เมื่อ passenger กดปุ่มสร้างกระทู้ พาไปยังหน้า create-thread-page -->
+            <div class="text-[#E12424] font-bold text-xs ">
+                ลบโพสต์การเดินทาง
+            </div>
+        </button>
+    </div>
+
+    <!-- ตอบรับ thread สำหรับ driver -->
+    <div (click)="acceptTrip()" class="mb-6 mt-6 flex flex-auto "
+        *ngIf="userCookie.role_id != 1 && type == 'detail' && extraType == 'thread'">
+        <button class="flex flex-auto items-center justify-center  rounded-lg text-white mx-2 bg-[#F04E23]">
+            <span
+                class="flex flex-auto items-center justify-center  text-white my-5 font-semibold">ตอบรับการเดินทางนี้</span>
+        </button>
+    </div>
+    <!-- <div class="mb-24 mt-8 flex flex-auto " *ngIf="type == 'create'">
+        <div class="flex flex-auto border border-[#F04E23] rounded-lg text-[#F04E23] mx-2 cursor-pointer"
+            (click)="cancel()">
+            <span
+                class="flex flex-auto items-center justify-center text-[#F04E23] my-5 font-semibold">กลับสู่หน้าแรก</span>
+        </div>
+        <div class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white mx-2 cursor-pointer"
+            (click)="create()">
+            <span
+                class="flex flex-auto items-center justify-center bg-[#F04E23] text-white my-5 font-semibold">สร้าง</span>
+        </div>
+    </div> -->
+</form>

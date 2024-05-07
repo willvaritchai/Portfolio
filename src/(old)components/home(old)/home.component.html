@@ -1,0 +1,205 @@
+<div class="mx-auto">
+    <form>
+        <!-- หน้า home ไม่ค่อยเหมือนที่ design เท่าไหร่ (layout) -->
+        <div class="min-w-screen min-h-screen flex items-center justify-center  ">
+            <!-- <div class="px-3 pt-1 shadow-2xl w-full h-fit  overflow-hidden" style="max-width:550px; max-height: 550px;"> -->
+            <div class="px-4 pt-4 shadow-xl w-full min-h-screen  overflow-hidden " style="max-width:550px; ">
+                <div class="md:flex">
+                    <!-- <div class="hidden md:block bg-blue-300 py-10 px-2 rounded-xl">
+                            <img src="../assets/login-vector.png" alt="signup" class="flip-horizontal my-14">
+                        </div> -->
+                    <div class="w-full pb-28 ">
+                        <div class="flex flex-row justify-between ">
+                            <div class="mb-4">
+                                <span class="text-xl font-bold text-[272727]">สวัสดี
+                                    <!-- {{userData.firstname}}&nbsp;{{userData.lastname}}  -->
+                                    {{userData?.fullname}}
+                                </span>
+                                <br>
+                                <span class="text-xs font-extralight text-[#B5B5B5]">กำลังใช้งานเป็น
+                                    <!-- {{userData.roles}} -->
+                                    <span *ngIf="userData?.role_id == 1"
+                                        class="font-bold text-[#F04E23]">"ผู้โดยสาร"</span>
+                                    <span *ngIf="userData?.role_id == 2"
+                                        class="font-bold text-[#F04E23]">"ผู้ขับขี่"</span>
+                                    <span *ngIf="userData?.role_id == 3"
+                                        class="font-bold text-[#F04E23]">"ผู้ดูแลระบบ"</span>
+                                </span>
+                            </div>
+                            <!-- <div >
+                                <button type="button"
+                                    class="border border-[#F04E23] text-[#F04E23] rounded-lg p-1 text-xs"><mat-icon
+                                        class=" text-[#F04E23]" [svgIcon]="'heroicons_solid:pencil'"
+                                        style="height: 1rem;"></mat-icon>โพสต์การเดินทาง</button>
+                            </div> -->
+                        </div>
+
+                        <!-- Passenger create trip event section -->
+                        <!-- <div>
+                            <button class="w-full py-2 mb-6 border rounded-t-lg ">
+                                <div class="flex relative flex-col-3 ">
+                                    <mat-icon  class="mx-2" 
+                                    [svgIcon]="'general_icons:location-filled'" ></mat-icon>
+
+                                        <p class="">คุณกำลังจะไปที่ไหน?</p>
+
+                                        <mat-icon class="absolute mr-2 right-0"
+                                            [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+
+                                </div>
+                                
+                            </button>
+                        </div> -->
+                        <!-- carousel layout -->
+                        <div class="overflow-x-auto snap-x">
+                            <div class="flex w-full mb-6 snap-x text-[#272727]">
+
+                                <div class="flex gap-x-4 snap-x bg-white  rounded-xl">
+                                    <!-- click redirect to driver register page-->
+                                    <img (click)="go('/driver-register/driver-profile')"
+                                        [src]="regisDriver" alt=""
+                                        class="w-11/12 snap-start border rounded-xl object-contain cursor-pointer hover:drop-shadow">
+
+                                    <!-- click open trip suggestion dialog-->
+                                    <img (click)="carousel()" [src]="tripSuggest"
+                                        alt=""
+                                        class="w-11/12 snap-start border rounded-xl object-contain cursor-pointer hover:drop-shadow">
+
+                                    <!-- <mat-icon class=""
+                                     style="width: 440px; height: auto ; "
+                                    [svgIcon]="'general_icons:regis-driver-promote'">
+                                    </mat-icon> -->
+
+                                </div>
+
+
+
+
+
+                                <!-- svg id trip-sugg-promote-->
+                                <!-- click open trip suggestion dialog-->
+                                <!-- <button class="snap-start mx-auto object-cover rounded-xl" >   
+                                    <mat-icon class=""
+                                     style="width: 440px; height: auto ; "
+                                    [svgIcon]="'general_icons:trip-sugg-promote'">
+                                    </mat-icon>
+                              
+                                </button> -->
+
+
+
+
+                                <!-- <div class="h-full  w-full my-4 mx-4">
+                                    <p class="text-base"> ร่วมเป็นส่วนหนึ่งกับเราโดยการ </p>
+                                    <p class="font-bold text-2xl mb-2">สมัครเป็น Driver</p>
+                                
+                                            <ul class="list-disc ml-2 mb-2 text-sm" >
+                                                <li>มีเพื่อนช่วยหารค่าเดินทาง</li>
+                                                <li>ช่วยลดปัญหาการจราจรหนาแน่น</li>
+                                                <li>ได้พบปะเพื่อนใหม่ๆในมหาลัยฯ</li>
+                                           </ul>
+                                   
+                                    <button class="bg-[#F04E23] w-full 
+                                    rounded-lg text-white font-bold py-1">
+                                    สมัครเลย</button>
+                                </div>                     -->
+                            </div>
+                        </div>
+
+                        <!-- favourite place menu -->
+                        <div *ngIf="userData.role_id != 1">
+                            <div class="">
+                                <h1 class="mt-4 mb-2 text-xl font-bold">คุณกำลังจะไปที่ไหน?</h1>
+                            </div>
+                            <div class="flex gap-x-6">
+                                <div *ngIf="homeRoute"
+                                    (click)="!homeRoute?.disablePost? go('/event/create',homeRoute):tempT.toggle() "
+                                    [matTooltipPosition]="'above'" [matTooltipDisabled]="!homeRoute?.disablePost"
+                                    [matTooltip]="'คุณมีโพสต์การเดินทางที่ดำเนินอยู่'" #tempT="matTooltip"
+                                    class="grid grid-col-2 w-auto h-auto justify-center text-center"
+                                    [ngClass]="{' opacity-50':homeRoute?.disablePost}">
+                                    <button type="button" class="grid">
+                                        <mat-icon class="mx-auto mb-2" style="width: 32px; height: 32px !important; "
+                                            [svgIcon]="'general_icons:fav-home'"></mat-icon>
+                                        <p>กลับบ้าน</p>
+                                    </button>
+                                </div>
+                                <div *ngIf="studyRoute"
+                                    (click)="!studyRoute?.disablePost? go('/event/create',studyRoute):tempT.toggle() "
+                                    [matTooltipPosition]="'above'" [matTooltipDisabled]="!studyRoute?.disablePost"
+                                    [matTooltip]="'คุณมีโพสต์การเดินทางที่ดำเนินอยู่'" #tempT="matTooltip"
+                                    class="grid grid-col-2 w-auto h-auto justify-center text-center"
+                                    [ngClass]="{' opacity-50':studyRoute?.disablePost}">
+                                    <button type="button" class="grid">
+                                        <mat-icon class="mx-auto mb-2" style="width: 32px; height: 32px !important; "
+                                            [svgIcon]="'general_icons:fav-school'"></mat-icon>
+                                        <p>ไปเรียน</p>
+                                    </button>
+                                </div>
+                                <div *ngIf="travelRoute"
+                                    (click)="!travelRoute?.disablePost? go('/event/create',travelRoute):tempT.toggle() "
+                                    [matTooltipPosition]="'above'" [matTooltipDisabled]="!travelRoute?.disablePost"
+                                    [matTooltip]="'คุณมีโพสต์การเดินทางที่ดำเนินอยู่'" #tempT="matTooltip"
+                                    class="grid grid-col-2 w-auto h-auto justify-center text-center"
+                                    [ngClass]="{' opacity-50':travelRoute?.disablePost}">
+                                    <button type="button" class="grid">
+                                        <mat-icon class="mx-auto mb-2" style="width: 32px; height: 32px !important; "
+                                            [svgIcon]="'general_icons:fav-trip'"></mat-icon>
+                                        <p>แวะเที่ยว</p>
+                                    </button>
+                                </div>
+                                <div (click)="go('/account/favourite-routes')"
+                                    class="grid grid-col-2 w-auto h-auto justify-center text-center">
+                                    <button type="button" class="grid">
+                                        <mat-icon class="mx-auto mb-2" style="width: 32px; height: 32px !important; "
+                                            [svgIcon]="'general_icons:fav-more'"></mat-icon>
+                                        <p>เพิ่มเติม</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="py-10 shadow-md rounded-lg">
+                            <div class="text-center">
+                                carousel
+                            </div>
+                        </div> -->
+
+                        <!-- post การเดินทาง -->
+                        <div class="my-4">
+                            <div class="text-2xl font-bold text-[#272727]">
+                                โพสต์การเดินทาง
+                            </div>
+                            <!-- input ค้นหาโพส -->
+                            <!-- <div class="py-2 flex space-x-4">
+                                <div class="flex-grow">
+                                    <div class="rounded-2xl">
+                                        <form class="w-full">
+                                            <mat-form-field class="w-full rounded-full text-base">
+                                                <mat-icon matPrefix [svgIcon]="'heroicons_outline:magnifying-glass'"
+                                                    class="text-[#B5B5B5]"></mat-icon>
+                                                <input matInput type="text" class="" placeholder="ค้นหา"
+                                                    required>
+                                            </mat-form-field>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="cursor-pointer pt-2">
+                                        <img class="w-10 rounded-lg" src="../../assets/icon-filter.png" alt="filter">
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!-- Event List -->
+                        <div class="">
+                            <event-list (eListOutput)="eventListData($event)" type="event"></event-list>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,192 @@
+<div class="mx-auto min-w-screen min-h-screen  items-center justify-center  overflow-hidden shadow-xl"
+    style="max-width:550px;">
+    <div class="mx-4">
+        <div class="flex flex-row justify-between pt-7 pb-2">
+            <div *ngIf="socialType == 'list'" class="text-2xl  font-bold">รายชื่อเพื่อน</div>
+            <!-- <div *ngIf="socialType == 'search'" class="text-2xl  font-bold">ค้นหาเพื่อน</div> -->
+            <div *ngIf="socialType == 'list'" (click)="go('social-network/friends/search')"
+                class="text-sm text-[#3686FF] pt-2 cursor-pointer">เพิ่มเพื่อน</div>
+        </div>
+        <!-- input&filter -->
+        <input-search (searchOutput)="searching()" (searchValue)="onSearchValChange($event)"></input-search>
+
+        <!-- ขอเป็นเพื่อน -->
+        <div *ngIf="socialType == 'list' && friendsRequest.length > 0">
+            <div class="mt-4 mb-3 mb font-bold text-base">
+                คำขอเป็นเพื่อน {{friendsRequest.length}} รายการ
+            </div>
+            <div class=" max-w-2xl mx-auto">
+                <div class="  bg-white rounded-lg  ">
+                    <div class="flow-root">
+                        <!-- class="divide-y" หากอยากให้มี underline ใต้แต่ละ list -->
+                        <ul role="list" class="divide-gray-200 " *ngFor="let requestList of friendsRequest">
+                            <li class="mb-2 ">
+                                <div class="mx-auto">
+
+                                    <div class=" flex items-center space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <img (click)="go('/account/other-profile', requestList.encrypt_id)"
+                                                *ngIf="requestList.download_url"
+                                                class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                                                [src]="requestList.download_url" alt="user_profile" />
+                                            <mat-icon (click)="go('/account/other-profile', requestList.encrypt_id)"
+                                                *ngIf="!requestList.download_url" style="width: 40px; height: 40px;"
+                                                class="cursor-pointer hover:drop-shadow"
+                                                [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-bold text-[#272727] truncate ">
+                                                <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                                                {{requestList.fullname}}
+                                            </p>
+                                            <p class="text-xs font-normal text-[#272727] break-normal ">
+                                                <mat-icon style="width: 10px; height: 10px;"
+                                                    [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                                {{requestList.faculty_name}}
+                                            </p>
+
+                                        </div>
+                                        <!-- <div (click)="addFriend(social.user_id)"
+                                class="inline-flex items-center text-base font-semibold text-gray-900 ">
+                                เพิ่มเพื่อน
+                                </div> -->
+                                        <div>
+                                            <button (click)="manageFriend(requestList,'add')"
+                                                class="h-8 w-12 mr-2 rounded-xl bg-[#F04E23] font-bold text-white"
+                                                style="font-size: 10px;">
+                                                ยืนยัน
+                                            </button>
+                                            <button (click)="manageFriend(requestList,'cancel')"
+                                                class="h-8 w-12 rounded-xl bg-[#B5B5B5] font-bold text-white"
+                                                style="font-size: 10px;">
+                                                ปฎิเสธ
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- friend-list -->
+        <div *ngIf="isLoading" class="flex justify-center items-center mt-10">
+            <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+        </div>
+        <div *ngIf="friendsList.length > 0 && socialType == 'list'" class="mb-28">
+            <div *ngIf="socialType == 'list'" class="mt-2 font-bold text-base">
+                เพื่อนทั้งหมด {{friendsList.length}} คน
+            </div>
+            <div class="mt-3 mx-auto">
+                <div class=" bg-white rounded-lg  ">
+                    <div class="flow-root">
+                        <!-- class="divide-y" หากอยากให้มี underline ใต้แต่ละ list -->
+                        <ul role="list" class="divide-gray-200 " *ngFor="let friend of friendsList">
+                            <li class="pb-3 ">
+                                <div class="flex-row mx-auto">
+
+                                    <div class=" flex items-center space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <img (click)="go('/account/other-profile', friend.encrypt_id)"
+                                                *ngIf="friend.download_url"
+                                                class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                                                [src]="friend.download_url" alt="user_profile" />
+                                            <mat-icon (click)="go('/account/other-profile', friend.encrypt_id)"
+                                                *ngIf="!friend.download_url" style="width: 40px; height: 40px;"
+                                                class="cursor-pointer hover:drop-shadow"
+                                                [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-bold text-[#272727] truncate ">
+                                                <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                                                {{friend.fullname}}
+                                            </p>
+                                            <p *ngIf="friend.mutualFriend.length > 0"
+                                                class="text-xs font-normal text-[#272727] truncate ">
+                                                <mat-icon style="width: 10px; height: 10px;"
+                                                    [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                                มีเพื่อนร่วมกัน {{friend.mutualFriend.length}} คน
+                                            </p>
+                                            <p class="text-xs font-normal text-[#272727] break-normal ">
+                                                <mat-icon style="width: 10px; height: 10px;"
+                                                    [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                                {{friend.faculty_name}}
+                                            </p>
+
+                                        </div>
+                                        <!-- <div (click)="addFriend(social.user_id)"
+                                class="inline-flex items-center text-base font-semibold text-gray-900 ">
+                                เพิ่มเพื่อน
+                                </div> -->
+                                        <div *ngIf="socialType == 'search'">
+                                            <button *ngIf="friend.my_id == null && friend.friend_id == null"
+                                                (click)="manageFriend(friend,'add')"
+                                                class="h-8 w-20 rounded-xl bg-[#F04E23] font-bold text-white"
+                                                style="font-size: 10px;">
+                                                เพิ่มเพื่อน
+                                            </button>
+                                            <button *ngIf="friend.my_id != null && friend.friend_id != null"
+                                                (click)="manageFriend(friend,'cancel')"
+                                                class="h-8 w-20 rounded-xl bg-[#B5B5B5] font-bold text-white"
+                                                style="font-size: 10px;">
+                                                ยกเลิกคำขอ
+                                            </button>
+                                        </div>
+                                        <div *ngIf="socialType == 'list'" class="hover:drop-shadow">
+                                            <mat-icon [matMenuTriggerFor]="option" style="width: 4px; height: 16px;"
+                                                class="mr-4" class="cursor-pointer"
+                                                [svgIcon]="'general_icons:menu'"></mat-icon>
+                                            <mat-menu #option="matMenu" xPosition="before">
+                                                <button
+                                                    (click)="deleteFriend({user_id: userData.user_id, friend_id: friend.user_id})"
+                                                    mat-menu-item>
+                                                    <mat-icon style="width: 24px; height: 24px;"
+                                                        [svgIcon]="'general_icons:delete-friend'"></mat-icon>
+                                                    <span class="text-sm">ลบเพื่อน</span>
+                                                </button>
+                                                <button [routerLink]="['/report',friend?.user_id]" mat-menu-item>
+                                                    <mat-icon style="width: 24px; height: 24px;"
+                                                        [svgIcon]="'general_icons:report-user'"></mat-icon>
+                                                    <span class="text-sm">รายงานผู้ใช้</span>
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div (click)="paginationTrigger()" *ngIf="pagination?.isExistList && !isPaginateLoading && !isLoading"
+                class="mx-auto border rounded-lg mb-4 hover:drop-shadow cursor-pointer">
+                <div class="my-2 text-center text-[#3686FF] text-xs">
+                    แสดงเพิ่มเติม
+                </div>
+            </div>
+            <div *ngIf="isPaginateLoading" class="flex justify-center items-center mt-10">
+                <mat-spinner diameter="50" [color]="'warn'"></mat-spinner>
+            </div>
+        </div>
+        <div *ngIf="socialType == 'list' && friendsList.length == 0 && !isLoading"
+            class="text-center my-40 text-xl font-bold">
+            <!-- <div *ngIf="friendsRequest.length == 0 "> -->
+            <span class="text-[#B5B5B5] text-xs">ไม่พบข้อมูในรายชื่อเพื่อน...</span><br>
+            <span class="font-bold text-base">ค้นหาเพื่อนโดยแตะเมนู <span class="text-[#3686FF]">"เพิ่มเพื่อน"</span>
+                ด้านบน</span>
+            <!-- </div> -->
+            <!-- <div *ngIf="friendsRequest.length > 0 ">
+                คุณไม่มีเพื่อนเลย <br>"ตอบรับคำขอเป็นเพื่อน?"
+            </div> -->
+        </div>
+
+    </div>
+</div>

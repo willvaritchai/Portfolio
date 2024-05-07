@@ -1,0 +1,40 @@
+<div
+  class="mx-auto my-5 min-h-screen flex flex-col shadow-xl rounded-md"
+  style="max-width: 550px;"
+>
+  <div class="mx-4">
+    <button
+      class="hover:drop-shadow active:drop-shadow"
+      [routerLink]="['/account/detail']"
+    >
+      <div class="flex flex-row">
+        <mat-icon
+          [svgIcon]="'general_icons:arrow-left-black'"
+          style="min-width: 24px; min-height: 24px;"
+        ></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+
+    <div class="text-2xl text-center font-bold">ข้อตกลงการใช้งาน</div>
+        <!-- consent-card -->
+        <div class="pt-5">
+            <div class="border rounded-md border-[#B5B5B5] px-2 py-2">
+              <p class="text-xl font-bold pb-2 text-[#272727]">นโยบายความเป็นส่วนตัว</p>
+              <p class="text-sm text-[#5B5B5B] break-keep">
+                  • ระบบเก็บข้อมูลส่วนตัวเช่น ชื่อจริง นามสกุล อีเมล เบอร์โทรศัพท์ เพื่อใช้เป็นข้อมูลประกอบการตัดสินใจร่วมการเดินทางของผู้ใช้งาน <br>
+                  • ผู้พัฒนา (ผู้ควบคุมข้อมูล) ต้องยืนยันตัวตนในการเข้าถึงฐานข้อมูล เพื่อตรวจสอบ แก้ไข และลบข้อมูลบัญชีผู้ใช้งาน <br>
+                  • ข้อมูลทั้งหมดของผู้ใช้จะไม่ถูกนำไปเผยแพร่บนช่องทางอื่นที่นอกเหนือจากเว็บไซต์ MOD RIDE - Ride Sharing in KMUTT <br>
+              </p>
+              <p class="text-xl font-bold py-2 text-[#272727]">ข้อกำหนดและเงื่อนไข</p>
+              <p class="text-sm text-[#5B5B5B] break-keep">
+                  • เว็บไซต์นี้ถูกพัฒนาอยู่ในขอบเขตของการเรียนรู้ภายใต้วิชา INT372 Capstone Project 2 <br>
+                  • ทางผู้พัฒนาไม่มีจุดประสงค์พัฒนาระบบเพื่อเป็นผู้ประกอบการหรือการหารายได้แต่อย่างใด  เพียงแต่เพื่อให้ได้ระบบที่มีการทำงานที่สมบูรณ์และสามารถอำนวยความสะดวกสำหรับการร่วมเดินทางของคนในมจธ. ซึ่งเป็นหนึ่งในจุดประสงค์หลักของการพัฒนาระบบ MOD RIDE - Ride Sharing in KMUTT <br>
+                  • ผู้พัฒนาขอปฎิเสธความรับผิดชอบต่อความสูญเสียหรือความเสียหาย ในลักษณะ ใด ๆ ที่เกิดขึ้น จึงเรียนมาให้ทราบ ณ ที่นี้
+              </p>
+            </div>
+        </div>
+  </div>
+</div>

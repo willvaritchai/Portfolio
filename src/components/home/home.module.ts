@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './home.component';
 import { HomeRoutes } from './home.routing';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { HomeComponent } from './home.component';
+
+
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [RouterModule.forChild(HomeRoutes),CommonModule],
-  providers: [],
+  imports: [
+    RouterModule.forChild(HomeRoutes),
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
-export class HomeModule {}
+export class HomeModule { }

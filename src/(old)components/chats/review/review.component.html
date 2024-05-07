@@ -1,0 +1,74 @@
+<div class="mx-auto shadow-xl rounded-md min-h-[calc(100vh-112px)] relative" style="max-width:550px;">
+    <div *ngIf="checkAuthorize">
+        <div class="flex justify-center mt-16 w-full">
+            <mat-icon *ngIf="!driverDetail?.download_url" style="width: 126px; height: 126px;"
+                [svgIcon]="'general_icons:profile-img'"></mat-icon>
+            <img *ngIf="driverDetail?.download_url" (click)="go('/account/other-profile', driverDetail.encrypt_id)"
+                [src]="driverDetail?.download_url" style="width: 126px; height: 126px;"
+                class="object-cover  rounded-full cursor-pointer hover:drop-shadow" alt="user_profile" />
+        </div>
+        <div class="flex justify-center items-center py-4 mx-12 space-x-2">
+            <div class="font-bold text-xl text-center">
+                <!-- ชื่อสกุล -->
+                {{fullname}}
+            </div>
+            <div *ngIf="role > 1" class="flex items-center">
+                <mat-icon style="width: 28px; height: 28px;" [svgIcon]="'general_icons:check'" #tempRefV="matTooltip"
+                    (click)="tempRefV.toggle()" [matTooltip]="verifiedUserMessage"></mat-icon>
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center py-1 mx-12">
+            <div class="text-[#5B5B5B] text-base break-words">
+                ประสบการณ์โดยรวมจากการร่วมเดินทางครั้งนี้
+            </div>
+            <div class="text-[#5B5B5B] text-base">
+                เป็นอย่างไรบ้าง?
+            </div>
+        </div>
+        <div class="mt-6">
+            <!-- <star-rating [starType]="'svg'" [rating]="0"></star-rating> -->
+            <star-rating starType="svg" [rating]="0" size="large" staticColor="ok"
+                (starClickChange)="onRatingUpdated($event)"></star-rating>
+        </div>
+        <div class="flex justify-center pt-5 pb-52">
+            <!-- รายงานผู้ใช้ -->
+            <button type="button" (click)="reportUser()"
+                class="flex flex-auto items-center justify-center text-[#B5B5B5] text-xs">
+                รายงานผู้ใช้</button>
+        </div>
+        <!-- <div class="flex justify-center fixed bottom-0 bg-gray-800 text-white pb-32"> -->
+        <!-- <div class="flex justify-center items-end">
+        <div class="flex justify-center">
+            ดาวน์โหลด
+        </div>
+    </div> -->
+        <div class="flex flex-col justify-center absolute bottom-24 left-0 w-full">
+            <div class="flex justify-center items-center space-x-3">
+                <button type="button" (click)="downloadFile()"
+                    class="flex flex-auto items-center justify-center text-[#3686FF] text-sm font-bold">
+                    <mat-icon class="mr-1" style="width: 16px; height: 16px;"
+                        [svgIcon]="'general_icons:download'"></mat-icon>
+                    ดาวน์โหลดไฟล์แชท</button>
+                <!-- <mat-icon class="" style="width: 16px; height: 16px;" [svgIcon]="'general_icons:download'"></mat-icon>
+            <p class="text-[#3686FF] text-sm">ดาวน์โหลดไฟล์แชท</p> -->
+            </div>
+            <div class="flex space-x-4 justify-center pt-5 mx-4 mb-4">
+                <!-- <div>
+                ยกเลิก
+            </div>
+            <div>
+                ต่อไป
+            </div> -->
+                <button type="button" (click)="skip()"
+                    class="h-12 w-full rounded-xl  text-base font-bold text-[#F04E23] bg-white border-[#F04E23] border">
+                    ข้าม
+                </button>
+                <button type="button" (click)="next()" [disabled]="this.currentRating == 0"
+                    class="h-12 w-full rounded-xl  text-base font-bold text-white"
+                    [ngClass]="{'bg-[#B5B5B5]' : this.currentRating == 0,'bg-[#F04E23]':this.currentRating != 0}">
+                    ต่อไป
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

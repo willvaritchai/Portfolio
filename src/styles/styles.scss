@@ -1,0 +1,16 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+
+/* Importing Bootstrap SCSS file. */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+html, body {
+    font-family: "Noto Sans Thai";
+}
+
+
+
+

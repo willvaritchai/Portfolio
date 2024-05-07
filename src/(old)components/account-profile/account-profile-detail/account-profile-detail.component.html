@@ -1,0 +1,176 @@
+<style scoped>
+    input[type='radio']:after {
+        accent-color: red !important;
+    }
+</style>
+<div class="mx-auto shadow-xl px-2 rounded-md min-h-screen" style="max-width:550px;">
+    <div class="mx-4 " [ngClass]="{'pb-28': accountPage == '/account/detail'}">
+        <!-- <div *ngIf="accountPage != '/account/detail'">
+            <div class="text-2xl pt-7 pb-2 font-bold">สร้างบัญชีใช้งาน</div>
+            <div class="text-base text-[#5B5B5B]">Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry.
+            </div>
+        </div> -->
+        <!-- แก้ไขรูป -->
+        <div class="flex pt-6 mb-6">
+            <div class="flex justify-left mr-4 ">
+                <mat-icon *ngIf="!profilePic" style="width: 80px; height: 80px;"
+                    [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                <img *ngIf="profilePic" [src]="profilePic" alt="Your Alt Text"
+                    class="object-cover  w-20 h-20 rounded-full  border" />
+            </div>
+            <div class=" mx-auto grid grid-cols-3 gap-x-10">
+                <div class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">{{userData?.count_friend}}</span>
+                    <span class="text-[#B5B5B5] text-sm">เพื่อน</span>
+                </div>
+
+                <button #tempRefT="matTooltip" (click)="tempRefT.toggle()" [matTooltip]="tripCountMessage"
+                    class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">{{userData?.count_travel}}</span>
+                    <span class="text-[#B5B5B5] text-sm">การเดินทาง</span>
+
+                </button>
+                <!-- โปรไฟล์ตัวเองไม่ต้องแสดง Mutual Friend -->
+                <!-- <div class="grid w-max h-auto mx-auto my-auto text-center">
+                    <span class="font-bold text-2xl">25</span>
+                    <span class="text-[#B5B5B5] text-sm">เพื่อนร่วมกัน</span>
+                </div> -->
+            </div>
+
+            <div class="mt-4 ">
+                <!-- <mat-radio-group class="flex justify-center space-x-2" required [formControlName]="'status'">
+                    <mat-radio-button class="font-bold text-xs text-black">
+                        ใช้งาน
+                    </mat-radio-button>
+                    <mat-radio-button class="font-bold text-xs">
+                        ไม่ใช้งาน
+                    </mat-radio-button>
+                </mat-radio-group> -->
+                <!-- <div *ngIf="accountPage == '/account/detail' && accountOriginFormGroup.get('role_id')?.value != 3"
+                    [formGroup]="accountFormGroup">
+                    <div class="flex flex-row justify-center space-x-4">
+                        <div class="flex items-center mb-4">
+                            <input [formControlName]="'role_id'" id="passenger" type="radio" name="role_id" [value]="1"
+                                class="accent-[#F04E23] h-4 w-4 border-gray-300 text-red-50" aria-labelledby="passenger"
+                                aria-describedby="passenger">
+                            <label for="passenger" class=" text-black font-bold text-xs ml-2 mt-0.5 block">
+                                ผู้โดยสาร
+                            </label>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <input [formControlName]="'role_id'" id="driver" type="radio" name="role_id" [value]="2"
+                                class="h-4 w-4 accent-[#F04E23] border-gray-300 " aria-labelledby="driver"
+                                aria-describedby="driver">
+                            <label for="driver" class=" text-black font-bold text-xs ml-2 mt-0.5 block">
+                                ผู้ขับขี่
+                            </label>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+
+        </div>
+        <!-- input -->
+        <div [formGroup]="accountFormGroup">
+            <div class="text-2xl font-bold mb-2 w-full">{{userData?.fullname}}
+                <span *ngIf="userData?.role_id != 1">
+                    <mat-icon #tempRefV="matTooltip" (click)="tempRefV.toggle()" [matTooltip]="verifiedUserMessage"
+                        class="w-8 h-8" [svgIcon]="'general_icons:check'"></mat-icon>
+                </span>
+            </div>
+            <div class="flex relative z-0 mb-2 w-full group">
+                <mat-icon class="w-8 h-8" [svgIcon]="'general_icons:faculty'"></mat-icon>
+                <p class="px-2">{{userData?.faculty_name}} <span>{{userData?.branch_name}}</span></p>
+
+            </div>
+            <div *ngIf="userData?.role_id != 1" class="flex relative z-0 mb-4 w-full group ">
+                <mat-icon *ngIf="userData?.rate" class="text-[#FCB72B] mt-1" [svgIcon]="'heroicons_solid:star'"
+                    style="height: 1rem;"></mat-icon>
+                <span *ngIf="userData?.rate" class="font-bold">{{userData?.rate}}
+                    <span class="text-[#B5B5B5] font-normal">(คะแนนจาก {{userData?.total}} คน)
+                    </span>
+                </span>
+                <span *ngIf="!userData?.rate" class="text-[#B5B5B5] font-normal">ผู้ขับขี่ใหม่
+                </span>
+            </div>
+            <div class="flex flex-col-2 gap-x-4">
+                <button (click)="go('/account/edit')"
+                    class="bg-[#F04E23] w-full rounded-lg h-10  text-base font-bold text-white">
+                    แก้ไขข้อมูล
+                </button>
+                <!-- <button class="flex mx-auto my-auto px-2 py-2 rounded-xl border border-[#E12424] 
+                cursor-pointer bg-white">
+                    <mat-icon class="w-8 h-8" [svgIcon]="'general_icons:emergency-con'"></mat-icon>
+                </button> -->
+            </div>
+
+        </div>
+        <div class="mt-6 w-full">
+            <h1 class="font-bold text-base mb-2">ตั้งค่าการใช้งานทั่วไป</h1>
+
+            <!-- admin only -->
+            <button *ngIf="userData?.role_id == 3" class="w-full py-2 h-12 mb-4 rounded-lg"
+                [routerLink]="['/user-management/list']">
+                <div class="flex relative flex-col-3 ">
+                    <mat-icon class="mx-2" [svgIcon]="'heroicons_outline:user-group'"></mat-icon>
+                    <p class="">จัดการข้อมูลผู้ใช้</p>
+                    <mat-icon class="absolute mr-2 right-0" [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+                </div>
+            </button>
+
+            <button *ngIf="userData?.role_id != 1" class="w-full py-2 h-12 mb-4 rounded-lg"
+                [routerLink]="['/account/favourite-routes']">
+                <div class="flex relative flex-col-3 ">
+                    <mat-icon class="mx-2" [svgIcon]="'general_icons:location'"></mat-icon>
+                    <p class="">ข้อมูลเส้นทางประจำ</p>
+                    <mat-icon class="absolute mr-2 right-0" [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+                </div>
+            </button>
+
+            <button class="w-full py-2 h-12 mb-4 rounded-lg" [routerLink]="['/driver-register/driver-profile']">
+                <div class="flex relative flex-col-3 ">
+                    <mat-icon class="mx-2" [svgIcon]="'general_icons:setting'"></mat-icon>
+                    <p class="">ข้อมูลเกี่ยวกับผู้ขับขี่</p>
+                    <mat-icon class="absolute mr-2 right-0" [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+                </div>
+            </button>
+
+            <button class="w-full py-2 h-12 rounded-lg" [routerLink]="['/account/emergency-contact']">
+                <div class="flex relative flex-col-3 ">
+                    <mat-icon class="mx-2" [svgIcon]="'general_icons:emergency'"></mat-icon>
+                    <p class="">ช่องทางติดต่อกรณีฉุกเฉิน</p>
+                    <mat-icon class="absolute mr-2 right-0" [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+                </div>
+            </button>
+
+        </div>
+
+        <div class="mt-6 w-full ">
+            <h1 class="font-bold text-base mb-2">ข้อมูลข้อกำหนดและเงื่อนไข</h1>
+            <button class="w-full py-2 h-10 mb-4 rounded-lg" [routerLink]="['/account/terms-conditions']">
+                <div class="flex relative flex-col-3 ">
+                    <mat-icon class="mx-2" [svgIcon]="'general_icons:document'"></mat-icon>
+                    <p class="">ข้อตกลงการใช้งาน</p>
+                    <mat-icon class="absolute mr-2 right-0" [svgIcon]="'general_icons:arrow-icon'"></mat-icon>
+                </div>
+            </button>
+        </div>
+
+        <div class="pt-10">
+            <button class="w-full py-2 h-12 mb-2 rounded-lg bg-[#F4F4F6]" (click)="logout()">
+                <div class="flex relative flex-col-3 justify-center ">
+                    <mat-icon class="mx-2" [svgIcon]="'general_icons:logout'"></mat-icon>
+                    <p class="">ออกจากระบบ</p>
+                </div>
+            </button>
+            <div class="grid text-center text-xs text-[#B5B5B5] mt-4 ">
+                <p>Capstone Project 23 UN2</p>
+                <a href="about-us" class="text-[#3686FF] underline">เกี่ยวกับพวกเรา</a>
+            </div>
+
+        </div>
+
+
+    </div>

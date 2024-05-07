@@ -1,0 +1,41 @@
+<div class="mx-auto shadow-xl rounded-md min-h-[calc(100vh-112px)] relative pb-40" style="max-width:550px;">
+    <div *ngIf="checkAuthorize">
+        <div class="flex justify-center mt-16 w-full">
+            <mat-icon style="width: 312px; height: 208px;" [svgIcon]="'general_icons:done-review'"></mat-icon>
+        </div>
+        <div class="flex justify-center items-center py-3 mx-12 space-x-2">
+            <div class="font-bold text-xl">
+                การเดินทางครั้งนี้สิ้นสุดแล้ว
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center py-3 mx-12">
+            <div class="text-[#5B5B5B] text-base break-words">
+                หวังว่าคุณจะได้รู้จักกับเพื่อนใหม่ในมหาลัยจากการเดินทางครั้งนี้
+            </div>
+            <div class="text-[#5B5B5B] text-base">
+                ขอบคุณที่เราเป็นส่วนหนึ่งของการเดินทางของคุณ
+            </div>
+        </div>
+        <div class="flex justify-center items-center space-x-3">
+            <div>
+                <button type="button" (click)="downloadFile()"
+                    class="flex flex-auto items-center justify-center text-[#3686FF] text-sm font-bold">
+                    <mat-icon class="mr-1" style="width: 16px; height: 16px;"
+                        [svgIcon]="'general_icons:download'"></mat-icon>
+                    ดาวน์โหลดไฟล์แชท</button>
+            </div>
+            <!-- <mat-icon class="" style="width: 16px; height: 16px;" [svgIcon]="'general_icons:download'"></mat-icon>
+            <p class="text-[#3686FF] text-sm">ดาวน์โหลดไฟล์แชท</p> -->
+        </div>
+
+        <div class="flex flex-col justify-center absolute bottom-24 left-0 w-full">
+
+            <div class="flex space-x-2 justify-center pt-5 px-12">
+                <button type="button" (click)="home()"
+                    class="h-12 w-full rounded-xl  text-base font-bold text-white bg-[#F04E23]">
+                    กลับสู่หน้าแรก
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

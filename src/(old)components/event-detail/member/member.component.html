@@ -1,0 +1,64 @@
+<div>
+    <!-- <p class="text-xs font-bold mb-3">สมาชิกการเดินทาง</p> -->
+    <div class="flex flex-auto " *ngFor="let events of memberList; let last = last">
+        <div class="flex flex-auto space-x-4 " [ngClass]="{'mb-3' : memberList.length > 1 && !last}">
+            <div class="my-auto">
+                <img (click)="go('/account/other-profile', events.encrypt_id)" *ngIf="events.download_url"
+                    class="object-cover w-10 h-10 rounded-full cursor-pointer hover:drop-shadow"
+                    [src]="events.download_url" alt="user_profile" />
+                <mat-icon (click)="go('/account/other-profile', events.encrypt_id)" *ngIf="!events.download_url"
+                    style="width: 40px; height: 40px;" class="cursor-pointer hover:drop-shadow"
+                    [svgIcon]="'general_icons:profile-img'"></mat-icon>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="text-xs flex flex-grow items-center font-bold">
+                    {{events.fullname}}
+                    <!-- confirm icon -->
+                    <mat-icon *ngIf="events.role_check=='driver'" [svgIcon]="'general_icons:check'"
+                        style="height: 16px; width: 16px;"></mat-icon>
+                </div>
+                <div *ngIf="events.friendtype || events.role_name=='driver'" class="flex flex-auto text-xs space-x-3">
+                    <div *ngIf="events.friendtype && userId!=events.user_id ">
+                        <mat-icon *ngIf="events.friendtype=='friend'" class="mt-0.5 mr-0.5"
+                            style="width: 10px; height: 10px;" [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                        <mat-icon *ngIf="events.friendtype=='mutualfriend'" class="mt-0.5 mr-0.5"
+                            style="width: 10px; height: 10px;" [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                        <span *ngIf="events.friendtype=='friend'">เป็นเพื่อนกับคุณ</span>
+                        <span *ngIf="events.friendtype=='mutualfriend'">มีเพื่อนร่วมกัน {{events.mutalfriend}} คน</span>
+                    </div>
+                    <div class="flex justify-center text-center" *ngIf="events.role_name=='driver'">
+                        <div class="flex justify-center text-center"
+                            *ngIf="events.rate != null && events.total != null">
+                            <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                                style="height: 1rem;"></mat-icon>
+                            <span>{{events.rate}} ({{events.total}})</span>
+                        </div>
+                        <div class="flex justify-center text-center text-xs"
+                            *ngIf="events.rate == null && events.total == null">
+                            <span>ผู้ขับขี่ใหม่</span>
+                        </div>
+                        <!-- <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                            style="height: 1rem;"></mat-icon>
+                        <span>{{events.rate}} ({{events.total}})</span> -->
+                    </div>
+
+                </div>
+                <div class="flex flex-auto text-xs  space-x-3">
+                    <mat-icon class="mt-0.5 mr-0.5" style="width: 10px; height: 10px;"
+                        [svgIcon]="'general_icons:faculty'"></mat-icon>
+                    {{events.faculty_name}}
+                </div>
+            </div>
+
+            <div class="flex flex-auto items-center justify-end text-xs font-bold" *ngIf="userId != events.user_id">
+                <span *ngIf="events.role_name=='driver'">ผู้ขับขี่</span>
+                <span *ngIf="events.role_name=='passenger'">ผู้โดยสาร</span>
+            </div>
+            <div class="flex flex-auto items-center justify-end text-xs font-bold" *ngIf="userId == events.user_id">
+                <span>คุณ</span>
+            </div>
+        </div>
+
+    </div>
+</div>

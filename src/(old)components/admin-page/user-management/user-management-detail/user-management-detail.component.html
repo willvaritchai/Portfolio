@@ -1,0 +1,351 @@
+<style scoped>
+    input[type='radio']:after {
+        accent-color: red !important;
+    }
+
+    .border-green {
+        border-color: #6DB33F !important;
+    }
+
+    .border-red {
+        border-color: #E12424 !important;
+    }
+
+    .bgWhite {
+        background-color: white !important;
+    }
+</style>
+<div *ngIf="checkAuthorize" class="mt-10 mx-10 pb-10">
+    <!-- user-management -->
+    <div class="grid grid-cols-7 space-x-5 mt-7">
+        <!-- grid-col-1 -->
+        <div class="col-span-6 bg-white rounded-lg">
+            <div class="mx-6 pt-6 pb-14">
+                <div class="flex flex-row justify-between">
+                    <button class="hover:drop-shadow" [routerLink]="['/user-management/list']">
+                        <div class="flex flex-row justify-between">
+                            <mat-icon matPrefix style="width: 24px; height: 24px;"
+                                [svgIcon]="'general_icons:arrow-left'"></mat-icon>
+                            <div class="font-bold text-xl">
+                                รายละเอียดผู้ใช้งาน
+                            </div>
+                        </div>
+                    </button>
+                    <div *ngIf="editMode" class="flex space-x-10">
+                        <button (click)="cancelSave()" class="hover:drop-shadow font-bold text-xl text-[#B5B5B5]">
+                            ยกเลิก
+                        </button>
+                        <button (click)="save()" [disabled]="!checkEnableSave()"
+                            [ngClass]="{'bg-[#B5B5B5]':!checkEnableSave(), 'bg-[#3686FF] hover:drop-shadow':checkEnableSave()}"
+                            class=" font-bold text-xl text-white  px-4 py-3 rounded-lg">
+                            <div class="flex flex-row space-x-1">
+                                <mat-icon matPrefix style="width: 24px; height: 24px;"
+                                    [svgIcon]="'general_icons:save'"></mat-icon>
+                                <div>
+                                    บันทึก
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <!-- user-detail-profile -->
+                <div class="mt-4 grid grid-cols-4">
+                    <div>
+                        <mat-icon *ngIf="!userDetail.download_url" matPrefix style="width: 200px; height: 200px;"
+                            [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                        <img *ngIf="userDetail.download_url" [src]="userDetail.download_url" alt="user-profile"
+                            class="object-cover rounded-full border" style="width: 200px; height: 200px;" />
+                    </div>
+                    <div class="col-span-3">
+                        <div class="flex flex-row space-x-3">
+                            <span class="text-3xl font-bold">{{userDetail.fullname}}</span>
+                            <div [ngClass]="{'border-[#3686FF] text-[#3686FF]': userDetail.role_name_th == 'ผู้โดยสาร',
+                                        'border-[#F04E23] text-[#F04E23]': userDetail.role_name_th == 'ผู้ขับขี่',
+                                        'border-[#A259FF] text-[#A259FF]': userDetail.role_name_th == 'ผู้ดูแลระบบ'}"
+                                class="border rounded-3xl text-center text-xl font-bold w-28 h-9 py-1">
+                                {{userDetail.role_name_th}}
+                            </div>
+                        </div>
+                        <div [formGroup]="userDetailManFormGroup" class="grid grid-cols-2 mt-4">
+
+                            <div>
+                                <span class="text-sm">อีเมล</span>
+                                <div class="text-xl font-bold">
+                                    {{userDetail.email}}
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-sm">เบอร์โทร</span>
+                                <div class="text-xl font-bold">
+                                    {{userDetail.tel}}
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-sm">คณะที่อยู่</span>
+                                <div *ngIf="!editMode" class="text-xl font-bold">
+                                    {{userDetail.faculty_name}}
+                                </div>
+                                <div *ngIf="editMode" class="text-xl font-bold">
+                                    <input matInput type="text" name="floating_faculty"
+                                        [formControlName]="'faculty_name'" [matAutocomplete]="faculty"
+                                        class="font-bold block  px-0 w-11/12  text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                        required />
+                                    <mat-autocomplete #faculty="matAutocomplete" [displayWith]="displayFaculty">
+                                        <mat-option *ngFor="let faculty of filteredFaculties | async" [value]="faculty">
+                                            {{ faculty.faculty_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-sm">ช่องทางติดต่ออื่นๆ</span>
+                                <div class="text-xl font-bold">
+                                    {{userDetail.other_contact}}
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-sm">สาขาที่อยู่</span>
+                                <div *ngIf="!editMode" class="text-xl font-bold">
+                                    {{userDetail.branch_name}}
+                                </div>
+                                <div *ngIf="editMode" class="text-xl font-bold">
+                                    <input matInput type="text" name="floating_branch" formControlName="branch_name"
+                                        [matAutocomplete]="branch"
+                                        [ngClass]="{'bg-[#5B5B5B] opacity-10' : disableBranch}"
+                                        class="font-bold block  px-0 w-11/12  text-[#272727]  border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                                        required />
+                                    <mat-autocomplete #branch="matAutocomplete" [displayWith]="displayBranch">
+                                        <mat-option *ngFor="let branch of filteredBranches | async" [value]="branch">
+                                            {{ branch.branch_name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-sm">ข้อมูลการติดต่อ</span>
+                                <div class="text-xl font-bold">
+                                    {{userDetail.contact_info}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- license -->
+                <div class="mt-10">
+                    <div class="font-bold text-2xl">
+                        รูปถ่ายใบอนุญาตขับรถยนต์
+                    </div>
+                    <div *ngIf="driverProfile?.licenseDetail?.approval_status != 0" class="text-xl mt-4">
+                        <div *ngIf="driverProfile?.licenseDetail?.approval_status == 1"
+                            class="flex flex-row space-x-10">
+                            <span class=" font-bold">
+                                ผลการอนุมัติ
+                            </span>
+                            <span style="color: #6DB33F;">อนุมัติแล้วเมื่อ&nbsp;{{driverProfile.licenseDetail.timestamp
+                                |
+                                customDateFormat}}
+                            </span>
+                        </div>
+                        <div *ngIf="driverProfile?.licenseDetail?.approval_status == 2"
+                            class="flex flex-row space-x-10">
+                            <span class=" font-bold">
+                                ผลการอนุมัติ
+                            </span>
+                            <span
+                                class="text-[#E12424]">ไม่ผ่านการอนุมัติเมื่อ&nbsp;{{driverProfile.licenseDetail.timestamp
+                                | customDateFormat}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- if denied will show: denied-detail -->
+                    <div class="mt-4" *ngIf="driverProfile?.licenseDetail?.approval_status == 2">
+                        <div class="font-bold text-xl">ข้อความการปฏิเสธคำขอถึงผู้สมัคร</div>
+                        <div class="mt-4 text-xl">
+                            {{driverProfile?.licenseDetail?.denied_detail}}
+                        </div>
+                    </div>
+                    <!-- ถ้าเป็นผู้ขับขี่ และยังไม่ได้สมัครจะขึ้น -->
+                    <div *ngIf="!driverProfile?.licenseDetail"
+                        class="mt-4 border border-[#D9D9D9] rounded-lg py-24 text-center text-[#B5B5B5] font-bold text-xl">
+                        ไม่พบข้อมูล
+                    </div>
+                    <div *ngIf="driverProfile?.licenseDetail">
+                        <div class="mt-4 flex justify-center">
+                            <img *ngIf="driverProfile.licenseDetail.license_download"
+                                [src]="driverProfile.licenseDetail.license_download" alt="license-img"
+                                class="border rounded-lg" style="width: 400px; height: 261px;" />
+                        </div>
+                        <!-- license-table -->
+                        <table class="mt-6 w-full" mat-table [dataSource]="licenseDetailList">
+                            <!-- first-name Column -->
+                            <ng-container matColumnDef="license_fn">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="text-center">ชื่อจริงที่ปรากฎบนบัตร (ภาษาอังกฤษ)</div>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="text-xl text-center">{{element?.license_fn}}</div>
+                                </td>
+                            </ng-container>
+                            <!-- last-name Column -->
+                            <ng-container matColumnDef="license_ln">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <div class="text-center">นามสกุลที่ปรากฎบนบัตร (ภาษาอังกฤษ)</div>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="text-xl text-center">{{element?.license_ln}}</div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="licenseCol"></tr>
+                            <tr mat-row *matRowDef="let row; columns: licenseCol;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- vehicle-detail -->
+                <div *ngIf="driverProfile?.vehicleList.length == 0" class="mt-10">
+                    <div class="font-bold text-2xl">
+                        ข้อมูลยานพาหนะคันที่ 1
+                    </div>
+                    <div
+                        class="mt-4 border border-[#D9D9D9] rounded-lg py-24 text-center text-[#B5B5B5] font-bold text-xl">
+                        ไม่พบข้อมูล
+                    </div>
+                </div>
+                <div class="mt-10" *ngFor="let vList of driverProfile?.vehicleList; let i = index">
+                    <div class="font-bold text-2xl">
+                        ข้อมูลยานพาหนะคันที่ {{i+1}}
+                    </div>
+                    <div class="flex flex-row space-x-10">
+                        <div class="font-bold text-xl">วันเวลาที่บันทึก</div>
+                        <div class="text-xl">เมื่อ {{vList.create_date | customDateFormat}} </div>
+                    </div>
+                    <div class="mt-6 flex justify-center">
+                        <img [src]="vList.vehicle_download" alt="vehicle-img" class="border rounded-lg"
+                            style="width: 400px; height: 261px;" />
+                    </div>
+                    <!-- vehicle-list-table -->
+                    <table class="mt-6 w-full" mat-table [dataSource]="[vList]">
+                        <!-- first-name Column -->
+                        <ng-container matColumnDef="brand">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">ยี่ห้อ</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.brand}}</div>
+                            </td>
+                        </ng-container>
+                        <!-- last-name Column -->
+                        <ng-container matColumnDef="model">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">รุ่น</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.model}}</div>
+                            </td>
+                        </ng-container>
+                        <!-- first-name Column -->
+                        <ng-container matColumnDef="vehicle_type">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">ประเภทยานพาหนะ</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.vehicle_type}}</div>
+                            </td>
+                        </ng-container>
+                        <!-- last-name Column -->
+                        <ng-container matColumnDef="vehicle_color">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">สียานพาหนะ</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.vehicle_color}}</div>
+                            </td>
+                        </ng-container>
+                        <!-- first-name Column -->
+                        <ng-container matColumnDef="license_plate">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">ทะเบียน</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.license_plate}}</div>
+                            </td>
+                        </ng-container>
+                        <!-- last-name Column -->
+                        <ng-container matColumnDef="seats">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="text-center">จำนวนที่นั่ง</div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="text-xl text-center">{{element?.seats}}</div>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="vehicleCol"></tr>
+                        <tr mat-row *matRowDef="let row; columns: vehicleCol;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- grid-col-2 -->
+        <div class="text-xl">
+            <!-- div: button for approval -->
+            <button *ngIf="!driverProfile?.licenseDetail || driverProfile?.licenseDetail?.approval_status == 0"
+                (click)="onApproveDialog()" [disabled]="!driverProfile?.licenseDetail"
+                class="h-16 w-full rounded-lg  font-bold text-white hover:drop-shadow border border-solid " [ngClass]="{'bg-[#B5B5B5] pointer-events-none hover:drop-shadow-none':!driverProfile?.licenseDetail,
+            'bg-[#F04E23]':driverProfile?.licenseDetail}">
+                <span>อนุมัติคำขอ</span>
+            </button>
+            <button *ngIf="driverProfile?.licenseDetail?.approval_status == 1" (click)="onApproveDialog()"
+                class="h-16 w-full rounded-lg  font-bold text-white hover:drop-shadow border border-solid bg-white border-green">
+                <span style="color: #6DB33F;">อนุมัติคำขอแล้ว</span>
+            </button>
+            <button *ngIf="driverProfile?.licenseDetail?.approval_status == 2" (click)="onApproveDialog()"
+                class="h-16 w-full rounded-lg  font-bold text-white hover:drop-shadow border border-solid bg-white border-red">
+                <span class="text-[#E12424]">ไม่ผ่านการอนุมัติ</span>
+            </button>
+            <!-- div: จัดการบัญชีผู้ใช้ -->
+            <div class="mt-6 bg-white rounded-lg ">
+                <div class="px-4 py-4">
+                    <span class=" font-bold ">จัดการบัญชีผู้ใช้</span>
+                    <div class="text-left">
+                        <button [ngClass]="{'bg-blue-100 rounded-lg ': editMode}"
+                            class="w-full my-1 hover:drop-shadow hover:bg-blue-100 hover:rounded-lg"
+                            (click)="edit(true)">
+                            <div class="mt-2 pl-2  text-[#3686FF] flex flex-row space-x-2">
+                                <div>
+                                    <mat-icon matPrefix style="width: 24px; height: 24px;"
+                                        [svgIcon]="'general_icons:edit-icon'"></mat-icon>
+                                </div>
+                                <div>
+                                    แก้ไขข้อมูล
+                                </div>
+                            </div>
+                        </button>
+                        <!-- <button disabled  class="w-full my-1 text-[#B5B5B5] pointer-events-none"
+                            (click)="deleteUser(userDetail.user_id)">
+                            <div class="mt-2 pl-2   flex flex-row space-x-2">
+                                <div>
+                                    <mat-icon matPrefix style="width: 24px; height: 24px;"
+                                        [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                </div>
+                                <div>
+                                    ลบบัญชีผู้ใช้
+                                </div>
+                            </div>
+                        </button> -->
+                        <button class="w-full my-1 hover:drop-shadow hover:bg-red-100 hover:rounded-lg"
+                            (click)="deleteUser(userDetail.user_id)">
+                            <div class="mt-2 pl-2  text-[#E12424] flex flex-row space-x-2">
+                                <div>
+                                    <mat-icon matPrefix style="width: 24px; height: 24px;"
+                                        [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                </div>
+                                <div>
+                                    ลบบัญชีผู้ใช้
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

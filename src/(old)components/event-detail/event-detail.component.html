@@ -1,0 +1,42 @@
+<div class="mx-auto my-5 flex flex-col shadow-xl rounded-md min-h-screen" style="max-width:550px;">
+  <div class="mx-4">
+    <div class="flex flex-col items-center py-3">
+      <!-- <div class="mx-auto shadow-xl rounded-md" style="max-width:400px;">
+  <div class="mx-4">
+    <div class="flex flex-row justify-center py-3"> -->
+      <div class="">
+        <span class="text-2xl font-bold text-black">รายละเอียดการเดินทาง</span>
+      </div>
+    </div>
+    <div class="mx-2">
+      <!-- <p>สมาชิกการเดินทาง</p> -->
+      <p class="text-xs font-bold mb-3">สมาชิกการเดินทาง</p>
+      <!-- member component -->
+      <member [members]="members" [userId]="userId"></member>
+    </div>
+    <div class="mx-2">
+      <detail [detail]="eventDetail" [type]="'detail'"></detail>
+    </div>
+    <div class="mb-32 mt-8 flex flex-auto mx-2 ">
+      <div class="flex flex-auto  rounded-lg text-white" (click)="joinEvent()" *ngIf="isJoin == false"
+        [ngClass]="{'bg-[#B5B5B5]' : this.eventDetail.status != null, 'bg-[#F04E23] cursor-pointer' : this.eventDetail.status == null}">
+        <button type="button"
+          class="flex flex-auto items-center justify-center rounded-lg text-white my-5 font-semibold">
+          ขอร่วมการเดินทาง</button>
+      </div>
+      <div class="flex flex-auto  bg-[#F04E23] rounded-lg text-white" (click)="goChat()" *ngIf="isJoin == true">
+        <button type="button"
+          class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white my-5 font-semibold">
+          เข้าสู่หน้าแชท</button>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- member -->
+  <!-- <div>
+      <p>สมาชิกร่วมการเดินทาง</p>
+    </div>
+  </div>
+
+</div> -->
+</div>

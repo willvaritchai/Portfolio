@@ -1,0 +1,65 @@
+<div class="mx-auto pb-28  my-5 flex flex-col shadow-xl rounded-md min-h-screen" style="max-width:550px;">
+    <div *ngIf="checkAuthorize" class="mx-4">
+        <!-- สำหรับ passenger ดู thread ของตัวเอง -->
+        <div *ngIf="url == '/thread'">
+            <div class="flex justify-center ">
+                <mat-icon style="width: 301px; height: 200px;" [svgIcon]="'general_icons:thread-icon'"></mat-icon>
+            </div>
+            <div class="mt-2 text-center">
+                <div class="font-bold text-base">
+                    <span *ngIf="threadList?.length > 0">
+                        โพสต์การเดินทางเรียบร้อยแล้ว
+                    </span>
+                    <span *ngIf="threadList?.length == 0">
+                        ไม่เจอโพสต์ที่คุณกำลังมองหา?
+                    </span>
+                </div>
+                <div class="text-xs mt-2">
+                    <span *ngIf="threadList?.length > 0">
+                        โพสต์การเดินทางของคุณถูกสร้างแล้ว เมื่อผู้ขับขี่ตอบรับคุณสามารถ<br>
+                        เข้าสู่หน้าแชทเพื่อสื่อสารกับผู้ขับขี่ได้เลย
+                    </span>
+                    <span *ngIf="threadList?.length == 0">
+                        คุณสามารถเขียนข้อมูลการเดินทางของคุณเพื่อรอให้ฝั่งผู้ขับขี่<br>
+                        มาตอบรับการเดินทางของคุณได้
+                    </span>
+                </div>
+                <div *ngIf="threadList?.length == 0" class="mt-2">
+                    <button [routerLink]="['/thread/create']" type="button" class="hover:drop-shadow  flex mx-auto">
+                        <div class="mt-1">
+                            <svg id="create-post" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <mask id="mask0_1869_10154" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0"
+                                    y="0" width="24" height="24">
+                                    <rect width="24" height="24" fill="#D9D9D9" />
+                                </mask>
+                                <path
+                                    d="M11 13V16C11 16.2833 11.0958 16.5208 11.2875 16.7125C11.4792 16.9042 11.7167 17 12 17C12.2833 17 12.5208 16.9042 12.7125 16.7125C12.9042 16.5208 13 16.2833 13 16V13H16C16.2833 13 16.5208 12.9042 16.7125 12.7125C16.9042 12.5208 17 12.2833 17 12C17 11.7167 16.9042 11.4792 16.7125 11.2875C16.5208 11.0958 16.2833 11 16 11H13V8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8V11H8C7.71667 11 7.47917 11.0958 7.2875 11.2875C7.09583 11.4792 7 11.7167 7 12C7 12.2833 7.09583 12.5208 7.2875 12.7125C7.47917 12.9042 7.71667 13 8 13H11ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z"
+                                    fill="#F04E23" />
+                            </svg>
+                        </div>
+
+                        <!-- เมื่อ passenger กดปุ่มสร้างกระทู้ พาไปยังหน้า create-thread-page -->
+                        <div class="text-[#F04E23] rounded-lg p-1 font-bold text-base ">
+                            สร้างโพสต์กระทู้การเดินทาง
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- สำหรับ driver ดู thread-list -->
+        <div *ngIf="url == '/threads'">
+            <div class="font-bold text-2xl">
+                กระทู้โพสต์การเดินทาง
+            </div>
+        </div>
+
+        <!-- thread-of-passenger -->
+        <div class="">
+            <!-- <event-list ></event-list> -->
+            <event-list [type]="url == '/threads'? 'threads':'thread'" [threadList]="threadList"
+                [paginationInput]="pagination" [checkAuthorize]="checkAuthorize"></event-list>
+        </div>
+    </div>
+</div>

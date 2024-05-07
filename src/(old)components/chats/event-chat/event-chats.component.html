@@ -1,0 +1,135 @@
+  <!-- div ของ title chat -->
+  <div *ngIf="checkAuthorize" class="fixed border inset-x-1 flex mx-auto max-w-[550px] bg-white top-[52px]">
+    <div class="flex flex-row-3 justify-start w-full bg-white space-x-4 my-2 ">
+      <div class="ml-4  flex align-middle ">
+        <mat-icon style="width: 32px; height: 32px;" [svgIcon]="'general_icons:chat'"></mat-icon>
+      </div>
+
+      <div class="grow">
+        <p class="text-xs font-bold text-[#272727] truncate ">
+          <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+          กลุ่มแชท {{eventName}}
+        </p>
+        <p class="text-xs font-normal text-[#272727] truncate ">
+          สมาชิก {{memberCount}} คน
+        </p>
+
+      </div>
+
+      <div class="flex align-middle">
+        <button mat-icon-button [matMenuTriggerFor]="option" aria-label="Example icon-button with a menu">
+          <mat-icon style="width: 32px; height: 16px;" class="mr-2" [svgIcon]="'general_icons:menu'"></mat-icon>
+        </button>
+        <mat-menu #option="matMenu" xPosition="before">
+          <button mat-menu-item *ngIf="isOwner == true && eventStatus == 1" (click)="start()">
+            <mat-icon style="width: 32px; height: 36px;" [svgIcon]="'general_icons:start-event'"></mat-icon>
+            <span>เริ่มการเดินทาง</span>
+          </button>
+          <button mat-menu-item (click)="goDetail()">
+            <mat-icon style="width: 32px; height: 36px;" [svgIcon]="'general_icons:detail'"></mat-icon>
+            <span>รายละเอียด</span>
+          </button>
+          <button *ngIf="userId != ownerId" mat-menu-item (click)="report()">
+            <mat-icon style="width: 32px; height: 36px;" [svgIcon]="'general_icons:emergency'"></mat-icon>
+            <span>รายงานปัญหา</span>
+          </button>
+          <button mat-menu-item (click)="downloadFile()">
+            <mat-icon style="width: 32px; height: 36px;" [svgIcon]="'general_icons:download-chat'"></mat-icon>
+            <span>ดาวน์โหลดไฟล์แชท</span>
+          </button>
+          <!-- driver ต้อง start ก่อน || passenger ออกได้เสมอ -->
+          <button mat-menu-item (click)="goToReview()"
+            *ngIf="status != 4 && ((isOwner && eventStatus == 2) || (!isOwner))">
+            <mat-icon style="width: 32px; height: 36px;" [svgIcon]="'general_icons:leave-chat'"></mat-icon>
+            <span>ออกจากกลุ่ม</span>
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="mx-auto shadow-xl rounded-md min-h-screen" style="max-width:550px;">
+    <!-- chats -->
+    <div *ngIf="checkAuthorize" class="mx-4 mt-20 pb-40 ">
+      <div class="mx-auto bg-white overflow-hidden ">
+        <!-- Chat messages container -->
+        <div #containerElement class="chat-container overflow-y-auto">
+          <!-- ... Chat messages - lists ... -->
+          <!-- #1 -->
+          <div class=" w-sm flex items-end justify-end space-x-2 mb-3" *ngFor="let item of messageArray"
+            [ngClass]="{'flex-row-reverse': item.user === selectedUser?.fullname}">
+            <!-- {{today}} : {{item.timestamp}} -->
+            <div class="flex-shrink-0" *ngIf="item.user !== selectedUser?.fullname">
+              <img *ngIf="item.download_url" (click)="goOtherProfile('/account/other-profile', item.user)"
+                class="w-8 h-8 object-cover rounded-full border cursor-pointer hover:drop-shadow"
+                [src]="item.download_url" alt="profile">
+              <mat-icon *ngIf="!item.download_url" (click)="goOtherProfile('/account/other-profile', item.user)"
+                style="width: 32px; height: 36px;" [svgIcon]="'general_icons:profile-img'"
+                class="cursor-pointer hover:drop-shadow"></mat-icon>
+              <!-- <mat-icon  style="width: 32px; height: 36px;" [svgIcon]="'general_icons:profile-img'"></mat-icon> -->
+            </div>
+            <div class="flex flex-col items-start"
+              [ngClass]="{'text-left ': item.user === selectedUser?.fullname, 'text-left': item.user !== selectedUser?.fullname}">
+              <p style="font-size: 12px;" [ngClass]="{'hidden': item.user === selectedUser?.fullname}">
+                {{item.user}}
+              </p>
+              <p class="max-w-[259px] text-sm font-base text-[#272727] break-words bg-[#EFEFEF] rounded-lg p-2">
+                <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                {{item.message}}
+              </p>
+            </div>
+            <div class="flex-1 mt-5">
+              <p class="text-xs font-normal text-[#272727] truncate"
+                [ngClass]="{'text-right mx-2': item.user === selectedUser?.fullname, 'text-left': item.user !== selectedUser?.fullname}">
+                <!-- {{social.firstname}}&nbsp;{{social.lastname}} -->
+                <span *ngIf="checkDate(item.timestamp)">{{item.timestamp | date:'HH:mm'}}</span>
+                <span *ngIf="!checkDate(item.timestamp)">{{item.timestamp | date:'dd/MM/YY'}}</span>
+                <!-- {{item.timestamp | date:'dd/MM/YY HH:mm'}} -->
+                <!-- <span *ngIf="checkDate(item.timestamp)">{{item.timestamp | date:'HH:mm'}}</span>
+              <span *ngIf="!checkDate(item.timestamp)">{{item.timestamp | date:'dd/MM/YY'}}</span> -->
+                <!-- {{item.timestamp}} -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Input field and send button -->
+  <!-- <div class="border-t border-b fixed bg-white bottom-24"> -->
+  <div *ngIf="status != 4 && checkAuthorize" class="fixed border inset-x-1 flex mx-auto max-w-[550px] bg-white bottom-24">
+    <div class="flex justify-between flex-col-4 w-full bg-white py-2 space-x-4 mx-4 ">
+      <!-- <div class="">
+
+      <button (click)="sendMessage()" class=" text-white rounded-xl w-10 h-10  focus:outline-none"
+        [ngClass]="{'bg-[#B5B5B5]' : status == 4,'bg-[#F04E23]': status != 4}">
+        <mat-icon class="mt-1" style="width: 24px; height: 24px;" [svgIcon]="'general_icons:location_chat'"></mat-icon>
+      </button>
+    </div> -->
+      <!-- <div class="">
+
+      <button (click)="sendMessage()" class=" text-white rounded-xl w-10 h-10  focus:outline-none"
+        [ngClass]="{'bg-[#B5B5B5]' : status == 4,'bg-[#F04E23]': status != 4}">
+        <mat-icon class="mt-1" style="width: 24px; height: 24px;" [svgIcon]="'general_icons:camera'"></mat-icon>
+      </button>
+    </div> -->
+      <div class="grow">
+
+        <input [disabled]="status == 4" type="text" id="messageInput" placeholder="ข้อความ" [(ngModel)]="messageText"
+          (keyup.enter)="sendMessage()"
+          class="flex-1 w-full border border-gray-300 rounded-lg py-2 px-4 focus:outline-none text-xs font-normal">
+      </div>
+      <div class="">
+
+        <button (click)="sendMessage()" class=" text-white rounded-xl w-10 h-10  focus:outline-none"
+          [ngClass]="{'bg-[#B5B5B5]' : status == 4,'bg-[#F04E23]': status != 4}">
+          <mat-icon class="mt-1" style="width: 24px; height: 24px;" [svgIcon]="'general_icons:send'"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

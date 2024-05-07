@@ -1,0 +1,38 @@
+.mdc-data-table__cell, .mdc-data-table__header-cell{
+  padding-left: 16px;
+  padding-right: 0px;
+}
+
+.mat-mdc-table{
+  border: 1px solid #D9D9D9; 
+  border-radius: 0.5rem !important;
+  // border-spacing: 3px !important;
+  // border-collapse: unset !important;
+}
+
+.mat-mdc-header-cell{
+  background-color: #F4F4F6 !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+}
+.mat-mdc-cell{
+  // border-bottom: unset !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.mat-mdc-header-row{
+  font-family: "Noto Sans Thai" !important;
+}
+
+.mat-mdc-row, .mdc-data-table__content{
+  font-family: "Noto Sans Thai" !important;
+}
+
+.small-icon-button {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+
+

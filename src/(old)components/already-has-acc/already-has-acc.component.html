@@ -1,0 +1,54 @@
+<style scoped>
+</style>
+<div class="mx-auto shadow-xl px-2 rounded-md" style="max-width:400px;">
+    <div class="mx-4 ">
+        <div>
+            <div class="text-2xl pt-7 pb-2 font-bold">เข้าสู่ระบบ</div>
+        </div>
+        <!-- input -->
+        <div [formGroup]="alreadyHasAccFormGroup">
+            <div class="relative z-0 mb-6 w-full group mt-3">
+                <input  [formControlName]="'fullname'" type="text" name="fullname"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="fullname"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ชื่อบัญชีใช้งาน</label>
+            </div>
+            <div class="relative z-0 mb-6 w-full group mt-3">
+                <input (keyup.enter)="adminSignin()" [formControlName]="'password'" [type]="inputType"  name="password" minlength="8" maxlength="15"
+                    class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+
+                <label for="password"
+                    class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    รหัสผ่าน</label>
+                <label *ngIf="passWarn" for="password"
+                    class="absolute text-sm text-red-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[text-red-500]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    รหัสผ่าน *ต้องมีจำนวนไม่น้อยกว่า 8 ตัว</label>
+                <!-- <mat-error *ngIf="alreadyHasAccFormGroup.get('password')?.value.length < 8">test</mat-error> -->
+                <div class="flex flex-row justify-end ">
+                    <button *ngIf="!showPass" (click)="showPassword('show')" class="-mt-8">
+                        <mat-icon style="height: 20px; width: 20px;" [svgIcon]="'heroicons_outline:eye-off'"></mat-icon>
+                    </button>
+                    <button *ngIf="showPass" (click)="showPassword('hide')" class="-mt-8">
+                        <mat-icon style="height: 20px; width: 20px;" [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- button -->
+        <div class=" pb-6 bottom-24" style="margin-top: 340px;">
+            <!-- component -->
+            <button
+                [disabled]="alreadyHasAccFormGroup.get('fullname')?.value.length < 1 || alreadyHasAccFormGroup.get('password')?.value.length < 8"
+                [ngClass]="{'bg-[#B5B5B5]' : alreadyHasAccFormGroup.get('fullname')?.value.length < 1 || alreadyHasAccFormGroup.get('password')?.value.length < 8 ,
+                'bg-[#F04E23]' : alreadyHasAccFormGroup.get('fullname')?.value.length >= 1 && alreadyHasAccFormGroup.get('password')?.value.length >= 8
+            }"
+                (click)="adminSignin()" class="focus:bg-[#F04E23]"
+                class="h-12 w-full rounded-2xl  text-base font-bold text-white">
+                ต่อไป
+            </button>
+        </div>
+    </div>
+</div>

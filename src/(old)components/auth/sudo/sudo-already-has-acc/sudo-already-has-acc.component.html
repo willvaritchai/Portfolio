@@ -1,0 +1,28 @@
+<style scoped>
+</style>
+<div class="mx-auto shadow-xl px-2 rounded-md" style="max-width:400px;">
+    <div class="mx-4 ">
+        <div>
+            <div class="text-2xl pt-7 pb-2 font-bold">เข้าสู่ระบบ</div>
+        </div>
+        <!-- input -->
+        <div [formGroup]="alreadyHasAccFormGroup">
+            <div class="relative z-0 mb-6 w-full group mt-3">
+                <input (keyup.enter)="signinByEmail()" [formControlName]="'email'" type="email" name="email"
+                class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " required />
+                <label for="email"
+                class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    อีเมล</label>
+            </div>
+        </div>
+        <!-- button -->
+        <div  class=" pb-6" style="margin-top: 340px;">
+            <!-- component -->
+            <button (click)="signinByEmail()" class="focus:bg-[#F04E23]" 
+                class="h-12 w-full rounded-2xl bg-[#F04E23] text-base font-bold text-white">
+                ต่อไป
+            </button>
+        </div>
+    </div>
+</div>

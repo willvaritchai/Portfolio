@@ -1,0 +1,19 @@
+<!-- input & filter -->
+<div class="flex flex-row mt-4 mb-4 ">
+    <div class="w-full rounded-lg bg-[#F6F8FB] 
+        flex flex-wrap relative h-10 items-center mr-2">
+        <!-- <div class="flex -mr-px justify-center w-15 p-1">
+            <span class="flex items-center leading-normal px-2 border-0 rounded-lg text-xs text-gray-600">
+                <mat-icon matPrefix style="width: 12px; height: 12px;" [svgIcon]="'general_icons:search'"
+                    class="text-[#B5B5B5] "></mat-icon>
+            </span>
+        </div> -->
+        <input type="text" (ngModelChange)="searchModelChange($event)" [(ngModel)]="search" (keyup)="onKeyUp($event)"
+            class="pl-2 bg-[#F6F8FB] flex-shrink flex-grow flex-auto leading-normal  rounded rounded-l-none  self-center relative  font-roboto text-sm outline-none"
+            placeholder="พิมพ์ข้อความเพื่อค้นหา" />
+    </div>
+    <div>
+        <mat-icon (click)="searching()" class="cursor-pointer hover:drop-shadow" matPrefix
+            style="width: 40px; height: 40px;" [svgIcon]="'general_icons:search-button'"></mat-icon>
+    </div>
+</div>

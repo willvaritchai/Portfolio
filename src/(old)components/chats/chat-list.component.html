@@ -1,0 +1,263 @@
+<div class="mx-auto shadow-xl rounded-md min-h-screen" style="max-width:550px;">
+    <div class="mt-4 mx-4 ">
+        <div class="my-2">
+            <p class="text-2xl font-bold">รายการแชท</p>
+        </div>
+        <!-- no chat -->
+        <div class="my-72 flex flex-col justify-center items-center h-full" *ngIf="roomList.length == 0">
+            <div class="flex flex-col items-center justify-center">
+                <div class="my-1">
+                    <mat-icon style="width: 40px; height: 40px;" [svgIcon]="'general_icons:no-chat'"></mat-icon>
+                </div>
+                <div class="my-1">
+                    <p class="text-sm text-[#B5B5B5] ">คุณไม่มีกลุ่มแชทการเดินทางใดๆ...</p>
+                </div>
+            </div>
+        </div>
+        <div class="my-2" *ngIf="roomListOpen.length > 0">
+            <p class="text-sm font-semibold">กลุ่มแชทที่ยังดำเนินอยู่</p>
+        </div>
+        <div *ngFor="let chat of roomListOpen">
+            <div class="my-2 border rounded-lg">
+                <!-- <mat-accordion multi>
+                <mat-expansion-panel hideToggle class="h-fit" *ngIf="chat.status != 2">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description class="flex flex-grow space-x-2 py-5">
+                            <div class="my-auto">
+                                <mat-icon style="width: 32px; height: 36px;"
+                                    [svgIcon]="'general_icons:group-chat'"></mat-icon>
+                            </div>
+                            <div class="my-auto flex-grow justify-start max-w-[150px]">
+                                <p class="text-xs font-semibold break-words">{{chat.event_name}} </p>
+                                <div class="flex flex-auto space-x-2 items-center">
+                                    <div>
+                                        <p class="text-xs">กำลังรอการตอบรับ</p>
+                                    </div>
+                                    <mat-icon style="width: 10px; height: 10px;"
+                                        [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                    <p class="text-xs">สมาชิก {{chat.member_count}} คน</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-end min-w-fit">
+                                <button type="button"
+                                    class="flex flex-auto items-center justify-center border border-[#F04E23] text-[#F04E23] rounded-lg px-3 py-1 my-5 font-semibold text-sm">
+                                    รายละเอียด</button>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="">
+                        <button type="button" (click)="goChat(chat.encryptEvent)"
+                            class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white px-5 py-1 my-5 font-semibold text-sm w-full">
+                            เข้าสู่หน้าแชท</button>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">รายการขอเข้าร่วมการเดินทาง</p>
+                        <div>
+                            <div class="flex flex-auto mt-5" *ngFor="let events of requestList">
+                                <div class="flex flex-auto space-x-4 mb-3">
+                                    <div class="my-auto">
+                                        <mat-icon style="width: 40px; height: 40px;"
+                                            [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <div class="text-xs flex flex-grow items-center font-bold">
+                                            {{events.fullname}}
+                                            <mat-icon *ngIf="events.role_check=='driver'"
+                                                [svgIcon]="'general_icons:check'"
+                                                style="height: 16px; width: 16px;"></mat-icon>
+                                        </div>
+                                        <div *ngIf="events.friendtype || events.role_name=='driver'"
+                                            class="flex flex-auto text-xs space-x-3">
+                                            <div *ngIf="events.friendtype && userId!=events.user_id ">
+                                                <mat-icon *ngIf="events.friendtype=='friend'" class="mt-0.5 mr-0.5"
+                                                    style="width: 10px; height: 10px;"
+                                                    [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                                                <mat-icon *ngIf="events.friendtype=='mutualfriend'"
+                                                    class="mt-0.5 mr-0.5" style="width: 10px; height: 10px;"
+                                                    [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                                <span *ngIf="events.friendtype=='friend'">เป็นเพื่อนกับคุณ</span>
+                                                <span *ngIf="events.friendtype=='mutualfriend'">มีเพื่อนร่วมกัน
+                                                    {{events.mutalfriend}} คน</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-auto text-xs  space-x-3">
+                                            <mat-icon class="mt-0.5 mr-0.5" style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                            {{events.faculty_name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-auto items-center justify-end text-xs font-bold space-x-2">
+                                        <button type="button" (click)="accept(chat.encryptEvent)"
+                                            class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white px-2 py-2 my-5 font-semibold text-sm w-full">
+                                            ยืนยัน</button>
+                                        <button type="button" (click)="denied()"
+                                            class="flex flex-auto items-center justify-center bg-[#B5B5B5] rounded-lg text-white px-2 py-2 my-5 font-semibold text-sm w-full">
+                                            ปฏิเสธ</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion> -->
+                <div class="">
+                    <div class="flex flex-shrink  flex-auto space-x-3 px-2"
+                        *ngIf="chat.status != 3 || (chat.status != 2 && chat.reqestStatus != 4)">
+                        <div class="my-auto">
+                            <mat-icon style="width: 32px; height: 36px;"
+                                [svgIcon]="'general_icons:group-chat'"></mat-icon>
+                        </div>
+                        <div class="my-auto flex-grow">
+                            <p class="text-xs font-semibold break-words">{{chat.event_name}}</p>
+                            <div class="flex flex-auto space-x-2 items-center">
+                                <div class="flex space-x-1" *ngIf="chat.reqestStatus == 0">
+                                    <mat-icon style="width: 10px; height: 10px;" class="my-auto"
+                                        [svgIcon]="'general_icons:wait'"></mat-icon>
+                                    <p class="text-xs text-[#3686FF]">กำลังรอการตอบรับ</p>
+                                </div>
+                                <div class="flex space-x-1" *ngIf="chat.reqestStatus == 2">
+                                    <mat-icon style="width: 10px; height: 10px;" class="my-auto"
+                                        [svgIcon]="'general_icons:denied-request'"></mat-icon>
+                                    <p class="text-xs text-[#E12424]">ผู้ขับขี่ปฏิเสธ</p>
+                                </div>
+                                <div class="flex space-x-1">
+                                    <mat-icon style="width: 10px; height: 10px;" class="my-auto"
+                                        [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                    <p class="text-xs">สมาชิก {{chat.member_count}} คน</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-auto flex justify-end">
+                            <!-- เพิ่มเติม -->
+                            <button type="button" (click)="goDetail(chat.encryptEvent)"
+                                class="flex flex-auto items-center justify-center border border-[#F04E23] text-[#F04E23] rounded-lg px-3 py-1 my-5 font-semibold text-sm">
+                                รายละเอียด</button>
+                        </div>
+                    </div>
+                    <div class="px-2 py-3" *ngIf="chat.reqestStatus == 1">
+                        <button type="button" (click)="goChat(chat.encryptEvent)"
+                            class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white px-5 py-1  font-semibold text-sm w-full">
+                            เข้าสู่หน้าแชท</button>
+                    </div>
+                    <!-- passenger ขอเข้าร่วม -->
+                    <div class="px-2" *ngIf="chat.requestList?.length>0 && chat.user_id == userId">
+                        <p class="text-sm font-bold">รายการขอเข้าร่วมการเดินทาง</p>
+                        <!-- <div class="flex flex-auto" *ngFor="let events of requestList"> -->
+                        <div class="flex flex-auto" *ngFor="let events of chat.requestList">
+                            <div class="flex flex-auto space-x-4 mb-3">
+                                <div class="my-auto">
+                                    <img (click)="goOther(events.encrypt_id)" *ngIf="events.download_url"
+                                        class="w-10 h-10 rounded-full object-cover cursor-pointer"
+                                        [src]="events.download_url" alt="profile">
+                                    <mat-icon (click)="goOther(events.encrypt_id)" *ngIf="!events.download_url"
+                                        class="cursor-pointer" style="width: 40px; height: 40px;"
+                                        [svgIcon]="'general_icons:profile-img'"></mat-icon>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="text-xs flex flex-grow items-center font-bold">
+                                        {{events.fullname}}
+                                        <!-- confirm icon -->
+                                        <mat-icon *ngIf="events.role_check=='driver'" [svgIcon]="'general_icons:check'"
+                                            style="height: 16px; width: 16px;"></mat-icon>
+                                    </div>
+                                    <div *ngIf="events.friendtype || events.role_name=='driver'"
+                                        class="flex flex-auto text-xs space-x-3">
+                                        <div *ngIf="events.friendtype && userId!=events.user_id ">
+                                            <mat-icon *ngIf="events.friendtype=='friend'" class="mt-0.5 mr-0.5"
+                                                style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:my-friend'"></mat-icon>
+                                            <mat-icon *ngIf="events.friendtype=='mutualfriend'" class="mt-0.5 mr-0.5"
+                                                style="width: 10px; height: 10px;"
+                                                [svgIcon]="'general_icons:mutual-friend'"></mat-icon>
+                                            <span *ngIf="events.friendtype=='friend'">เป็นเพื่อนกับคุณ</span>
+                                            <span *ngIf="events.friendtype=='mutualfriend'">มีเพื่อนร่วมกัน
+                                                {{events.mutalfriend}} คน</span>
+                                        </div>
+                                        <!-- <div class="flex justify-center text-center" *ngIf="events.role_name=='driver'">
+                                        <div class="flex justify-center text-center"
+                                            *ngIf="events.rate != null && events.total != null">
+                                            <mat-icon class="text-[#FCB72B] my-auto" [svgIcon]="'heroicons_solid:star'"
+                                                style="height: 1rem;"></mat-icon>
+                                            <span>{{events.rate}} ({{events.total}})</span>
+                                        </div>
+                                        <div class="flex justify-center text-center text-xs"
+                                            *ngIf="events.rate == null && events.total == null">
+                                            <span>ผู้ขับขี่ใหม่</span>
+                                        </div>
+                                    </div> -->
+                                    </div>
+                                    <div class="flex flex-auto text-xs  space-x-3">
+                                        <mat-icon class="mt-0.5 mr-0.5" style="width: 10px; height: 10px;"
+                                            [svgIcon]="'general_icons:faculty'"></mat-icon>
+                                        {{events.faculty_name}}
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-auto items-center justify-end text-xs font-bold space-x-2">
+                                    <button type="button" (click)="accept(events)"
+                                        class="flex flex-auto items-center justify-center bg-[#F04E23] rounded-lg text-white px-2 py-2 my-5 font-semibold text-sm w-full">
+                                        ยืนยัน</button>
+                                    <button type="button" (click)="denied(events.members_id)"
+                                        class="flex flex-auto items-center justify-center bg-[#B5B5B5] rounded-lg text-white px-2 py-2 my-5 font-semibold text-sm w-full">
+                                        ปฏิเสธ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- cancel or denied message -->
+            <div class="flex justify-center my-2" *ngIf="chat.user_id != userId">
+                <!-- <p class="text-xs text-[#B5B5B5]">ยกเลิกคำขอ</p> -->
+                <button type="button" (click)="cancel(chat.members_id)" *ngIf="chat.reqestStatus == 0"
+                    class="flex flex-auto items-center justify-center text-[#B5B5B5] text-xs">
+                    ยกเลิกคำขอ</button>
+                <button type="button" (click)="seeDetails(chat.members_id)" *ngIf="chat.reqestStatus == 2"
+                    class="flex flex-auto items-center justify-center text-[#3686FF] text-sm">
+                    ดูข้อความจากผู้ขับขี่</button>
+            </div>
+
+        </div>
+
+        <!--หากมี pass event > 0 แสดงข้อมูล pass event history-->
+        <!-- pass event history -->
+        <div class="my-2 mt-6 flex flex-row-2 justify-between" *ngIf="roomListClose.length > 0">
+            <p class="text-sm font-semibold ">กลุ่มแชทที่สิ้นสุดแล้ว</p>
+            <button class="text-[#3686FF] flex align-middle " (click)="show()">
+                <span class="text-xs" *ngIf="!isShow">แสดงทั้งหมด ({{roomListClose.length}})</span>
+                <span class="text-xs" *ngIf="isShow">ซ่อนทั้งหมด ({{roomListClose.length}})</span>
+            </button>
+        </div>
+        <div *ngIf="isShow">
+            <div class="my-2" *ngFor="let chat of roomListClose">
+                <div class="flex flex-shrink  flex-auto space-x-3"
+                    *ngIf="chat.status == 2 || chat.status == 3 || chat.reqestStatus == 4">
+                    <div class="my-auto">
+                        <mat-icon style="width: 32px; height: 36px;"
+                            [svgIcon]="'general_icons:history-group-chat'"></mat-icon>
+                    </div>
+                    <div class="my-auto flex-grow">
+                        <p class="text-xs font-semibold text-[#2727276d]">{{chat.event_name}}</p>
+                        <div class="flex flex-auto space-x-2 items-center">
+                            <mat-icon style="width: 10px; height: 10px;"
+                                [svgIcon]="'general_icons:history-mutual-friend'"></mat-icon>
+                            <p class="text-xs text-[#2727276d]">สมาชิก {{chat.member_count}} คน</p>
+                        </div>
+                    </div>
+                    <div class="my-auto flex justify-end">
+                        <div class="">
+                            <button type="button" (click)="goChat(chat.encryptEvent)"
+                                class="flex flex-auto items-center justify-center border border-[#F04E23] text-[#F04E23] rounded-lg px-7 py-1 my-5 font-semibold text-sm">
+                                ตรวจสอบ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,221 @@
+<html>
+
+<head>
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin-left: 10px;
+            height: 100%;
+        }
+
+        #map {
+            height: 50%;
+            flex: 4;
+        }
+
+        .search-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .search-form {
+            margin-bottom: 10px;
+        }
+
+        .suggest {
+            position: absolute;
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #000;
+            padding: 4px;
+            flex-direction: column;
+        }
+
+        /* Style for displaying selected values */
+        .selected-values {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript" src="https://api.longdo.com/map/?key=ed0ce2f09867ddd66b1749054b466d41"></script>
+    <script>
+        var map;
+        var startSearch;
+        var endSearch;
+        var selectedValues = {}; // Object to store selected values for each input
+
+        function init() {
+            map = new longdo.Map({
+                placeholder: document.getElementById("map"),
+            });
+
+            startSearch = document.getElementById('startSearch');
+            endSearch = document.getElementById('endSearch');
+
+            // Create a button element
+            var button = document.createElement("button");
+            button.innerHTML = "Get Current Location";
+            button.onclick = getCurrentLocation;
+
+            // Append the button to the body
+            document.body.appendChild(button);
+
+            map.Search.placeholder(
+                document.getElementById('startResult'),
+                document.getElementById('endResult')
+            );
+
+            startSearch.oninput = function () {
+                handleSearchInput(startSearch);
+            };
+
+            endSearch.oninput = function () {
+                handleSearchInput(endSearch);
+            };
+
+            map.Event.bind('suggest', function (result) {
+                handleSuggest(result);
+            });
+
+            startSearch.onkeyup = function (event) {
+                handleEnterKey(event, startSearch);
+            };
+
+            endSearch.onkeyup = function (event) {
+                handleEnterKey(event, endSearch);
+            };
+        }
+
+        function handleSearchInput(inputElement) {
+            console.log(inputElement.value);
+            var suggestElement = inputElement.nextElementSibling;
+            console.log(suggestElement);
+
+            if (inputElement.value.length < 2) {
+                suggestElement.style.display = 'none';
+                return;
+            }
+
+            map.Search.suggest(inputElement.value, {
+                area: 10
+            });
+
+            suggestElement.style.display = 'flex';
+        }
+
+        function handleSuggest(result) {
+            var activeSearch = document.activeElement;
+
+            if (result.meta.keyword != activeSearch.value) return;
+
+            var suggestElement = activeSearch.nextElementSibling;
+            suggestElement.innerHTML = '';
+            for (var i = 0, item; item = result.data[i]; ++i) {
+                longdo.Util.append(suggestElement, 'a', {
+                    innerHTML: item.d,
+                    href: 'javascript:doSuggest(\'' + item.w + '\', \'' + activeSearch.id + '\')'
+                });
+            }
+            suggestElement.style.display = 'flex';
+        }
+
+        function handleEnterKey(event, inputElement) {
+            if ((event || window.event).keyCode != 13)
+                return;
+
+            // Check if Enter key is pressed, and if so, prevent displaying the location
+            event.preventDefault();
+
+            doSearch(inputElement);
+        }
+
+        function doSearch(inputElement) {
+            var resultElement = document.getElementById(inputElement.id + 'Result');
+            map.Search.search(inputElement.value, {
+                area: 10
+            });
+            var suggestElement = inputElement.nextElementSibling;
+            suggestElement.style.display = 'none';
+
+            var address = map.Search.address(map.location());
+            var location = map.location();
+
+            console.log(`Search Result for ${inputElement.id}:`, {
+                address: address,
+                location: location
+            });
+
+            // Display the selected value in the HTML
+            document.getElementById(inputElement.id + 'Selected').innerText = `Selected Value: ${inputElement.value}`;
+        }
+
+        function doSuggest(value, inputId) {
+            var inputElement = document.getElementById(inputId);
+            inputElement.value = value;
+            doSearch(inputElement);
+
+            // Save selected value to the object
+            selectedValues[inputId] = value;
+
+            // Additional Logging for Suggestions
+            var suggestElement = inputElement.nextElementSibling;
+            var suggestions = Array.from(suggestElement.getElementsByTagName('a')).map(a => a.innerText);
+
+            console.log(`Selected value for ${inputElement.id}:`, value);
+            console.log(`Suggestions for ${inputElement.id}:`, suggestions);
+            console.log(`All selected values:`, selectedValues);
+        }
+
+        function getCurrentLocation() {
+            // Ask for the user's current location
+            map.location(longdo.LocationMode.Geolocation);
+
+            // Get the location
+            var location = map.location();
+
+            // Display latitude and longitude for the current location
+            var currentLocationElement = document.getElementById("currentLocation");
+            currentLocationElement.innerText = `Latitude: ${location.lat}, Longitude: ${location.lon}`;
+
+            // Log the location to the console
+            console.log(location);
+        }
+    </script>
+</head>
+
+<body onload="init();">
+    <div id="map"></div>
+
+    <div class="search-container">
+        <div class="search-form">
+            <h3>ตำแหน่งเริ่มต้นการเดินทาง</h3>
+            <input id="startSearch" />
+            <div id="startSuggest" class="suggest"></div>
+            <!-- <div id="startResult"></div> -->
+            <!-- Display selected value for startSearch -->
+            <div id="startSearchSelected" class="selected-values"></div>
+            <!-- Display latitude and longitude for startSearch -->
+            <div id="startSearchLocation" class="selected-values"></div>
+        </div>
+        <div class="search-form">
+            <h3>ตำแหน่งจุดปลายการเดินทาง</h3>
+            <input id="endSearch" />
+            <div id="endSuggest" class="suggest"></div>
+            <!-- <div id="endResult"></div> -->
+            <!-- Display selected value for endSearch -->
+            <div id="endSearchSelected" class="selected-values"></div>
+            <!-- Display latitude and longitude for endSearch -->
+            <div id="endSearchLocation" class="selected-values"></div>
+        </div>
+    </div>
+
+    <!-- Display current location -->
+    <div id="currentLocation" class="selected-values"></div>
+</body>
+
+</html>

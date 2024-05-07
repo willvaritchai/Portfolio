@@ -1,0 +1,73 @@
+<div class="mx-auto my-5 min-h-screen flex flex-col shadow-xl rounded-md"
+  style="max-width: 550px; padding-bottom: 130px">
+  <div class="mx-4">
+    <button class="hover:drop-shadow active:drop-shadow" [routerLink]="['/account/detail']">
+      <div class="flex flex-row">
+        <mat-icon [svgIcon]="'general_icons:arrow-left-black'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+
+    <div class="text-center">
+      <span class="text-2xl font-bold text-[#272727]">ข้อมูลเส้นทางประจำ</span>
+    </div>
+
+    <!-- Favourite place section -->
+    <div class="text-[#272727]">
+      <!-- กลับบ้าน -->
+      <div class="w-full h-auto flex flex-row-3 relative mt-4 mb-4">
+        <mat-icon class="my-auto mr-4" [svgIcon]="'general_icons:fav-home-acc'"
+          style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div class="flex flex-col ">
+          <h1 class="font-bold">กลับบ้าน</h1>
+          <!-- ถ้ามีข้อมูลสถานที่ก็แสดงเป็นข้อมูลสถานที่ format ดังนี้ distance, start, end location -->
+          <p *ngIf="homeRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">
+            <span *ngIf="homeRoute?.distance">{{homeRoute?.distance}} กิโลเมตร • </span>
+            <span>{{homeRoute?.start_point}} → {{homeRoute?.dest_point}}</span>
+          </p>
+          <p *ngIf="!homeRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">เพิ่มข้อมูลเส้นทางนี้</p>
+        </div>
+        <button (click)="go(homeRoute,'home')" class="absolute py-3 pr-2 right-0 ">
+          <mat-icon [svgIcon]="'general_icons:fav-edit-acc'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        </button>
+      </div>
+
+      <!-- ไปเรียน -->
+      <div class="w-full  h-auto flex flex-row-3 relative mt-4 mb-4">
+        <mat-icon class="my-auto mr-4" [svgIcon]="'general_icons:fav-school-acc'"
+          style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div class="flex flex-col">
+          <h1 class="font-bold">ไปเรียน</h1>
+          <!-- ถ้ายังไม่มีข้อมูล favourite place สำหรับเส้นทางนั้นๆให้ขึ้น "เพิ่มข้อมูลเส้นทางนี้" เป็น default -->
+          <p *ngIf="studyRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">
+            <span *ngIf="studyRoute?.distance">{{studyRoute?.distance}} กิโลเมตร • </span>
+            <span>{{studyRoute?.start_point}} → {{studyRoute?.dest_point}}</span>
+          </p>
+          <p *ngIf="!studyRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">เพิ่มข้อมูลเส้นทางนี้</p>
+        </div>
+        <button (click)="go(studyRoute,'study')" class="absolute py-3 pr-2 right-0 ">
+          <mat-icon [svgIcon]="'general_icons:fav-edit-acc'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        </button>
+      </div>
+
+      <!-- แวะเที่ยว -->
+      <div class="w-full h-auto flex flex-row-3 relative mt-4 mb-4">
+        <mat-icon class="my-auto mr-4" [svgIcon]="'general_icons:fav-trip-acc'"
+          style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div class="flex flex-col">
+          <h1 class="font-bold">แวะเที่ยว</h1>
+          <p *ngIf="travelRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">
+            <span *ngIf="travelRoute?.distance">{{travelRoute?.distance}} กิโลเมตร • </span>
+            <span>{{travelRoute?.start_point}} → {{travelRoute?.dest_point}}</span>
+          </p>
+          <p *ngIf="!travelRoute" class="text-[#B5B5B5] text-clip overflow-hidden mr-6">เพิ่มข้อมูลเส้นทางนี้</p>
+        </div>
+        <button (click)="go(travelRoute,'travel')" class="absolute py-3 pr-2 right-0 ">
+          <mat-icon [svgIcon]="'general_icons:fav-edit-acc'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

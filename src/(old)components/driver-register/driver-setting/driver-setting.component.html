@@ -1,0 +1,430 @@
+<div class="mx-auto  my-5  flex flex-col shadow-xl rounded-md" style="max-width:550px; padding-bottom: 130px;">
+  <div class="mx-4">
+    <button class="hover:drop-shadow active:drop-shadow" (click)="goBack('/account/detail')">
+      <div class="flex flex-row">
+        <mat-icon [svgIcon]="'general_icons:arrow-left-black'"
+          style="width: 24px !important; height: 24px !important;"></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+    <div class="text-center">
+      <span *ngIf="!addVehicleCheck" class="text-2xl font-bold text-black">การตั้งค่าเกี่ยวกับผู้ขับขี่</span>
+      <span *ngIf="addVehicleCheck" class="text-2xl font-bold text-black">เพิ่มยานพาหนะ</span>
+    </div>
+    <div *ngIf="!addVehicleCheck">
+      <div class="mt-4">
+        <div class="text-base font-bold">
+          ข้อมูลใบขับขี่
+        </div>
+        <span style="font-size: 14px;">
+          รูปภาพใบขับขี่ต้องเห็นรายละเอียดชัดเจน<br>
+          โดยเฉพาะส่วนของรูปผู้ถือบัตรและชื่อจริงนามสกุล
+        </span>
+      </div>
+      <!-- div: license -->
+      <div class="mt-4 border border-[#D9D9D9] rounded-lg">
+        <div class="my-2 mx-2 ">
+          <!-- เมื่อยังไม่มีข้อมูล driver-profile -->
+          <div *ngIf="!driverProfile?.licenseDetail" class="flex justify-between">
+            <div *ngIf="!licensePic && !driverProfile?.licenseDetail" class="flex flex-row">
+              <mat-icon class="mt-2 mr-2" [svgIcon]="'general_icons:upload'"
+                style="width: 24px !important; height: 24px !important;"></mat-icon>
+              <div>
+                <div class="font-bold" style="font-size: 14px;">
+                  อัปโหลดรูปใบขับขี่
+                </div>
+                <span class="text-xs text-[#B5B5B5]">รองรับไฟล์ JPEG, JPG, PNG ขนาดไม่เกิน 10 MB</span>
+              </div>
+            </div>
+            <div *ngIf="licensePic && !driverProfile?.licenseDetail" class="flex flex-row">
+              <img [src]="licensePic" alt="license" class="border" style="max-width: 91px; max-height: 60px;" />
+              <div class="ml-2">
+                <div class="font-bold text-sm">รูปภาพใบขับขี่</div>
+                <span class="text-[#B5B5B5] text-xs">{{licenseFormGroup.get('license_size')?.value}}&nbsp;MB</span>
+              </div>
+            </div>
+
+            <button *ngIf="!driverProfile?.licenseDetail" (click)="license.click()">
+              <div class="bg-[#F04E23] rounded-lg px-2 py-1 text-white text-xs">
+                เลือกไฟล์
+              </div>
+            </button>
+            <input #license type="file" class="hidden" accept="image/*" (change)="changeFile($event,'license')">
+          </div>
+          <!-- หากมีข้อมูลในระบบแล้ว -->
+          <div *ngIf="driverProfile?.licenseDetail" class="flex justify-between">
+            <div class="flex flex-row">
+              <img [src]="driverProfile?.licenseDetail?.license_download" alt="license" class="border"
+                style="max-width: 91px; max-height: 60px;" />
+              <div class="ml-2">
+                <div class="font-bold" style="font-size: 14px;">รูปภาพใบขับขี่</div>
+                <span class="text-[#B5B5B5] text-xs">{{licenseFormGroup.get('license_size')?.value}}&nbsp;MB</span>
+              </div>
+            </div>
+            <!-- delete_license: เมื่อ status = approve, icon นี้จะแสดง -->
+            <div *ngIf="driverProfile.licenseDetail.approval_status == 1">
+              <button (click)="onDeleteDriverProfile('delete_license')" class="hover:drop-shadow">
+                <mat-icon matPrefix style="width: 14px; height: 14px;" [svgIcon]="'heroicons_outline:trash'"
+                  class="text-[#E12424]"></mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- div-license: fn, ln -->
+      <div class="mt-7 " [formGroup]="licenseFormGroup">
+        <div *ngIf="!driverProfile?.licenseDetail else licenseDetail">
+          <div class="relative z-0 mb-6 w-full group">
+            <input [formControlName]="'license_fn'" type="text" name="floating_license_fn" placeholder=""
+              class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+              required />
+            <label for="floating_license_fn"
+              class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              ชื่อจริงที่ปรากฎบนบัตร (ภาษาอังกฤษ)</label>
+          </div>
+          <div class="mt-7 relative z-0 mb-6 w-full group">
+            <input [formControlName]="'license_ln'" type="text" name="license_ln" placeholder=""
+              class="font-bold block py-2.5 px-0 w-full text-sm text-[#272727] bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+              required />
+            <label for="license_ln"
+              class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              นามสกุลที่ปรากฎบนบัตร (ภาษาอังกฤษ)</label>
+          </div>
+        </div>
+        <ng-template #licenseDetail>
+          <div class="mt-3">
+            <div class="text-[#5B5B5B] text-xs">
+              ชื่อจริงที่ปรากฎบนบัตร (ภาษาอังกฤษ)
+            </div>
+            <div class="text-sm font-bold">
+              {{driverProfile?.licenseDetail.license_fn}}
+            </div>
+          </div>
+          <div class="mt-5">
+            <div class="text-[#5B5B5B] text-xs">
+              นามสกุลที่ปรากฎบนบัตร (ภาษาอังกฤษ)
+            </div>
+            <div class="text-sm font-bold">
+              {{driverProfile?.licenseDetail.license_ln}}
+            </div>
+          </div>
+          <div class="mt-4 p-2 border border-[#D9D9D9] rounded-lg flex justify-between">
+            <div class="flex flex-row">
+              <mat-icon class="mt-2 mr-2" [svgIcon]="'general_icons:status'"
+                style="width: 24px !important; height: 24px !important;"></mat-icon>
+              <div>
+                <div class="font-bold text-[#B5B5B5]" style="font-size: 10px;">
+                  สถานะการสมัคร
+                </div>
+                <div class="font-bold text-xs">
+                  <span *ngIf="driverProfile.licenseDetail.approval_status == 0" class=" text-[#3686FF]">รอการอนุมัติ
+                    (ใช้เวลามากกว่าหนึ่งวัน)</span>
+                  <!-- เขียวอันนี้ tailwiind มันบัคสีดำ -->
+                  <span *ngIf="driverProfile.licenseDetail.approval_status == 1" class=" "
+                    style="color: #6DB33F;">อนุมัติแล้วเมื่อ {{driverProfile.licenseDetail.timestamp |
+                    customDateFormat}}</span>
+                  <span *ngIf="driverProfile.licenseDetail.approval_status == 2"
+                    class=" text-[#E12424]">ไม่ผ่านการอนุมัติเมื่อ
+                    {{driverProfile.licenseDetail.timestamp
+                    |
+                    customDateFormat}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- cancel_register: status = denied -->
+            <div *ngIf="driverProfile.licenseDetail.approval_status == 2"
+              class="flex justify-self-center font-bold text-xs text-[#3686FF]">
+              <button (click)="onDeleteDriverProfile('denied_approval')">
+                ดูข้อความ
+              </button>
+            </div>
+          </div>
+          <!-- cancel_register: แสดงเมื่อ status = pending -->
+          <div *ngIf="driverProfile.licenseDetail.approval_status == 0"
+            class="mt-2 text-center text-xs font-bold text-[#B5B5B5]">
+            <button (click)="onDeleteDriverProfile('cancel_register')">
+              ยกเลิกคำขอการสมัคร
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- div: vehicle-detail -->
+    <div class="mt-4">
+      <div class="text-base font-bold">
+        รายละเอียดยานพาหนะ
+      </div>
+      <span style="font-size: 14px;">
+        รูปภาพยานพาหนะต้องสอดคล้องกับรายละเอียดที่กรอก<br>
+        และเห็นหมายเลขทะเบียนชัดเจน
+      </span>
+    </div>
+
+    <!-- เมื่อมี driver-profile แล้ว -->
+    <div *ngIf="driverProfile?.licenseDetail && !addVehicleCheck">
+      <div *ngFor="let vList of driverProfile?.vehicleList">
+        <div class="mt-4 p-2 border border-[#D9D9D9] rounded-lg">
+          <div class="flex justify-between">
+            <div class="flex flex-row">
+              <img [src]="vList?.vehicle_download" alt="vehicle" class="border rounded-lg"
+                style="max-width: 107px; max-height: 60px;" />
+              <div class="ml-2 -mt-1.5">
+                <span class="w-14 font-bold border border-[#D9D9D9] rounded-md "
+                  style="font-size: 10px; padding: 0px 4px;">
+                  {{vList.license_plate}}
+                </span>
+                <div class="font-bold text-xs">{{vList.brand}}&nbsp;{{vList.model}}</div>
+                <div class="text-xs">{{vList.seats}} ที่นั่ง • {{vList.create_date | customDateFormat}}</div>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="driverProfile?.vehicleList.length == 1" class="hover:drop-shadow"
+                (click)="deleteVehicle(vList)">
+                <mat-icon matPrefix style="width: 14px; height: 14px;" [svgIcon]="'heroicons_outline:trash'"
+                  [ngClass]="{'text-[#B5B5B5]':driverProfile?.vehicleList.length == 1, 'text-[#E12424]':driverProfile?.vehicleList.length > 1}"></mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div *ngIf="driverProfile?.vehicleList.length < 3 && driverProfile.licenseDetail.approval_status == 1" class="mt-4 flex justify-center ">
+        <button (click)="addVehicleCheck = true" class="hover:drop-shadow">
+          <span class="px-2 py-1 font-bold text-xs border rounded-lg border-[#F04E23] text-[#F04E23]">
+            เพิ่มยานพาหนะ ({{driverProfile?.vehicleList.length}}/3)
+          </span>
+        </button>
+      </div> -->
+      <div *ngIf="driverProfile?.vehicleList.length < 3 && driverProfile?.licenseDetail?.approval_status == 1"
+        class="mt-4 flex justify-center ">
+        <button (click)="addVehicleCheck = true" class="hover:drop-shadow">
+          <span class="px-2 py-1 font-bold text-xs border rounded-lg border-[#F04E23] text-[#F04E23]">
+            เพิ่มยานพาหนะ ({{driverProfile?.vehicleList.length}}/3)
+          </span>
+        </button>
+      </div>
+    </div>
+    <!-- upload-vehicle-img or driver-register -->
+    <div *ngIf="!driverProfile?.licenseDetail || addVehicleCheck">
+      <div class="mt-4 border border-[#D9D9D9] rounded-lg">
+        <div class="my-2 mx-2 flex justify-between">
+          <div *ngIf="!vehiclePic" class="flex flex-row">
+            <mat-icon class="mt-2 mr-2" [svgIcon]="'general_icons:upload'"
+              style="width: 24px !important; height: 24px !important;"></mat-icon>
+            <div>
+              <div class="font-bold" style="font-size: 14px;">
+                อัปโหลดรูปภาพยานพาหนะ
+              </div>
+              <span class="text-xs text-[#B5B5B5]">รองรับไฟล์ JPEG, JPG, PNG ขนาดไม่เกิน 10 MB</span>
+            </div>
+          </div>
+          <div *ngIf="vehiclePic" class="flex flex-row">
+            <img [src]="vehiclePic" alt="vehicle" class="border" style="max-width: 91px; max-height: 60px;" />
+            <div class="ml-2">
+              <div class="font-bold" style="font-size: 14px;">รูปภาพยานพาหนะ</div>
+              <span class="text-[#B5B5B5] text-xs">{{vehicleImgObj?.fileSize}}&nbsp;MB</span>
+            </div>
+          </div>
+          <button (click)="vehicle.click()">
+            <div class="bg-[#F04E23] rounded-lg px-2 py-1 text-white text-xs">
+              เลือกไฟล์
+            </div>
+          </button>
+          <input #vehicle type="file" class="hidden" accept="image/*" (change)="changeFile($event,'vehicle')">
+        </div>
+      </div>
+
+      <!-- create-vehicle-detail -->
+      <div class="flex flex-auto flex-col mt-5" [formGroup]="vehicleFormGroup">
+        <!-- แถว#1 -->
+        <div class="flex flex-auto">
+          <!-- ยี่ห้อ -->
+          <div class="flex flex-auto w-1/2 mr-2">
+            <div class="flex flex-auto space-x-4 mb-3">
+              <div class="my-auto">
+                <mat-icon [svgIcon]="'general_icons:vehicle'" style="height: 24px; width: 24px;"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col my-auto" *ngIf="type == 'detail'">
+              <div class="flex flex-col ">
+                <label class="text-xs text-[#5B5B5B]">ยี่ห้อ</label>
+                <p class="break-words my-2 text-xs font-bold">{{detail.brand}}</p>
+              </div>
+            </div> -->
+                <div class="flex flex-auto items-center justify-center">
+                  <div class="relative z-0 w-full group">
+                    <input [formControlName]="'brand'" type="text" name="brand"
+                      class="block py-2.5 px-0 w-full text-sm font-bold text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                      placeholder=" " />
+                    <label for="brand"
+                      class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                      ยี่ห้อ</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- รุ่น -->
+          <div class="flex flex-auto w-1/2 ">
+            <div class="flex flex-auto space-x-4 mb-3">
+              <div class="my-auto">
+                <mat-icon [svgIcon]="'general_icons:vehicle-model'" style="height: 24px; width: 24px;"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col" *ngIf="type == 'detail'">
+              <div class="flex flex-col">
+                <label class="text-xs text-[#5B5B5B]">รุ่น</label>
+                <p class="break-words my-2 text-xs font-bold">{{detail.model}}</p>
+              </div>
+            </div> -->
+                <div class="flex flex-auto items-center justify-center">
+                  <div class="relative z-0 w-full group">
+                    <input [formControlName]="'model'" type="text" name="model"
+                      class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                      placeholder=" " />
+                    <label for="model"
+                      class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                      รุ่น</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- แถว#2 -->
+        <div class="flex flex-auto">
+          <!-- vehicle-type -->
+          <div class="flex flex-auto w-1/2 mr-2">
+            <div class="flex flex-auto space-x-2 mb-3">
+              <div class="my-auto">
+                <mat-icon [svgIcon]="'general_icons:vehicle-type'" style="height: 24px; width: 24px;"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col" *ngIf="type == 'detail'">
+                <div class="flex flex-col">
+                  <label class="text-xs text-[#5B5B5B]">ประเภทยานพาหนะ</label>
+                  <p class="break-words my-2 text-xs font-bold">{{detail.vehicle_type}}
+                  </p>
+                </div> -->
+              </div>
+              <div class="flex flex-auto items-center justify-center">
+                <div class="relative z-0 w-full group">
+                  <input noPaste preventInput matInput [formControlName]="'vehicle_type'" type="text" 
+                    name="vehicleType" [matAutocomplete]="vehicleType"
+                    class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                    placeholder=" " />
+                  <label for="vehicleType"
+                    class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    ประเภทยานพาหนะ</label>
+                  <mat-autocomplete [autoActiveFirstOption]="true" #vehicleType="matAutocomplete" [displayWith]="displayVehicleTypes">
+                    <mat-option *ngFor="let vType of filteredVehicleType | async" [value]="vType">
+                      {{ vType }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- color -->
+          <div class="flex flex-auto w-1/2 ">
+            <div class="flex flex-auto space-x-4 mb-5">
+              <div class="my-auto">
+                <mat-icon [svgIcon]="'general_icons:vehicle-color'" style="height: 24px; width: 24px;"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col" *ngIf="type == 'detail'">
+                <div class="flex flex-col">
+                  <label class="text-xs text-[#5B5B5B]">สียานพาหนะ</label>
+                  <p class="break-words my-2 text-xs font-bold">{{detail.vehicle_color}}
+                  </p>
+                </div>
+              </div> -->
+                <div class="flex flex-auto items-center justify-center">
+                  <div class="relative z-0 w-full group">
+                    <input formControlName="vehicle_color" type="text" name="vehicle_color"
+                      class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                      placeholder=" " />
+                    <label for="vehicle_color"
+                      class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                      สียานพาหนะ</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- แถว#3 -->
+        <div class="flex flex-auto">
+          <!-- license -->
+          <div class="flex flex-auto w-1/2 mr-2">
+            <div class="flex flex-auto space-x-4 ">
+              <div class="my-auto">
+                <mat-icon [svgIcon]="'general_icons:vehicle-license'" style="height: 24px; width: 24px;"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col" *ngIf="type == 'detail'">
+                <div class="flex flex-col">
+                  <label class="text-xs text-[#5B5B5B]">ทะเบียน</label>
+                  <p class="break-words my-2 text-xs font-bold">{{detail.license}}</p>
+                </div>
+              </div> -->
+                <div class="flex flex-auto items-center justify-center">
+                  <div class="relative z-0 w-full group">
+                    <input [formControlName]="'license_plate'" type="text" name="license" maxlength="10"
+                      class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                      placeholder=" " />
+                    <label for="license"
+                      class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                      ทะเบียน</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- seat -->
+          <div class="flex flex-auto w-1/2">
+            <div class="flex flex-auto space-x-4 ">
+              <div class="my-auto">
+                <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:person'"></mat-icon>
+              </div>
+              <div>
+                <!-- <div class="flex flex-col" *ngIf="type == 'detail'">
+                <div class="flex flex-col">
+                  <label class="text-xs text-[#5B5B5B]">จำนวนที่นั่ง</label>
+                  <p class="break-words my-2 text-xs font-bold">{{detail.seats}}</p>
+                </div>
+              </div> -->
+                <div class="flex flex-auto items-center justify-center">
+                  <div class="relative z-0 w-full group">
+                    <input [formControlName]="'seats'" type="number" name="seats"
+                      class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+                      placeholder="" preventUpDownScroll noPaste inputNumberOnly [numOnlyMax]="7" />
+                    <label for="seats"
+                      class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                      จำนวนที่นั่ง</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ ยืนยัน -->
+      <div class="flex justify-center mt-7">
+        <!-- <button  [disabled]="disableBtn" [ngClass]="{'bg-[#B5B5B5]': disableBtn,
+           'bg-[#F04E23]': !disableBtn}" class="h-12 w-full rounded-2xl  text-base font-bold text-white">
+        บันทึก
+      </button> -->
+        <button (click)="confirmDriverSetting()" [disabled]="disbleBtn" [ngClass]="{'bg-[#B5B5B5]': disbleBtn,
+           'bg-[#F04E23]': !disbleBtn}" class="h-12  rounded-xl  text-base font-bold text-white" style="width: 358px;">
+          ยืนยัน
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+</div>

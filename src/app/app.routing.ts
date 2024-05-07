@@ -1,10 +1,15 @@
 import { Route } from "@angular/router";
-import { AuthSignInComponent } from "src/components/auth/sign-in/sign-in.component";
-
 export const appRoutes: Route[] = [
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
-
+    { path: '', pathMatch: 'full', redirectTo: 'portfolio' },
     {
-        path: 'home', pathMatch: 'full',  loadChildren: () => import('src/components/home/home.module').then(m => m.HomeModule) 
-    }
+        path: '',
+        children: [
+            { path: 'portfolio', loadChildren: () => import('src/components/home/home.module').then(m => m.HomeModule) },
+        ]
+    },
+
+    // 404 & Catch all
+    { path: '404-not-found', pathMatch: 'full', loadChildren: () => import('src/app/errors/error-404/error-404.module').then(m => m.NotFoundModule) },
+    { path: '**', redirectTo: '404-not-found' }
+
 ]

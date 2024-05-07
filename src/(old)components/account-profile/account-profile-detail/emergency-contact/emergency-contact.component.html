@@ -1,0 +1,120 @@
+<div class="mx-auto relative my-5 min-h-screen flex flex-col shadow-xl rounded-md "
+  style="max-width: 550px; padding-bottom: 130px;">
+  <div class=" mx-4">
+    <button class="hover:drop-shadow active:drop-shadow" (click)="go('/account/detail')">
+      <div class="flex flex-row">
+        <mat-icon [svgIcon]="'general_icons:arrow-left-black'" style="min-width: 24px; min-height: 24px;"></mat-icon>
+        <div>
+          <span class="text-xs">ย้อนกลับ</span>
+        </div>
+      </div>
+    </button>
+
+    <div class="my-4 flex mx-auto">
+      <mat-icon class="mx-auto" [svgIcon]="'general_icons:emergency-illustrator'"
+        style="min-width: 180px; min-height: 120px;"></mat-icon>
+    </div>
+
+    <div class="text-center text-[#272727] mb-4">
+      <span class="text-xl font-bold mb-2 block">ช่องทางการติดต่อกรณีฉุกเฉิน</span>
+      <span class="block break-words px-10 text-base">
+        กรุณากรอกข้อมูลผู้ติดต่อที่คุณไว้วางใจที่สุด<br>และพร้อมช่วยเหลือคุณเมื่อมีเหตุจำเป็น
+      </span>
+    </div>
+
+    <div *ngIf="!contactData || isEdit" [formGroup]="contactFormGroup">
+      <div class="flex flex-auto space-x-4 mb-3">
+        <div class="my-auto">
+          <mat-icon class="my-auto" [svgIcon]="'general_icons:person'" style="height: 3rem;"></mat-icon>
+        </div>
+        <div class="flex flex-auto items-center justify-center">
+          <div class="relative z-0 w-full group">
+            <input noPaste formControlName="contact_person" type="text" name="contact_person" minlength="3"
+              maxlength="50"
+              class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+              placeholder=" " required />
+
+            <label for="contact_person"
+              class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              ชื่อหรือความสัมพันธ์ของผู้ติดต่อ <span *ngIf="contactPersonWarn" class="text-red-500">*ไม่น้อยกว่า 3
+                ตัวอักษร</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-auto space-x-4 mb-3">
+        <div class="my-auto">
+          <mat-icon class="my-auto" [svgIcon]="'general_icons:call'" style="height: 3rem;"></mat-icon>
+        </div>
+        <div class="flex flex-auto items-center justify-center">
+          <div class="relative z-0 w-full group">
+            <input inputNumberOnly noPaste preventUpDownScroll [isTel]="true" maxlength="10"
+              formControlName="contact_number" type="text" name="floating_tel"
+              class="block py-2.5 px-0 w-full font-bold text-sm text-[#272727] bg-transparent border-0 border-b-2 border-grey-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#272727] peer"
+              placeholder=" " required />
+
+            <label for="contact_info"
+              class="absolute text-sm text-[#272727] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#272727]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              เบอร์โทร <span *ngIf="contactTelWarn" class="text-red-500">*กรุณากรอกเบอร์ให้ครบ 10 หลัก</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="contactData && !isEdit" class="flex-row mx-auto">
+      <div class=" flex items-center space-x-3">
+        <div class="flex-shrink-0">
+          <mat-icon style="width: 24px; height: 24px;" [svgIcon]="'general_icons:person'"></mat-icon>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs  text-[#272727] truncate ">
+            ชื่อหรือความสัมพันธ์ของผู้ติดต่อ
+          </p>
+          <p class="text-sm font-bold text-[#272727] truncate ">
+            {{contactData.contact_person}}
+          </p>
+        </div>
+        <div (click)="isEdit = true" class="hover:drop-shadow">
+          <mat-icon style="width: 18px; height: 18px;" class="cursor-pointer"
+            [svgIcon]="'general_icons:edit_square'"></mat-icon>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- delete: contact -->
+    <!-- save button -->
+    <div class="flex mx-auto text-center justify-center">
+      <div *ngIf="contactData && isEdit" class="fixed bottom-44">
+        <div (click)="deleteContact()" class="flex flex-row  cursor-pointer hover:drop-shadow">
+          <div>
+            <mat-icon [svgIcon]="'heroicons_solid:trash'" class="text-[#E12424]"></mat-icon>
+          </div>
+          <div>
+            <span class="text-[#E12424] font-semibold text-sm">ลบข้อมูลผู้ติดต่อ</span>
+          </div>
+        </div>
+      </div>
+      <div class="fixed bottom-28 min-w-[358px]">
+        <button *ngIf="!contactData || isEdit" [disabled]="disableBtn" (click)="saveContact()"
+          class="h-12 w-full rounded-xl text-base font-bold bg-[#F04E23] text-white"
+          [ngClass]="{'bg-[#B5B5B5]': disableBtn,'bg-[#F04E23] cursor-pointer hover:drop-shadow':!disableBtn}">
+          ยืนยัน
+        </button>
+        <button *ngIf="contactData && !isEdit" (click)="callEmergencyContact()"
+          class="hover:drop-shadow h-12 w-full rounded-xl text-base font-bold border border-[#E12424] text-[#E12424] ">
+          <div class="flex flex-row items-center justify-center">
+            <div class="mt-1 mr-2">
+              <mat-icon [svgIcon]="'heroicons_solid:call'" class="text-[#E12424]"></mat-icon>
+            </div>
+            <div>
+              ติดต่อกรณีเหตุฉุกเฉิน
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<!-- signin card -->
+<div class="flex flex-row justify-center">
+    <div class="mt-20 mx-4 px-4  rounded-lg shadow-xl " style="max-width:400px;">
+        <div class="text-center pt-4 text-2xl font-bold">เข้าสู่ระบบ</div>
+        <div class="pt-4 text-xs text-center text-[#5B5B5B]">ยินดีต้อนรับเข้าสู่ MOD RIDE - Ride Sharing in KMUTT</div>
+        <!-- button: signin-passenger -->
+        <div class="pt-4">
+            <a (click)="go('account/sudo-create')" class="px-7 py-2
+            uppercase rounded-2xl border-2 border-[#F04E23] w-full flex justify-center cursor-pointer bg-white">
+                <img [src]="kmuttLogo" class="w-9" alt="kmutt-logo">
+                <p class="text-[#F04E23] font-bold text-base pt-1">เข้าสู่ระบบด้วยบัญชีมจธ.</p>
+            </a>
+        </div>
+        <div
+            class="flex items-center pt-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+            <p class="text-center font-bold  text-[#5B5B5B] mx-4 mb-0 text-xs">หรือ</p>
+        </div>
+        <!-- mock สำหรับเข้าด้วยบัญชีที่มีไปก่อน -->
+        <div class="pt-4 text-center text-sm ">
+            <p class="text-center text-[#5B5B5B] text-xs">มีบัญชีใช้งานอยู่แล้ว? <span (click)="go('sudo-already-has-acc')"
+                    class="text-[#3686FF] font-bold cursor-pointer">เข้าสู่ระบบ</span></p>
+        </div>
+        <!-- <div class="pt-4 text-center text-sm ">
+            <p class="text-center text-[#5B5B5B] text-xs">ใช้บัญชีผู้ดูแลระบบ</p>
+        </div> -->
+        <div class="py-4  text-center" style="font-size: 10px;">
+            ในการดำเนินการต่อหมายถึงคุณได้ยินยอมตาม<span [routerLink]="'/consent'"
+                class="underline text-[#3686FF] cursor-pointer">ข้อตกลงการใช้งาน
+                ตามนโยบายความเป็นส่วนตัวและข้อกำหนดและเงื่อนไข</span>ต่าง ๆ ที่กำหนดไว้
+        </div>
+    </div>
+</div>
+
+<div class="pb-20"></div>
