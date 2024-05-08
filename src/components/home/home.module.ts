@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, NavbarComponent],
   imports: [
     RouterModule.forChild(HomeRoutes),
     CommonModule,

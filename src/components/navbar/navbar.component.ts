@@ -7,22 +7,20 @@ import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from 'src/app/app.component';
 import { GetExtraDataService } from 'src/services/get-extra-data/GetExtraData.service';
-import { HostListener } from '@angular/core';
 
 
 declare var window: any;
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
+  selector: 'navbar',
+  templateUrl: './navbar.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-  screenType: string = ''
+  private isMsalInitialized: boolean = false;
 
   /**
    * Constructor
@@ -45,22 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkScreenSize();
-  }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    // Call your function to process screen size changes here
-    this.checkScreenSize();
-  }
-
-  checkScreenSize() {
-    const width = window.innerWidth;
-
-    if (width >= 1536) {
-      this.screenType = 'pc'
-    } else if (width >= 1280)
-      this.screenType = 'lt'
   }
 
 }
