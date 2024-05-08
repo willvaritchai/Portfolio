@@ -6,11 +6,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { PortHomeComponent } from '../port-home/port-home.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, NavbarComponent],
+  declarations: [HomeComponent, NavbarComponent, PortHomeComponent],
   imports: [
     RouterModule.forChild(HomeRoutes),
     CommonModule,

@@ -1,52 +1,7 @@
 <navbar class="fixed w-full"></navbar>
-<div class="">
-    <!-- home -->
-    <div class="bg-[#151925]  flex justify-center px-24 pb-28 w-full">
-        <div class="grid grid-cols-2 "
-            [ngClass]="{'pt-40 space-x-36':screenType == 'pc', 'pt-32 space-x-24':screenType == 'lt'}">
-            <!-- left -->
-            <div class="">
-                <span class="font-extrabold text-white" style="font-size: 40px;">Varitchai Surachaitanawat</span>
-                <div class="font-extrabold text-3xl text-white">
-                    I’m a <span class="text-[#01EEFF]">Full Stack Developer</span>
-                </div>
-                <div class="mt-7 text-2xl text-white" style="max-width: 517px;">
-                    As a <span class="font-bold">Full Stack Developer</span>, I'm fueled by my passion for coding and
-                    driven
-                    to constantly hone my skills with unwavering love ❤️
-                </div>
-                <div class="flex flex-row space-x-14 mt-7">
-                    <button style="width: 46px;">
-                        <img src="../../assets/home/git.png" alt="github">
-                    </button>
-                    <button style="width: 46px;">
-                        <img src="../../assets/home/fb.png" alt="fb">
-                    </button>
-                    <button style="width: 46px;">
-                        <img src="../../assets/home/ig.png" alt="ig">
-                    </button>
-                    <button style="width: 46px;">
-                        <img src="../../assets/home/email.png" alt="email">
-                    </button>
-                    <button style="width: 46px;">
-                        <img src="../../assets/home/phone.png" alt="phone">
-                    </button>
-                </div>
-                <div class="mt-9">
-                    <button class="bg-[#01EEFF] text-white font-semibold text-2xl py-5 px-6 
-                rounded-3xl hover:shadow hover:shadow-white active:bg-[#00B6C3]">
-                        Download CV
-                    </button>
-                </div>
-            </div>
-            <!-- right -->
-            <div class="-mt-5">
-                <img style="max-width: 475px; max-height: 461px;" src="../../assets/home/me_home.png" alt="me_home">
-            </div>
-        </div>
-    </div>
-    <!-- about -->
-    <div class="bg-[#323846]  flex justify-center">
-        test
-    </div>
+<!-- home -->
+<port-home [screenType]="screenType"></port-home>
+<!-- about -->
+<div class="bg-[#323846]  flex justify-center">
+    test
 </div>

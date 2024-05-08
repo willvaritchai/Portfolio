@@ -1,25 +1,24 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, interval } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
-import { AppComponent } from 'src/app/app.component';
-
 
 declare var window: any;
 @Component({
-  selector: 'navbar',
-  templateUrl: './navbar.component.html',
+  selector: 'port-home',
+  templateUrl: './port-home.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class NavbarComponent implements OnInit {
+export class PortHomeComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
   private isMsalInitialized: boolean = false;
+  @Input() screenType: string | undefined;
 
   /**
    * Constructor
@@ -32,7 +31,6 @@ export class NavbarComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private cookieService: CookieService,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _appComponent: AppComponent,
     private elementRef: ElementRef,
 
   ) {
