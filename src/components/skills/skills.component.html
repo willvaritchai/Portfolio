@@ -1,0 +1,40 @@
+<div class="bg-[#151925]  px-16 pb-24 w-full xl:pt-28  md:pt-24 sm:pt-28 sm:px-10">
+    <div class="grid grid-cols-3 justify-center justify-self-center">
+        <div>
+            <div class="bg-white font-bold rounded-t-3xl text-center text-3xl py-3">
+                <span class="text-[#FF0000]">Hard</span> Skills
+            </div>
+            <div class="py-10 bg-[#323846] rounded-b-3xl">
+                <div class="grid grid-cols-3  justify-items-center">
+                    <div *ngFor="let hardSkill of hardSkillList; let i = index" [ngClass]="{'mt-8':i>=3}">
+                        <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                    </div>
+                </div>
+                <div class="flex justify-center space-x-20">
+                    <div *ngFor="let hardSkill of hardSkillList2;  let i = index" class="mt-8 space-y-10">
+                        <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center items-center">
+            <div class="text-center">
+                <span class="font-extrabold text-white md:text-6xl sm:text-3xl ">My <span
+                        class="text-[#01EEFF]">Skills</span></span>
+            </div>
+        </div>
+        <div>
+            <div class="bg-white font-bold rounded-t-3xl text-center text-3xl py-3">
+                <span class="text-[#0075FF]">Soft</span> Skills
+            </div>
+            <div class="py-16 bg-[#323846] rounded-b-3xl">
+                <div class="grid grid-cols-2  justify-items-center">
+                    <div *ngFor="let softSkill of softSkillList; let i = index" [ngClass]="{'mt-16':i>=2}">
+                        <img style="max-width: 134px; max-height: 125px;" [src]="softSkill.src" alt="softSkill">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

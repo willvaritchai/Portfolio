@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from 'src/app/app.component';
 import { GetExtraDataService } from 'src/services/get-extra-data/GetExtraData.service';
 import { HostListener } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 
 
 declare var window: any;
@@ -31,14 +32,10 @@ export class HomeComponent implements OnInit {
    * @param {UserProfileListService} _userProfileListService
    */
   constructor(
-    private _router: Router,
-    private _formBuilder: FormBuilder,
-    private cookieService: CookieService,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _appComponent: AppComponent,
-    private _getExtraDataService: GetExtraDataService,
-    private elementRef: ElementRef,
-
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private viewportScroller: ViewportScroller
   ) {
 
 
@@ -46,6 +43,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -57,17 +55,17 @@ export class HomeComponent implements OnInit {
   checkScreenSize() {
     const width = window.innerWidth;
     console.log(width);
-    
+
 
     if (width >= 1536) {
       this.screenType = 'pc'
-    } else if (width >= 1280){
+    } else if (width >= 1280) {
       this.screenType = 'lt'
-    }else{
+    } else {
       this.screenType = 'm'
     }
     console.log(this.screenType);
-    
+
     this._changeDetectorRef.markForCheck()
   }
 

@@ -1,0 +1,89 @@
+<style scoped>
+    @media (min-width: 100px) {
+        .slick-prev {
+            left: -20px !important;
+            z-index: 2;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .slick-prev {
+            left: 10px !important;
+            z-index: 2;
+        }
+    }
+
+
+    .slick-prev:before {
+        font-size: 40px !important;
+        z-index: 2;
+    }
+
+
+    @media (min-width: 100px) {
+        .slick-next {
+            right: -5px !important;
+            z-index: 2;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .slick-next {
+            right: 10px !important;
+            z-index: 2;
+        }
+    }
+
+    .slick-next:before {
+        font-size: 40px !important;
+        z-index: 2;
+    }
+
+
+
+
+    /* font-size: 30px !important;
+    z-index: 2 !important; */
+</style>
+
+<div class="bg-[#151925]  px-24 pb-36 w-full xl:pt-28  md:pt-24 sm:pt-28 sm:px-10">
+    <div class="text-center">
+        <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">My <span
+                class="text-[#01EEFF]">Experience</span></span>
+    </div>
+    <div>
+        <!-- card -->
+        <ngx-slick-carousel [config]="slideConfig">
+            <div ngxSlickItem class="mt-12 " *ngFor="let exp of expList; let last = last">
+                <div class="grid grid-cols-1 justify-center justify-self-center justify-items-center">
+                    <div [style]="{'width': screenType != 'm'? '300px':'250px'}">
+                        <img [src]="exp.src" alt="exp_img">
+                    </div>
+                    <div style="height: 220px; " [style]="{'width': screenType != 'm'? '300px':'250px'}"
+                        class="bg-[#323846] rounded-b-3xl text-white text-center px-5 flex flex-col justify-between">
+                        <div class="font-extrabold lg:text-xl sm:text-lg pt-4">
+                            {{exp.date}}
+                        </div>
+                        <div class="lg:text-lg sm:text-base mt-5 ">
+                            <ng-container *ngIf="exp.desc">
+                                <div *ngFor="let line of exp.desc.split('\n'); ">
+                                    <!-- Display each line separately -->
+                                    {{ line }}
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="mt-5 pb-6 ">
+                            <button class="bg-[#01EEFF] text-white font-semibold lg:text-base sm:text-sm flex items-center py-1 px-5 
+                rounded-lg hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block "
+                                style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">
+                                Detail
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </ngx-slick-carousel>
+
+    </div>
+</div>

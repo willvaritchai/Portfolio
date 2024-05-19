@@ -1,27 +1,24 @@
 <nav class="flex items-center justify-between bg-[#151925] py-5 px-24 shadow-sm shadow-black">
     <div>
         <span class="text-2xl text-white font-extrabold hover:text-[#01EEFF] cursor-pointer"
-            routerLink="/">Portfolio</span>
+            (click)="scrollTo('#home')">Portfolio</span>
     </div>
     <div>
         <ul class="flex space-x-10 text-xl font-medium">
             <li>
-                <a routerLink="/" class="text-white hover:text-[#01EEFF]">Home</a>
+                <a (click)="scrollTo('#home')" class="text-white hover:text-[#01EEFF] cursor-pointer">Home</a>
             </li>
             <li>
-                <a routerLink="/about" class="text-white hover:text-[#01EEFF]">About</a>
+                <a (click)="scrollTo('#about')" class="text-white hover:text-[#01EEFF] cursor-pointer">About</a>
             </li>
             <li>
-                <a routerLink="/about" class="text-white hover:text-[#01EEFF]">Experience</a>
+                <a (click)="scrollTo('#exp')" class="text-white hover:text-[#01EEFF] cursor-pointer">Experience</a>
             </li>
             <li>
-                <a routerLink="/about" class="text-white hover:text-[#01EEFF]">Experience</a>
+                <a (click)="scrollTo('#proj')" class="text-white hover:text-[#01EEFF] cursor-pointer">Projects</a>
             </li>
             <li>
-                <a routerLink="/about" class="text-white hover:text-[#01EEFF]">Projects</a>
-            </li>
-            <li>
-                <a routerLink="/about" class="text-white hover:text-[#01EEFF]">Skills</a>
+                <a (click)="scrollTo('#skills')" class="text-white hover:text-[#01EEFF] cursor-pointer">Skills</a>
             </li>
         </ul>
     </div>

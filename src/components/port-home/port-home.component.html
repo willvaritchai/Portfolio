@@ -2,11 +2,11 @@
     <div class="grid lg:grid-cols-2 xl:pt-40 xl:space-x-36 md:pt-32 lg:space-x-20 md:grid-cols-1 sm:pt-28">
         <!-- left -->
         <div class="">
-            <span class="font-extrabold text-white lg:text-4xl sm:text-3xl" >Varitchai Surachaitanawat</span>
+            <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">Varitchai Surachaitanawat</span>
             <div class="font-extrabold text-3xl text-white sm:text-2xl">
                 I’m a <span class="text-[#01EEFF]">Full Stack Developer</span>
             </div>
-            <div class="mt-7 text-2xl sm:text-xl text-white" style="max-width: 517px;">
+            <div class="mt-7 text-2xl sm:text-xl text-white md:text-left sm:text-justify" style="max-width: 517px;">
                 As a <span class="font-bold">Full Stack Developer</span>, I'm fueled by my passion for coding and
                 driven
                 to constantly hone my skills with unwavering love❤️
@@ -49,19 +49,20 @@
             </div>
 
             <div class="mt-9 " [ngClass]="{'flex justify-center':screenType == 'm'}">
-                <button class="bg-[#01EEFF] text-white font-semibold text-2xl py-5 px-6 
-                rounded-3xl hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block ">
+                <button class="bg-[#01EEFF] text-white font-semibold md:text-2xl sm:text-xl md:py-4 md:px-6 sm:py-2 sm:px-3 
+                md:rounded-3xl sm:rounded-xl hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block "
+                    style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">
                     Download CV
                 </button>
             </div>
         </div>
         <!-- right -->
-        <div class="-mt-5 flex justify-center">
+        <div class="lg:-mt-8  sm:mt-9 flex justify-center">
             <!-- not mobile -->
             <img *ngIf="screenType != 'm'" style="max-width: 475px; max-height: 461px;"
                 src="../../assets/home/me_home.png" alt="me_home">
             <!-- screen: mobile -->
-            <img *ngIf="screenType == 'm'" class="mt-9" style="max-width: 300px; max-height: 300px;"
+            <img *ngIf="screenType == 'm'" class="" style="max-width: 250px; max-height: 250px;"
                 src="../../assets/home/me_home.png" alt="me_home">
         </div>
     </div>

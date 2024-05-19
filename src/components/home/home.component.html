@@ -1,7 +1,11 @@
-<navbar class="fixed w-full"></navbar>
+<navbar class="fixed top-0 z-10 w-full"></navbar>
 <!-- home -->
-<port-home [screenType]="screenType"></port-home>
+<port-home id="home" [screenType]="screenType"></port-home>
 <!-- about -->
-<div class="bg-[#323846]  flex justify-center">
-    test
-</div>
+<port-about id="about" [screenType]="screenType"></port-about>
+<!-- exp -->
+<port-exp id="exp" [screenType]="screenType"></port-exp>
+<!-- proj -->
+<port-proj id="proj" [screenType]="screenType"></port-proj>
+<!-- skills -->
+<skills id="skills" [screenType]="screenType"></skills>

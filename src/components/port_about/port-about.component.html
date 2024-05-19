@@ -1,0 +1,110 @@
+<style scoped>
+
+</style>
+<div class="bg-[#323846]  flex justify-center px-24 pb-28 w-full">
+    <div class="grid lg:grid-cols-2 xl:pt-40 xl:space-x-10  md:pt-32  md:grid-cols-1 sm:pt-28">
+        <!-- left -->
+        <div class="mt-10  " [ngClass]="{'flex justify-center': screenType=='m'}">
+            <!-- not mobile -->
+            <img *ngIf="screenType != 'm'" style="max-width: 416px; max-height: 416px;"
+                src="../../assets/about/0.about_profile.png" alt="me_about">
+            <!-- screen: mobile -->
+            <div *ngIf="screenType == 'm'">
+                <span class="font-extrabold text-white lg:text-4xl sm:text-3xl flex justify-center">About <span
+                        class="text-[#01EEFF]">Me</span></span>
+                <img class="mt-9" style="max-width: 250px; max-height: 250px;"
+                    src="../../assets/about/0.about_profile.png" alt="me_about">
+            </div>
+        </div>
+        <!-- right -->
+        <div class="">
+            <span class="font-extrabold text-white lg:text-4xl sm:text-3xl" *ngIf="screenType != 'm'">About <span
+                    class="text-[#01EEFF]">Me</span></span>
+            <div class="mt-7 text-2xl sm:text-xl text-white md:text-left sm:text-center" style="max-width: 517px;">
+                Students from the Faculty of Information Technology, <br *ngIf="screenType=='m'">IT branch, King Mongkut's University of
+                Technology Thonburi.
+            </div>
+            <div class="font-bold text-white lg:text-3xl sm:text-2xl mt-7" *ngIf="screenType != 'm'">Education</div>
+            <!-- bigger than mobile -->
+            <div class="flex flex-row justify-center mt-7 relative">
+                <div (click)="showEduDesc = true" (mouseenter)="showEduDesc = true" (mouseleave)="showEduDesc = false"
+                    [ngStyle]="{'width': screenType != 'm' ? '416px':'300px'}">
+                    <!-- 'max-width: 416px; max-height: 290px;' -->
+                    <!-- image -->
+                    <img *ngIf="edu == 'sit'" src="../../assets/about/1.SIT.png" alt="SIT">
+                    <img *ngIf="edu == 'skt'" src="../../assets/about/2.skt.png" alt="SKT">
+
+                    <!-- div box -->
+                    <!-- style="max-width: 416px; max-height: 145px;" -->
+                    <div *ngIf="showEduDesc" [ngStyle]="{'width': screenType != 'm' ? '416px':'300px'}"
+                        class="absolute inset-0 rounded-xl flex flex-row items-center justify-center  mx-auto  bg-[#01EEFF] bg-opacity-70 text-2xl font-bold ">
+                        <!-- SIT มหาลัย -->
+                        <div *ngIf="edu=='sit'" class="flex flex-row space-x-10">
+                            <div class="text-left text-white"
+                                style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">
+                                <div>
+                                    SIT, KMUTT
+                                </div>
+                                <div class="text-3xl">
+                                    My GPA: <span
+                                        style="text-shadow: -1px -1px 0 #323846, 1px -1px 0 #323846, -1px 1px 0 #323846, 1px 1px 0 #323846;">3.33</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <button (click)="downloadTs()">
+                                    <img src="../../assets/about/transcript.png" alt="load_transcript"
+                                        class="w-11 h-11">
+                                </button>
+                            </div>
+                        </div>
+                        <!-- SKT มัธยม -->
+                        <div *ngIf="edu=='skt'" class="text-center text-white "
+                            style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">
+                            <div>
+                                Suankularb Wittayalai <br>Thonburi School
+                            </div>
+                            <div class="text-3xl">
+                                My GPA: <span
+                                    style="text-shadow: -1px -1px 0 #323846, 1px -1px 0 #323846, -1px 1px 0 #323846, 1px 1px 0 #323846;">3.64</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="flex justify-center space-x-10">
+                <button (click)="edu = 'sit'" class=" w-12 h-4 rounded-xl mt-8"
+                    [ngClass]="{'bg-[#01EEFF]':edu == 'sit', 'bg-white':edu != 'sit'}"></button>
+                <button (click)="edu = 'skt'" class="bg-white w-12 h-4 rounded-xl mt-8"
+                    [ngClass]="{'bg-[#01EEFF]':edu == 'skt', 'bg-white':edu != 'skt'}"></button>
+            </div>
+            <!-- for mobile -->
+            <!-- <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7">
+                <button style="width: 46px;">
+                    <img src="../../assets/home/git.png" alt="github">
+                </button>
+                <button style="width: 46px;">
+                    <img src="../../assets/home/fb.png" alt="fb">
+                </button>
+                <button style="width: 46px;">
+                    <img src="../../assets/home/ig.png" alt="ig">
+                </button>
+                <button style="width: 46px;">
+                    <img src="../../assets/home/email.png" alt="email">
+                </button>
+                <button style="width: 46px;">
+                    <img src="../../assets/home/phone.png" alt="phone">
+                </button>
+            </div> -->
+
+            <!-- <div class="mt-9 " [ngClass]="{'flex justify-center':screenType == 'm'}">
+                <button class="bg-[#01EEFF] text-white font-semibold text-2xl py-5 px-6 
+                rounded-3xl hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block ">
+                    Download CV
+                </button>
+            </div> -->
+        </div>
+
+    </div>
+</div>
