@@ -88,9 +88,13 @@ export class SkillsComponent implements OnInit {
       src: '../../assets/skills/soft/4.time-man.png',
       name: 'time',
     },
-    
+
   ]
 
+
+  isClicked: any = null
+  isFade: boolean = false
+  brainType: any = null
   /**
    * Constructor
    *
@@ -132,4 +136,25 @@ export class SkillsComponent implements OnInit {
     this._changeDetectorRef.markForCheck()
   }
 
+
+  brainClick(type: number) {
+    // left brain
+    if (type == 0) {
+      this.isClicked = 0
+      setTimeout(() => {
+        this.isFade = true
+        this.brainType = 0
+        this._changeDetectorRef.markForCheck()
+
+      }, 100);
+    } else { // right brain
+      this.isClicked = 1
+      setTimeout(() => {
+        this.isFade = true
+        this.brainType = 1
+        this._changeDetectorRef.markForCheck()
+
+      }, 100);
+    }
+  }
 }
