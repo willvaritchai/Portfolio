@@ -23,25 +23,25 @@ export class MyExpComponent implements OnInit {
 
   expList: any[] = [
     {
-      src: '../../assets/exp/1.scm.png',
+      src: './assets/exp/1.scm.png',
       name: 'scm',
       date: 'Jan - Aug 2023',
       desc: 'Full Stack Developer\n(Internship program)\n SCM S Technologies Co., Ltd.'
     },
     {
-      src: '../../assets/exp/2.it28.png',
+      src: './assets/exp/2.it28.png',
       name: 'it28',
       date: 'Jul - Aug 2022',
       desc: 'Copyreader team: Database\nIT#28 Starter Pack'
     },
     {
-      src: '../../assets/exp/3.it27.png',
+      src: './assets/exp/3.it27.png',
       name: 'it27',
       date: 'Jul 2021',
       desc: 'Academic team: Database\nIT#27 Starter Pack'
     },
     {
-      src: '../../assets/exp/4.dolphin.png',
+      src: './assets/exp/4.dolphin.png',
       name: 'dolphin',
       date: 'Nov 2020',
       desc: 'Hello World - Dolphin\nFrontEnd team'

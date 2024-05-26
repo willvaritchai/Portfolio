@@ -23,27 +23,27 @@ export class ProjectsComponent implements OnInit {
 
   projList: any[] = [
     {
-      src: '../../assets/proj/1.modride.png',
+      src: './assets/proj/1.modride.png',
       name: 'modride',
       title: 'MOD RIDE - Ride Sharing in KMUTT'
     },
     {
-      src: '../../assets/proj/2.oasip.png',
+      src: './assets/proj/2.oasip.png',
       name: 'oasip',
       title: 'OASIP: Intregrated Project'
     },
     {
-      src: '../../assets/proj/3.funbook.png',
+      src: './assets/proj/3.funbook.png',
       name: 'funbook',
       title: 'FUNBOOK - online book store'
     },
     {
-      src: '../../assets/proj/4.wish_grade.png',
+      src: './assets/proj/4.wish_grade.png',
       name: 'wyg',
       title: 'Wish Your Grade - grade calculator'
     },
     {
-      src: '../../assets/proj/5.obon.png',
+      src: './assets/proj/5.obon.png',
       name: 'obon',
       title: 'OBON Festival Project'
     },

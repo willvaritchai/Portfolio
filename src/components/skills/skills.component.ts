@@ -23,49 +23,49 @@ export class SkillsComponent implements OnInit {
 
   hardSkillList: any[] = [
     {
-      src: '../../assets/skills/hard/1.js.png',
+      src: './assets/skills/hard/1.js.png',
       name: 'js',
     },
     {
-      src: '../../assets/skills/hard/2.ts.png',
+      src: './assets/skills/hard/2.ts.png',
       name: 'ts',
     },
     {
-      src: '../../assets/skills/hard/3.tailwind.png',
+      src: './assets/skills/hard/3.tailwind.png',
       name: 'tailwind',
     },
     {
-      src: '../../assets/skills/hard/4.angular.png',
+      src: './assets/skills/hard/4.angular.png',
       name: 'angular',
     },
     {
-      src: '../../assets/skills/hard/5.vue.png',
+      src: './assets/skills/hard/5.vue.png',
       name: 'vue',
     },
     {
-      src: '../../assets/skills/hard/6.java.png',
+      src: './assets/skills/hard/6.java.png',
       name: 'java',
     },
     {
-      src: '../../assets/skills/hard/7.springboot.png',
+      src: './assets/skills/hard/7.springboot.png',
       name: 'springboot',
     },
     {
-      src: '../../assets/skills/hard/8.sql.png',
+      src: './assets/skills/hard/8.sql.png',
       name: 'sql',
     },
     {
-      src: '../../assets/skills/hard/9.github.png',
+      src: './assets/skills/hard/9.github.png',
       name: 'github',
     },
   ]
   hardSkillList2: any[] = [
     {
-      src: '../../assets/skills/hard/10.docker.png',
+      src: './assets/skills/hard/10.docker.png',
       name: 'docker',
     },
     {
-      src: '../../assets/skills/hard/11.linux.png',
+      src: './assets/skills/hard/11.linux.png',
       name: 'linux',
     },
 
@@ -73,19 +73,19 @@ export class SkillsComponent implements OnInit {
 
   softSkillList: any[] = [
     {
-      src: '../../assets/skills/soft/1.leader.png',
+      src: './assets/skills/soft/1.leader.png',
       name: 'leader',
     },
     {
-      src: '../../assets/skills/soft/2.commu.png',
+      src: './assets/skills/soft/2.commu.png',
       name: 'commu',
     },
     {
-      src: '../../assets/skills/soft/3.solving.png',
+      src: './assets/skills/soft/3.solving.png',
       name: 'solving',
     },
     {
-      src: '../../assets/skills/soft/4.time-man.png',
+      src: './assets/skills/soft/4.time-man.png',
       name: 'time',
     },
 
