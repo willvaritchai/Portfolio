@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HomeRoutes } from './home.routing';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { MyExpComponent } from '../port_exp/port-exp.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ProjectsComponent } from '../port_proj/port_proj.component';
 import { SkillsComponent } from '../skills/skills.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -29,7 +30,8 @@ import { SkillsComponent } from '../skills/skills.component';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    MatMenuModule,
   ],
 })
 export class HomeModule { }

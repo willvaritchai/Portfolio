@@ -38,8 +38,14 @@ export class PortHomeComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  text: string[] = ['']
 
+  ngOnInit(): void {
+    setTimeout(() => {
+
+      this.text = ['Full Stack Developer'];
+      console.log(this.text);
+    }, 2000);
   }
 
 }

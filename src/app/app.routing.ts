@@ -4,7 +4,7 @@ export const appRoutes: Route[] = [
     {
         path: '',
         children: [
-            { path: 'portfolio', loadChildren: () => import('src/components/home/home.module').then(m => m.HomeModule) },
+            { path: '', loadChildren: () => import('src/components/home/home.module').then(m => m.HomeModule) },
         ]
     },
 

@@ -46,8 +46,7 @@ export class PortAboutComponent implements OnInit {
   }
 
   downloadTs(){
-    const fileName = 'Transcript_Varitchai.pdf'; // Replace with the name of your file
-    const filePath = `./assets/about/${fileName}`; // Path to your file in the assets folder
+    const filePath = `https://drive.google.com/file/d/1j8y7cUW4Pcct8C8xubzz33Ib5xXx3Hft/view?usp=sharing`; // Path to your file in the assets folder
     window.open(filePath, '_blank');
   }
 }
