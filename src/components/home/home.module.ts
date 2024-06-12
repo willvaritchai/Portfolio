@@ -13,6 +13,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ProjectsComponent } from '../port_proj/port_proj.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { DialogComponent } from '../dialogs/dialogs.component';
 
 
 
@@ -23,7 +24,8 @@ import { MatMenuModule } from '@angular/material/menu';
     PortAboutComponent,
     MyExpComponent,
     ProjectsComponent,
-    SkillsComponent
+    SkillsComponent,
+    DialogComponent
   ],
   imports: [
     RouterModule.forChild(HomeRoutes),

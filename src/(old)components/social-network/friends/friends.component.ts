@@ -6,7 +6,7 @@ import { Subject, filter, takeUntil } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { enumFriendStatus } from 'src/environment-variables/variables.service';
 import { AppComponent } from 'src/app/app.component';
-import { ConfirmDialogComponent } from 'src/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/components/dialogs/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 declare var window: any;
 @Component({

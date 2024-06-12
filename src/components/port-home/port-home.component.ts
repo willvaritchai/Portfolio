@@ -48,4 +48,34 @@ export class PortHomeComponent implements OnInit {
     }, 2000);
   }
 
+
+  // open(linkType: string = '') {
+  //   let filePath: string = ''
+  //   switch (linkType) {
+  //     case 'git':
+  //       filePath = `https://github.com/willvaritchai`;
+  //       break;
+  //     case 'fb':
+  //       filePath = `https://www.facebook.com/pas.surachai`;
+  //       break;
+  //     case 'email':
+  //       filePath = `varitchai.will@gmail.com`;
+  //       break;
+  //     case 'tel':
+  //       filePath = `0814985488`;
+  //       break;
+  //   }
+  //   if (linkType != 'tel' && linkType != 'email') {
+  //     window.open(filePath, '_blank');
+  //     return
+  //   }
+  //   if (linkType == 'email') {
+  //     window.open('mailto:' + filePath, '_blank');
+  //     return
+  //   }
+  //   if (linkType == 'tel') {
+  //     window.open('tel:' + filePath);
+  //     return
+  //   }
+  // }
 }

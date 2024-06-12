@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { CookieService } from 'ngx-cookie-service';
-import { ConfirmDialogComponent } from 'src/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/components/dialogs/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppComponent } from 'src/app/app.component';
 import { ValidateFormsService } from 'src/services/ValidateFormService.service';

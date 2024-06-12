@@ -1,5 +1,5 @@
 <style scoped>    
-.dynamic-txts{
+/* .dynamic-txts{
     position: relative;
 }
 .dynamic-txts::after{
@@ -21,7 +21,7 @@
     100%{
         left: 0;
     }
-}
+} */
 </style>
 <div class="bg-[#151925]  flex justify-center px-24 pb-28 w-full">
     <div class="grid lg:grid-cols-2 xl:pt-40 xl:space-x-36 md:pt-32 lg:space-x-20 md:grid-cols-1 sm:pt-28">
@@ -30,7 +30,7 @@
             <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">Varitchai Surachaitanawat</span>
             <div class="font-extrabold text-3xl text-white sm:text-2xl">
                 I’m a <span class="text-[#01EEFF] dynamic-txts">
-                    Full Stack Developer
+                    <br *ngIf="screenType == 'm'">Full Stack Developer
                 </span>
             </div>
             <div class="mt-7 text-2xl sm:text-xl text-white md:text-left sm:text-justify" style="max-width: 517px;">
@@ -40,39 +40,39 @@
             </div>
             <!-- bigger than mobile -->
             <div *ngIf="screenType != 'm'" class="flex flex-row space-x-14 mt-7">
-                <button style="width: 46px;">
+                <a style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <a style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
-                </button>
-                <button style="width: 46px;">
+                </button> -->
+                <a style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <a style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
-                </button>
+                </a>
             </div>
             <!-- for mobile -->
             <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7">
-                <button style="width: 46px;">
+                <a style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <a style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
-                </button>
-                <button style="width: 46px;">
+                </button> -->
+                <a style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
-                </button>
-                <button style="width: 46px;">
+                </a>
+                <a style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
-                </button>
+                </a>
             </div>
 
             <div class="mt-9 " [ngClass]="{'flex justify-center':screenType == 'm'}">

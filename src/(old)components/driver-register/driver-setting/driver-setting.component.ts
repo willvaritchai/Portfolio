@@ -9,7 +9,7 @@ import { DriverRegisterService } from '../driver-register.service';
 import { AppComponent } from 'src/app/app.component';
 import * as e from 'cors';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/components/dialogs/confirm-dialog.component';
 import { ValidateFormsService } from 'src/services/ValidateFormService.service';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 

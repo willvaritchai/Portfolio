@@ -6,7 +6,7 @@ import { takeUntil, Subject, Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/components/dialogs/confirm-dialog.component';
 import { AppComponent } from 'src/app/app.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { AccountProfileService } from 'src/components/account-profile/account-profile.service';

@@ -11,7 +11,7 @@ import { takeUntil, Subject, Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/components/dialogs/confirm-dialog.component';
 import { AppComponent } from 'src/app/app.component';
 import { imgAsset } from 'src/environment-variables/img.asset.service';
 import { FilesManagementService } from 'src/services/FilesManagementService.service';

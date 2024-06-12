@@ -29,7 +29,7 @@ export class NotFoundComponent implements OnInit {
   }
 
   goHome(url:string = '') {
-    this._router.navigate(['portfolio'])
+    this._router.navigate([''])
   }
 
 

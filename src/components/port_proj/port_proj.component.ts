@@ -6,6 +6,8 @@ import { Subject, interval } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import * as jQuery from 'jquery';
+import { DialogComponent } from '../dialogs/dialogs.component';
+import { MatDialog } from '@angular/material/dialog';
 
 declare var window: any;
 @Component({
@@ -18,7 +20,6 @@ export class ProjectsComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-  private isMsalInitialized: boolean = false;
   @Input() screenType: string | undefined;
 
   projList: any[] = [
@@ -61,6 +62,7 @@ export class ProjectsComponent implements OnInit {
     private cookieService: CookieService,
     private _changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
+    private dialog: MatDialog,
 
   ) {
 
@@ -88,4 +90,16 @@ export class ProjectsComponent implements OnInit {
     };
   }
 
+  openDialog(projDetail: any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      autoFocus: false,
+      width: '100%',
+      data: { type: 'proj', detail: projDetail }
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == true) {
+      }
+    });
+  }
 }

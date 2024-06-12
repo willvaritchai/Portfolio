@@ -1,0 +1,86 @@
+<style scoped>
+  .tab-indent {
+    padding-left: 1em;
+    /* Adjust as needed */
+  }
+</style>
+<div class="text-center">
+  <h2 [ngClass]="{'bg-[#151925]': receivedData.type == 'proj', 'bg-[#323846]':receivedData.type == 'exp'}"
+    class="px-4 py-2 md:text-xl sm:text-lg text-center  font-bold mb-4  text-white">
+    {{receivedData.detail.title}}
+  </h2>
+  <div class="px-4 overflow-y-auto max-h-96 md:text-lg sm:text-base">
+    <!-- 🔍 experience-page --------------------------------------------------------------- -->
+    <div *ngIf="receivedData.type == 'exp'">
+      <p class="font-semibold italic">{{receivedData.detail.date}}</p>
+      <div class="flex justify-center my-4">
+        <img class="border rounded-xl md:w-96" [src]="receivedData.detail.img" alt="exp_img">
+      </div>
+      <!-- content -->
+      <div class="flex justify-center">
+        <!-- แยกเนื้อหา content ตามชื่อของมัน -->
+        <div *ngIf="receivedData.detail.name == 'scm'" class="text-center md:w-5/6">
+          This is SCM Experience Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio et sequi dolores omnis sit
+          saepe vero maiores nobis eveniet, vel beatae ratione, quas debitis asperiores a quod iste officia ab?
+        </div>
+        <div *ngIf="receivedData.detail.name == 'it28'" class="text-center md:w-5/6">
+          This is it28 Experience Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio et sequi dolores omnis sit
+          saepe vero maiores nobis eveniet, vel beatae ratione, quas debitis asperiores a quod iste officia ab?
+        </div>
+        <div *ngIf="receivedData.detail.name == 'it27'" class="text-center md:w-5/6">
+          This is it27 Experience Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio et sequi dolores omnis sit
+          saepe vero maiores nobis eveniet, vel beatae ratione, quas debitis asperiores a quod iste officia ab?
+        </div>
+        <div *ngIf="receivedData.detail.name == 'dolphin'" class="text-center md:w-5/6">
+          This is dolphin Experience Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio et sequi dolores omnis sit
+          saepe vero maiores nobis eveniet, vel beatae ratione, quas debitis asperiores a quod iste officia ab?
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- 🔍 projects-page --------------------------------------------------------------- -->
+    <div *ngIf="receivedData.type == 'proj'">
+      <div class="flex justify-center my-4">
+        <img class="border rounded-xl md:w-96" [src]="receivedData.detail.src" alt="exp_img">
+      </div>
+      <!-- content -->
+      <div class="flex justify-center">
+        <!-- แยกเนื้อหา content ตามชื่อของมัน -->
+        <div *ngIf="receivedData.detail.name == 'modride'" class="text-center md:w-5/6">
+          This is modride Projects Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod et, eius quia repudiandae
+          mollitia labore perferendis. Vel dignissimos explicabo placeat labore eligendi unde pariatur, culpa, itaque
+          quibusdam quaerat rerum a.
+        </div>
+        <div *ngIf="receivedData.detail.name == 'oasip'" class="text-center md:w-5/6">
+          This is oasip Projects Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod et, eius quia repudiandae
+          mollitia labore perferendis. Vel dignissimos explicabo placeat labore eligendi unde pariatur, culpa, itaque
+          quibusdam quaerat rerum a.
+        </div>
+        <div *ngIf="receivedData.detail.name == 'funbook'" class="text-center md:w-5/6">
+          This is funbook Projects Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod et, eius quia repudiandae
+          mollitia labore perferendis. Vel dignissimos explicabo placeat labore eligendi unde pariatur, culpa, itaque
+          quibusdam quaerat rerum a.
+        </div>
+        <div *ngIf="receivedData.detail.name == 'wyg'" class="text-center md:w-5/6">
+          This is wish your grade Projects Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod et, eius quia repudiandae
+          mollitia labore perferendis. Vel dignissimos explicabo placeat labore eligendi unde pariatur, culpa, itaque
+          quibusdam quaerat rerum a.
+        </div>
+        <div *ngIf="receivedData.detail.name == 'obon'" class="text-center md:w-5/6">
+          This is obon Projects Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod et, eius quia repudiandae
+          mollitia labore perferendis. Vel dignissimos explicabo placeat labore eligendi unde pariatur, culpa, itaque
+          quibusdam quaerat rerum a.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="px-4 py-2 mt-4 text-right  text-white"
+    [ngClass]="{'bg-[#151925]': receivedData.type == 'proj', 'bg-[#323846]':receivedData.type == 'exp'}">
+    <button (click)="closeDialog()" class="px-2 py-1 bg-[#01EEFF]  rounded active:bg-[#00B6C3] font-semibold"><span
+        style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">Close</span></button>
+  </div>
+</div>
