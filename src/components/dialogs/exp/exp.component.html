@@ -1,0 +1,230 @@
+<div *ngIf="receivedData.type == 'exp'">
+  <p class="font-semibold italic">{{receivedData.detail.date}}</p>
+  <div class="flex justify-center my-4">
+    <img class="object-cover border rounded-xl md:w-96" [src]="receivedData.detail.img" alt="exp_img">
+  </div>
+  <!-- content -->
+  <div class="flex justify-center">
+    <!-- แยกเนื้อหา content ตามชื่อของมัน -->
+    <div *ngIf="receivedData.detail.name == 'dday'"
+      class=" md:w-5/6 font-normal md:text-justify  sm:text-center md:text-xl sm:text-base text-black">
+      <p class>
+        SIT D-Day is an event where 4th-year IT students from KMUTT present their final projects to attendees,
+        including students, professors, committee members, and various IT companies.
+      </p>
+      <p class="mt-7">
+        The project that my team presented is called Modride: Ride Sharing in KMUTT. This project is a ride-sharing
+        web application for KMUTT users to find travel companions to similar destinations. It allows users to share
+        trips, split costs, reduce traffic, and foster connections between different faculties.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/2.png" alt="modride#2">
+      </div>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        responsibility
+      </p>
+      <p class="mt-7">
+        Every member of the Modride team had to take turns presenting the project to attendees, explaining the
+        project goals, core features, technology stack, and the system infrastructure.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/3.png" alt="modride#3">
+      </div>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/4.png" alt="modride#4">
+      </div>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/5.png" alt="modride#5">
+      </div>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/6.png" alt="modride#6">
+      </div>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        experience gained
+      </p>
+      <p class="mt-7">
+        The skill of presenting work to attendees prepares us and builds familiarity for real-world work in the
+        future.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/0.modride/7.png" alt="modride#7">
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'scm'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        Interned at SCM S Technologies as a Full Stack Developer, coding Backend controllers for API requests and
+        using Angular framework for Frontend client displays.
+      </p>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        responsibility
+      </p>
+      <p class="mt-7">
+        <span class="font-bold text-[#0500FF]">The hospital logistic system management</span> involves developing a
+        system for dispatching ambulances to transport patients, based on origin-destination points or other routes,
+        to ensure a systematic transfer process. This system enhances the security of information and improves the
+        management of the logistics system.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/1.png" alt="scm#1">
+      </div>
+      <p class="mt-7">
+        <span class="font-bold text-[#0500FF]">The infrastructure information management system</span> collects and
+        consolidates risk data from various systems, including infrastructure, websites, and mobile applications.
+        This data is used for assessment, inspection, and forwarding risk evaluation results.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/2.png" alt="scm#2">
+      </div>
+      <p class="mt-7">
+        In addition to the basic CRUD operations for managing risk data, I was responsible for the export report
+        feature to ensure accurate results using APACHE POI. This involved exporting Excel files to provide
+        preliminary project information for risk assessment.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/3.png" alt="scm#3">
+      </div>
+      <p class="mt-7">
+        <span class="font-bold text-[#0500FF]">The organizational evaluation system</span> utilizes organizational
+        data for inspection, evaluation, audit creation, or preparation of audit plans for implementation and
+        follow-up on audit results.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/4.png" alt="scm#4">
+      </div>
+      <p class="mt-7">
+        Managing CRUD operations for master data, including displaying, editing, and adding information.
+      </p>
+      <div class="flex justify-center mt-7 mb-2">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/5.png" alt="scm#5">
+      </div>
+      <div class="flex justify-center mb-9">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/6.png" alt="scm#6">
+      </div>
+      <p class="mt-7">
+        Content management, including news updates and displaying news/announcements.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/7.png" alt="scm#7">
+      </div>
+      <p class="mt-7">
+        Displaying information and details of news items.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/8.png" alt="scm#8">
+      </div>
+      <p class="mt-7">
+        Showing calendar data linked to announcements and news.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/1.scm/9.png" alt="scm#9">
+      </div>
+      <p class="mt-7">
+        <span class="font-bold text-[#0500FF]">Overall</span>, I gained various experiences from my internship,
+        acquiring work skills and real-world experience that have helped me improve and further develop my
+        abilities.
+      </p>
+      <div class="flex justify-center mt-7 mb-2">
+        <button (click)="openFile('scm')">
+          <mat-icon [svgIcon]="'general_icons:pdf'" style="min-width: 59px; min-height: 59px;"></mat-icon>
+        </button>
+      </div>
+      <p class="text-center text-base">
+        <button (click)="openFile('scm')">
+          Proof of Internship
+        </button>
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'it28'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        IT#28 Starter Pack is a training program designed to provide basic IT skills to junior students before they
+        begin their
+        studies in the Faculty of Information Technology at KMUTT.
+      </p>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        responsibility
+      </p>
+      <p class="mt-7">
+        My position is the <span class="font-bold text-[#0500FF]">proofreader</span>, responsible for reviewing
+        educational content on databases provided by the academic team. This content is used for training and
+        teaching junior students participating in the Faculty of Information Technology's program at KMUTT.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'it27'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        IT#27 Starter Pack is a training program designed to provide basic IT skills to junior students before they
+        begin their studies in the Faculty of Information Technology at KMUTT.
+      </p>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        responsibility
+      </p>
+      <p class="mt-7">
+        My position is in the <span class="font-bold text-[#0500FF]">academic team</span>, responsible for preparing
+        content and documents on databases and training the junior students participating in the Faculty of
+        Information Technology's program at KMUTT.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'dolphin'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        Hello World is a skill-up training program for junior students in the Faculty of Information Technology at
+        KMUTT. The skills learned from the program include Front-End, Web Design, Game Development, Game Design, and
+        Infrastructure.
+      </p>
+      <p class="mt-7 font-bold md:text-left sm:text-center">
+        experience gained
+      </p>
+      <p class="mt-7">
+        I participated in the Front-End training, which involved learning Front-End development using the React
+        framework. My team was tasked with developing a website that matched the design team's theme, which had to
+        align with a festival theme. My team was assigned the Obon Festival, a Buddhist festival in Japan.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/2.helloworld/1.png"
+          alt="helloworld#1">
+      </div>
+      <p class="mt-7">
+        Examples of source code and work...
+      </p>
+      <div class="grid xl:grid-cols-2 lg:grid-cols-1 justify-center ">
+        <div class="flex justify-center">
+          <img class="object-cover border rounded-xl md:w-72 xl:h-72  mt-7" src="./assets/exp/2.helloworld/2.png"
+            alt="helloworld#2">
+        </div>
+        <div class="flex justify-center">
+          <img class="object-cover border rounded-xl md:w-72 xl:h-72 mt-7" src="./assets/exp/2.helloworld/3.png"
+            alt="helloworld#3">
+        </div>
+      </div>
+      <p class="mt-7">
+        On the presentation day, each team must present their work according to the assigned task, with judges
+        evaluating the work.
+      </p>
+      <div class="grid xl:grid-cols-3 lg:grid-cols-1 justify-center ">
+        <div class="flex justify-center">
+          <img class="object-cover border rounded-xl md:w-72 xl:h-72  mt-7" src="./assets/exp/2.helloworld/4.png"
+            alt="helloworld#4">
+        </div>
+        <div class="flex justify-center">
+          <img class="object-cover border rounded-xl md:w-72 xl:h-72 mt-7" src="./assets/exp/2.helloworld/5.png"
+            alt="helloworld#5">
+        </div>
+        <div class="flex justify-center">
+          <img class="object-cover border rounded-xl md:w-72 xl:h-72 mt-7" src="./assets/exp/2.helloworld/6.png"
+            alt="helloworld#6">
+        </div>
+      </div>
+      <p class="mt-7">
+        I gained valuable knowledge and experience from participating in this program. It was a significant step in
+        helping me learn and understand the field of web development, especially using frameworks to facilitate the
+        process. Additionally, an indispensable aspect was the friendships I gained with my friends and my seniors.
+      </p>
+    </div>
+  </div>
+</div>

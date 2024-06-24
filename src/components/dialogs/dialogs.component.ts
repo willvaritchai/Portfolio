@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 declare var window: any
 
@@ -9,39 +9,48 @@ declare var window: any
 
 })
 export class DialogComponent implements OnInit {
-    detail: String = '';
-
-    // admin-approval-driver
-    approvalOptionList: any[] = [{ status: 'อนุมัติคำขอ', approval_status: 1 }, { status: 'ไม่อนุมัติคำขอ', approval_status: 2 }]
-    approvalStatus: any = 'เลือกสถานะ'
-    deniedDetail: any = null
+    screenType: string = ''
 
     // ----------------------------
     constructor(
         private dialogRef: MatDialogRef<DialogComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         @Inject(MAT_DIALOG_DATA) public receivedData: any,
-        // @Inject(MAT_DIALOG_DATA) public dialogData: any,
-        // @Inject(MAT_DIALOG_DATA) public userId: any,
     ) { }
 
     ngOnInit(): void {
+        this.checkScreenSize();
+
         this._changeDetectorRef.markForCheck()
         console.log(this.receivedData);
 
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+        // Call your function to process screen size changes here
+        this.checkScreenSize();
+    }
+
+    checkScreenSize() {
+        const width = window.innerWidth;
+        console.log(width);
+
+
+        if (width >= 1536) {
+            this.screenType = 'pc'
+        } else if (width >= 600) {
+            this.screenType = 'lt'
+        } else {
+            this.screenType = 'm'
+        }
+        console.log(this.screenType);
+
+        this._changeDetectorRef.markForCheck()
     }
 
     closeDialog(): void {
         this.dialogRef.close();
     }
 
-    confirm(): void {
-        console.log('normal-confirm');
-
-        let confirmStatus = true
-        this.dialogRef.close(confirmStatus);
-    }
-   
-
-    
 }

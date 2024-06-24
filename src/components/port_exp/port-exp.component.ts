@@ -25,6 +25,14 @@ export class MyExpComponent implements OnInit {
 
   expList: any[] = [
     {
+      src: './assets/exp/0.modride.png',
+      img: './assets/exp/0.modride/1.png',
+      name: 'dday',
+      date: '29 Apr 2024',
+      desc: 'IT BANGMOD D-Day 2024',
+      title: 'IT BANGMOD D-Day 2024'
+    },
+    {
       src: './assets/exp/1.scm.png',
       img: './assets/exp/1.1scm.png',
       name: 'scm',

@@ -7,12 +7,14 @@
             <div class="py-10 bg-[#323846] rounded-b-3xl">
                 <div class="grid grid-cols-3  justify-items-center">
                     <div *ngFor="let hardSkill of hardSkillList; let i = index" [ngClass]="{'mt-8':i>=3}">
-                        <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                        <img class="cursor-pointer" (click)="openDialog(hardSkill)"
+                            style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
                     </div>
                 </div>
                 <div class="flex justify-center space-x-20">
-                    <div *ngFor="let hardSkill of hardSkillList2;  let i = index" class="mt-8 space-y-10">
-                        <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                    <div *ngFor="let hardSkill2 of hardSkillList2;  let i = index" class="mt-8 space-y-10">
+                        <img class="cursor-pointer" (click)="openDialog(hardSkill2)"
+                            style="max-width: 73px; max-height: 68px;" [src]="hardSkill2.src" alt="hardSkill">
                     </div>
                 </div>
             </div>
@@ -30,7 +32,8 @@
             <div class="py-16 bg-[#323846] rounded-b-3xl">
                 <div class="grid grid-cols-2  justify-items-center">
                     <div *ngFor="let softSkill of softSkillList; let i = index" [ngClass]="{'mt-16':i>=2}">
-                        <img style="max-width: 134px; max-height: 125px;" [src]="softSkill.src" alt="softSkill">
+                        <img class="cursor-pointer" (click)="openDialog(softSkill)"
+                            style="max-width: 134px; max-height: 125px;" [src]="softSkill.src" alt="softSkill">
                     </div>
                 </div>
             </div>
@@ -67,12 +70,14 @@
                 <div class="py-10 bg-[#323846] rounded-b-3xl">
                     <div class="grid grid-cols-3  justify-items-center">
                         <div *ngFor="let hardSkill of hardSkillList; let i = index" [ngClass]="{'mt-8':i>=3}">
-                            <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                            <img class="" (click)="openDialog(hardSkill)" style="max-width: 73px; max-height: 68px;"
+                                [src]="hardSkill.src" alt="hardSkill">
                         </div>
                     </div>
                     <div class="flex justify-center space-x-20">
-                        <div *ngFor="let hardSkill of hardSkillList2;  let i = index" class="mt-8 space-y-10">
-                            <img style="max-width: 73px; max-height: 68px;" [src]="hardSkill.src" alt="hardSkill">
+                        <div *ngFor="let hardSkill2 of hardSkillList2;  let i = index" class="mt-8 space-y-10">
+                            <img class="" (click)="openDialog(hardSkill2)" style="max-width: 73px; max-height: 68px;"
+                                [src]="hardSkill2.src" alt="hardSkill">
                         </div>
                     </div>
                 </div>
@@ -85,7 +90,8 @@
                 <div class="py-16 bg-[#323846] rounded-b-3xl">
                     <div class="grid grid-cols-2  justify-items-center">
                         <div *ngFor="let softSkill of softSkillList; let i = index" [ngClass]="{'mt-16':i>=2}">
-                            <img style="max-width: 134px; max-height: 125px;" [src]="softSkill.src" alt="softSkill">
+                            <img class="" (click)="openDialog(softSkill)" style="max-width: 134px; max-height: 125px;"
+                                [src]="softSkill.src" alt="softSkill">
                         </div>
                     </div>
                 </div>

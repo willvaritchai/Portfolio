@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
 
     if (width >= 1536) {
       this.screenType = 'pc'
-    } else if (width >= 1280) {
+    } else if (width >= 600) {
       this.screenType = 'lt'
     } else {
       this.screenType = 'm'

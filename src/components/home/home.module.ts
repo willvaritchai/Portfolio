@@ -14,6 +14,9 @@ import { ProjectsComponent } from '../port_proj/port_proj.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogComponent } from '../dialogs/dialogs.component';
+import { ExpDialogComponent } from '../dialogs/exp/exp.component';
+import { ProjDialogComponent } from '../dialogs/proj/proj.component';
+import { SkillsDialogComponent } from '../dialogs/skills-dialog/skills-dialog.component';
 
 
 
@@ -25,7 +28,10 @@ import { DialogComponent } from '../dialogs/dialogs.component';
     MyExpComponent,
     ProjectsComponent,
     SkillsComponent,
-    DialogComponent
+    DialogComponent,
+    ExpDialogComponent,
+    ProjDialogComponent,
+    SkillsDialogComponent
   ],
   imports: [
     RouterModule.forChild(HomeRoutes),

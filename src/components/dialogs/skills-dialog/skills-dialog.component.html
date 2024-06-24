@@ -1,0 +1,341 @@
+<div *ngIf="receivedData.type == 'skill'">
+  <div class="flex justify-center my-4">
+    <img class="object-cover  md:w-80" [src]="receivedData.detail.img" alt="skills_img">
+  </div>
+  <div class="flex justify-center">
+    <div *ngIf="receivedData.detail.name == 'js'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Java Script
+      </p>
+      <p class="text-justify">
+        I am capable of developing web applications using JavaScript skills for the system's responsive components. This
+        includes creating functions to respond to user actions.
+      </p>
+      <div class="flex justify-center my-7">
+        <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/1.js/1.png" alt="js">
+      </div>
+      <p class="text-justify">
+        I have a good understanding of important JavaScript functions such as array management (filter, includes, etc.)
+        and for loops.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'ts'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Type Script
+      </p>
+      <p class="text-justify">
+        I possess skills in developing web applications with TypeScript, a high-level programming language crucial for
+        building systems in conjunction with the Angular Framework.
+      </p>
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 md:my-7 ">
+        <div class="flex justify-center md:mt-0 sm:mt-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/2.ts/1.png" alt="ts#1">
+        </div>
+        <div class="flex justify-center md:my-0 sm:my-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/2.ts/2.png" alt="ts#2">
+        </div>
+      </div>
+      <p class="text-justify">
+        Basic TypeScript operations include defining data types when declaring variables to ensure their functionality
+        meets requirements and efficiently managing variables.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'tailwind'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Tailwind CSS
+      </p>
+      <p class="text-justify">
+        I am capable of using Tailwind CSS for website styling by defining Tailwind classes in HTML tag attributes.
+        Additionally, I understand how to configure various Tailwind extensions in <span
+          class="font-bold italic">tailwind.config.js</span>, such as setting up keyframes.
+      </p>
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 md:my-7 ">
+        <div class="flex justify-center md:mt-0 sm:mt-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/3.tailwind/1.png"
+            alt="tailwind#1">
+        </div>
+        <div class="flex justify-center md:my-0 sm:my-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/3.tailwind/2.png"
+            alt="tailwind#2">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'angular'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Angular Framework
+      </p>
+      <p class="text-justify">
+        I am skilled in Angular development, making it ideal for large or complex projects due to its extensive add-ons
+        and services. I proficiently manage components, modules, and key Angular features such as directives, services,
+        modules, and Reactive Forms.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/4.angular/1.png" alt="angular#1">
+      </div>
+      <p class="text-center">
+        Example of module management
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/4.angular/2.png" alt="angular#2">
+      </div>
+      <p class="text-center">
+        Example of using ngIf, which employs if conditions to display HTML tags based on conditions.
+      </p>
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 md:my-7 ">
+        <div class="flex justify-center md:mt-0 sm:mt-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/4.angular/3.png"
+            alt="angular#3">
+        </div>
+        <div class="flex justify-center md:my-0 sm:my-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/4.angular/4.png"
+            alt="angular#4">
+        </div>
+      </div>
+      <p class="text-center">
+        Example of setting up formBuilder for efficient management of Reactive Forms with HTML inputs.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'vue'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Vue Framework
+      </p>
+      <p class="text-justify">
+        I develop web applications with Vue Framework, known for its ease and convenience. I use key Vue functions such
+        as v-for, v-if, v-model, @click, and leverage the essential Single-File Components (SFC) structure within this
+        framework.
+      </p>
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 md:my-7 ">
+        <div class="flex justify-center md:mt-0 sm:mt-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/5.vue/1.png" alt="vue#1">
+        </div>
+        <div class="flex justify-center md:my-0 sm:my-7 justify-items-center items-center justify-self-center">
+          <img class="object-cover border rounded-xl md:w-full" src="./assets/skills/hard/5.vue/2.png" alt="vue#2">
+        </div>
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Vue's two-way binding functions such as v-for, v-if, v-model,
+        and @click facilitate convenient control
+        over HTML tag operations.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/5.vue/3.png" alt="vue#3">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Vue operations within the SFC structure allow coding under the
+        script tag, managing HTML under the template tag, and styling components under the style tag, all in a single
+        file.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'java'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Java Programming
+      </p>
+      <p class="text-justify">
+        I have skills in developing web services or backend systems using Java, alongside the Spring Boot Framework. I
+        understand Java programming concepts such as encapsulation, variable management, and method/function definition
+        for efficient coding.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/6.java/1.png" alt="java#1">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Include using HashMap as a utility to manage object mapping to
+        specified keys.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/6.java/2.png" alt="java#2">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Using for-each to loop through array object lengths for data
+        management, as loops and arrays are essential and frequently used in Java programming.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'springboot'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Spring Boot Framework
+      </p>
+      <p class="text-justify">
+        I develop web services and backend systems using Java with the Spring Boot Framework, proficient in creating
+        RESTful APIs and managing database systems.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/7.springboot/1.png"
+          alt="spring#1">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Include database system connection configurations in
+        application.properties
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/7.springboot/2.png"
+          alt="spring#2">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples:</span> Using annotations like @RestController and @RequestMapping for
+        creating RESTful APIs to handle requests from clients.
+      </p>
+      <div class="flex justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/7.springboot/3.png"
+          alt="spring#3">
+      </div>
+      <p class="text-center">
+        <span class="font-bold italic">Examples</span> of CRUD annotations for handling API requests and responses to
+        clients.
+      </p>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'sql'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        MySQL DBMS
+      </p>
+      <p class="text-justify">
+        I am skilled in MySQL Database Management System (DBMS), with understanding in database connection, query
+        management, triggers, stored procedures, secure view creation, and database backup for data security and
+        structure.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/8.sql/1.png" alt="mysql#1">
+        <p class="md:text-base sm:text-sm">Image by DC Studio on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'git'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Git Version Control
+      </p>
+      <p class="text-justify">
+        I understand Git Version Control for managing code versions during collaborative development and effectively
+        managing source code into the Git system.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/9.git/1.png" alt="git#1">
+        <p class="md:text-base sm:text-sm">Image by vectorjuice on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'github'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Git Version Control
+      </p>
+      <p class="text-justify">
+        I understand Git Version Control for managing code versions during collaborative development and effectively
+        managing source code into the Git system.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/9.git/1.png" alt="git#1">
+        <p class="md:text-base sm:text-sm">Image by vectorjuice on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'docker'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Docker
+      </p>
+      <p class="text-justify">
+        I have knowledge of using Docker and Dockerization processes to manage containers under the infrastructure
+        system using Docker platform software.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/10.docker/1.png" alt="docker#1">
+        <p class="md:text-base sm:text-sm">Image by vectorjuice on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'linux'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Linux Command
+      </p>
+      <p class="text-justify">
+        I understand Linux commands for resource management under the infrastructure system, enabling efficient
+        collaboration with Docker.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/hard/11.linux/1.png" alt="linux#1">
+        <p class="md:text-base sm:text-sm">Image by rawpixel.com on Freepik</p>
+      </div>
+    </div>
+
+    <!-- hard skills -->
+    <div *ngIf="receivedData.detail.name == 'leader'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Leadership
+      </p>
+      <p class="text-justify">
+        I have experience leading teams during high school and university, where I initiated and presented project plans
+        to teammates. My leadership style promotes democracy and consensus, believing that stress-free collaboration
+        toward a shared direction ensures efficient and successful outcomes.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/soft/1.leader/1.png" alt="leader#1">
+        <p class="md:text-base sm:text-sm">Image by rawpixel.com on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'commu'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Communication
+      </p>
+      <p class="text-justify">
+        I possess capable communication skills within teams, effectively highlighting issues for discussion and
+        collaborating on solutions without creating tension. Understanding team perspectives is crucial for productive
+        consultations and discussions, minimizing time wasted due to conflicts.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/soft/2.commu/1.png" alt="commu#1">
+        <p class="md:text-base sm:text-sm">Image by peoplecreations on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'solving'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Problem Solving
+      </p>
+      <p class="text-justify">
+        I am skilled in problem-solving, prioritizing immediate and root cause issues. When problems arise, I swiftly
+        address immediate concerns to prevent escalation and then systematically tackle the underlying causes.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/soft/3.solving/1.png" alt="solving#1">
+        <p class="md:text-base sm:text-sm">Image by master1305 on Freepik</p>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'time'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p class="mb-4 font-bold md:text-left sm:text-center">
+        Time Management
+      </p>
+      <p class="text-justify">
+        I understand the importance of time management. In both daily life decisions and work contexts, I always set
+        time boundaries to ensure my efforts are focused and purposeful.
+      </p>
+      <div class="flex flex-col justify-center my-7 justify-items-center items-center justify-self-center">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/skills/soft/4.time/1.png" alt="time#1">
+        <p class="md:text-base sm:text-sm">Image by asier_relampagoestudio on Freepik</p>
+      </div>
+    </div>
+
+
+  </div>
+</div>

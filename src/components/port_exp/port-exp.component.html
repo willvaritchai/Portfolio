@@ -57,7 +57,7 @@
             <div ngxSlickItem class="mt-12 " *ngFor="let exp of expList; let last = last">
                 <div class="grid grid-cols-1 justify-center justify-self-center justify-items-center">
                     <div [style]="{'width': screenType != 'm'? '300px':'250px'}">
-                        <img [src]="exp.src" alt="exp_img">
+                        <img class="rounded-t-3xl" [src]="exp.src" alt="exp_img">
                     </div>
                     <div style="height: 220px; " [style]="{'width': screenType != 'm'? '300px':'250px'}"
                         class="bg-[#323846] rounded-b-3xl text-white text-center px-5 flex flex-col justify-between">
