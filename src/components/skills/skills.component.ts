@@ -57,25 +57,25 @@ export class SkillsComponent implements OnInit {
     {
       src: './assets/skills/hard/6.java.png',
       img: './assets/skills/hard/6.java/0.png',
-      title: 'Hard Skills | Java Programming ', 
+      title: 'Hard Skills | Java Programming ',
       name: 'java',
     },
     {
       src: './assets/skills/hard/7.springboot.png',
       img: './assets/skills/hard/7.springboot/0.png',
-      title: 'Hard Skills | Spring Boot Framework ', 
+      title: 'Hard Skills | Spring Boot Framework ',
       name: 'springboot',
     },
     {
       src: './assets/skills/hard/8.sql.png',
       img: './assets/skills/hard/8.sql/0.png',
-      title: 'Hard Skills | MySQL DBMS ', 
+      title: 'Hard Skills | MySQL DBMS ',
       name: 'sql',
     },
     {
       src: './assets/skills/hard/9.github.png',
       img: './assets/skills/hard/9.git/0.png',
-      title: 'Hard Skills | Git Version Control ', 
+      title: 'Hard Skills | Git Version Control ',
       name: 'github',
     },
   ]
@@ -83,13 +83,13 @@ export class SkillsComponent implements OnInit {
     {
       src: './assets/skills/hard/10.docker.png',
       img: './assets/skills/hard/10.docker/0.png',
-      title: 'Hard Skills | Docker ', 
+      title: 'Hard Skills | Docker ',
       name: 'docker',
     },
     {
       src: './assets/skills/hard/11.linux.png',
       img: './assets/skills/hard/11.linux/0.png',
-      title: 'Hard Skills | Linux Command ', 
+      title: 'Hard Skills | Linux Command ',
       name: 'linux',
     },
 
@@ -99,34 +99,36 @@ export class SkillsComponent implements OnInit {
     {
       src: './assets/skills/soft/1.leader.png',
       img: './assets/skills/soft/1.leader/0.png',
-      title: 'Soft Skills | Leadership ', 
+      title: 'Soft Skills | Leadership ',
       name: 'leader',
     },
     {
       src: './assets/skills/soft/2.commu.png',
       img: './assets/skills/soft/2.commu/0.png',
-      title: 'Soft Skills | Communication ', 
+      title: 'Soft Skills | Communication ',
       name: 'commu',
     },
     {
       src: './assets/skills/soft/3.solving.png',
       img: './assets/skills/soft/3.solving/0.png',
-      title: 'Soft Skills | Problem Solving ', 
+      title: 'Soft Skills | Problem Solving ',
       name: 'solving',
     },
     {
       src: './assets/skills/soft/4.time-man.png',
       img: './assets/skills/soft/4.time/0.png',
-      title: 'Soft Skills | Time Management ', 
+      title: 'Soft Skills | Time Management ',
       name: 'time',
     },
 
   ]
 
 
-  isClicked: any = null
+  isClicked: string = ''
   isFade: boolean = false
   brainType: any = null
+  isFullBrainClick: boolean = false
+  fullBrainOut: boolean = false
   /**
    * Constructor
    *
@@ -170,31 +172,45 @@ export class SkillsComponent implements OnInit {
   }
 
 
-  brainClick(type: number) {
+  brainClick(type: string = '') {
+    this.isClicked = type
+
     // left brain
-    if (type == 0) {
-      this.isClicked = 0
-      setTimeout(() => {
-        this.isFade = true
-        this.brainType = 0
-        this._changeDetectorRef.markForCheck()
+    switch (type) {
+      case 'left':
+        setTimeout(() => {
+          this.isFade = true
+          this.brainType = 0
+          this._changeDetectorRef.markForCheck()
 
-      }, 100);
-    } else { // right brain
-      this.isClicked = 1
-      setTimeout(() => {
-        this.isFade = true
-        this.brainType = 1
-        this._changeDetectorRef.markForCheck()
+        }, 100);
+        break;
+      case 'right':
+        setTimeout(() => {
+          this.isFade = true
+          this.brainType = 1
+          this._changeDetectorRef.markForCheck()
 
-      }, 100);
+        }, 100);
+        break;
+
+      default:
+        this.isFullBrainClick = true
+        setTimeout(() => {
+          this.fullBrainOut = true
+          this._changeDetectorRef.markForCheck()
+        }, 200);
+        break;
     }
+
   }
 
   openDialog(detail: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       autoFocus: false,
       width: '100%',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
       data: { type: 'skill', detail: detail }
     });
 

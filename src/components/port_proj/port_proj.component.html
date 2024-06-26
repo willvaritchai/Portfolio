@@ -48,8 +48,8 @@
 
 <div class="bg-[#323846]  px-24 pb-48 w-full xl:pt-28  md:pt-24 sm:pt-28 sm:px-10">
     <div class="text-center">
-        <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">My <span
-                class="text-[#01EEFF]">Projects</span></span>
+        <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">My <span class="text-[#01EEFF]">Projects <span
+                    class="text-white">&</span> Achievements</span></span>
     </div>
     <div>
         <!-- card -->
@@ -60,15 +60,17 @@
                         <img class="rounded-t-3xl object-cover" style="height: 172px;"
                             [style]="{'width': screenType != 'm'? '350px':'250px'}" [src]="proj.src" alt="proj_img">
                     </div>
-                    <div [ngClass]="{'h-28':screenType == 'm'}" [style]="{'width': screenType != 'm'? '350px':'250px'}"
+                    <div style="height: 220px; " [style]="{'width': screenType != 'm'? '350px':'250px'}"
                         class="bg-[#151925] rounded-b-3xl text-white text-center px-5 flex flex-col justify-between">
-                        <!-- <div class="font-extrabold lg:text-xl sm:text-lg pt-4">
+                        <div class="font-extrabold lg:text-xl sm:text-lg mt-5"
+                            [ngClass]="{'mt-2':screenType!='m', 'mt-4':screenType=='m'}">
                             {{proj.date}}
-                        </div> -->
-                        <div class="font-extrabold lg:text-base sm:text-sm mb-2 " [ngClass]="{'mt-2':screenType!='m', 'mt-4':screenType=='m'}">
+                        </div>
+                        <div class="lg:text-lg sm:text-base mt-5"
+                            [ngClass]="{'mt-2':screenType!='m', 'mt-4':screenType=='m'}">
                             {{proj.title}}
                         </div>
-                        <div class="mt-2 mb-4 " >
+                        <div class="mt-5 pb-6  ">
                             <button (click)="openDialog(proj)" class="bg-[#01EEFF] text-white font-semibold lg:text-base sm:text-sm flex items-center py-1 px-5 
                 rounded-lg hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block "
                                 style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">

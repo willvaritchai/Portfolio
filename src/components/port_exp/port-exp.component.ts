@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { delay, takeUntil } from 'rxjs/operators';
 import { Subject, interval } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
@@ -93,6 +93,8 @@ export class MyExpComponent implements OnInit {
       slidesToScroll: this.screenType == 'm' ? 1 : 3,
       arrows: true,
       infinite: true,
+      draggable: true,
+      speed: this.screenType == 'm' ? 600:900
     };
   }
 
@@ -103,6 +105,9 @@ export class MyExpComponent implements OnInit {
       slidesToScroll: this.screenType == 'm' ? 1 : 3,
       arrows: true,
       infinite: true,
+      draggable: true,
+      speed: this.screenType == 'm' ? 600:900
+
     };
 
     this._changeDetectorRef.markForCheck()
@@ -110,6 +115,9 @@ export class MyExpComponent implements OnInit {
 
 
   openDialog(expDetail: any) {
+    console.clear()
+    console.log('open dialog');
+
     const dialogRef = this.dialog.open(DialogComponent, {
       autoFocus: false,
       width: '100%',
@@ -117,8 +125,7 @@ export class MyExpComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == true) {
-      }
+      this._changeDetectorRef.markForCheck()
     });
   }
 }

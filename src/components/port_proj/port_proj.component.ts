@@ -26,27 +26,33 @@ export class ProjectsComponent implements OnInit {
     {
       src: './assets/proj/1.modride.png',
       name: 'modride',
-      title: 'MOD RIDE - Ride Sharing in KMUTT'
+      title: 'MOD RIDE - Ride Sharing in KMUTT',
+      date: 'Sep 2023 - Apr 2024'
     },
     {
       src: './assets/proj/2.oasip.png',
       name: 'oasip',
-      title: 'OASIP: Intregrated Project'
+      title: 'OASIP: Intregrated Project',
+      date: 'Apr - Dec  2022'
     },
     {
       src: './assets/proj/3.funbook.png',
       name: 'funbook',
-      title: 'FUNBOOK - online book store'
+      title: 'FUNBOOK - online book store',
+      date: 'Feb – Apr 2022'
     },
     {
       src: './assets/proj/4.wish_grade.png',
       name: 'wyg',
-      title: 'Wish Your Grade - grade calculator'
+      title: 'Wish Your Grade - grade calculator',
+      date: 'Apr 2022'
     },
     {
       src: './assets/proj/5.obon.png',
       name: 'obon',
-      title: 'OBON Festival Project'
+      title: 'OBON Festival Project',
+      date: 'Nov 2020'
+
     },
   ]
 
@@ -77,6 +83,8 @@ export class ProjectsComponent implements OnInit {
       slidesToScroll: this.screenType == 'm' ? 1 : 3,
       arrows: true,
       infinite: true,
+      draggable: true,
+      speed: this.screenType == 'm' ? 600:900
     };
   }
 
@@ -87,6 +95,8 @@ export class ProjectsComponent implements OnInit {
       slidesToScroll: this.screenType == 'm' ? 1 : 3,
       arrows: true,
       infinite: true,
+      draggable: true,
+      speed: this.screenType == 'm' ? 600:900
     };
   }
 
