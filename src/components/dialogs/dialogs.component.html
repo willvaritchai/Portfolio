@@ -26,7 +26,8 @@
 
   <div class="px-4 py-2 mt-4 text-right  text-white"
     [ngClass]="{'bg-[#151925]': receivedData.type == 'proj', 'bg-[#323846]':receivedData.type == 'exp' || receivedData.type == 'skill'}">
-    <button (click)="closeDialog()" class="px-2 py-1 bg-[#01EEFF]  rounded active:bg-[#00B6C3] font-semibold"><span
+    <button (click)="closeDialog()"
+      class="px-2 py-1 bg-[#01EEFF]  rounded hover:shadow hover:shadow-white active:bg-[#00B6C3] font-semibold"><span
         style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">Close</span></button>
   </div>
 </div>

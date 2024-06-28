@@ -125,14 +125,16 @@
         acquiring work skills and real-world experience that have helped me improve and further develop my
         abilities.
       </p>
-      <div class="flex justify-center mt-7 mb-2">
-        <button (click)="openFile('scm')">
-          <mat-icon [svgIcon]="'general_icons:pdf'" style="min-width: 59px; min-height: 59px;"></mat-icon>
+      <hr class="my-7 border border-[#323846]">
+      <div class="flex justify-center  mb-2">
+        <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0" (click)="openFile('scm')">
+          <mat-icon [ngClass]="{'animate-scale-up':onHover == 1}" [svgIcon]="'general_icons:pdf'"
+            style="min-width: 59px; min-height: 59px;"></mat-icon>
         </button>
       </div>
-      <p class="text-center text-base">
-        <button (click)="openFile('scm')">
-          Proof of Internship
+      <p class="text-center text-base text-blue-500 ">
+        <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0" (click)="openFile('scm')">
+          <span [ngClass]="{'underline font-bold':onHover == 1}">Proof of Internship</span>
         </button>
       </p>
     </div>
@@ -186,8 +188,7 @@
         align with a festival theme. My team was assigned the Obon Festival, a Buddhist festival in Japan.
       </p>
       <div class="flex justify-center my-7">
-        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/2.helloworld/1.png"
-          alt="helloworld#1">
+        <img class="object-cover border rounded-xl md:w-96" src="./assets/exp/2.helloworld/1.png" alt="helloworld#1">
       </div>
       <p class="mt-7">
         Examples of source code and work...

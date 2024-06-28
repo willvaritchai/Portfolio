@@ -17,6 +17,7 @@ import { DialogComponent } from '../dialogs/dialogs.component';
 import { ExpDialogComponent } from '../dialogs/exp/exp.component';
 import { ProjDialogComponent } from '../dialogs/proj/proj.component';
 import { SkillsDialogComponent } from '../dialogs/skills-dialog/skills-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -40,6 +41,7 @@ import { SkillsDialogComponent } from '../dialogs/skills-dialog/skills-dialog.co
     MatButtonModule,
     SlickCarouselModule,
     MatMenuModule,
+    MatTooltipModule
   ],
 })
 export class HomeModule { }

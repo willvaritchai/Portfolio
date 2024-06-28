@@ -1,5 +1,5 @@
-<style scoped>    
-/* .dynamic-txts{
+<style scoped>
+    /* .dynamic-txts{
     position: relative;
 }
 .dynamic-txts::after{
@@ -34,63 +34,68 @@
                 </span>
             </div>
             <div class="mt-7 text-2xl sm:text-xl text-white text-justify" style="max-width: 517px;">
-                As a <span class="font-bold">Full Stack Developer</span>, I'm fueled by my passion for coding and
-                driven
-                to constantly hone my skills with unwavering love❤️
+                As a <span class="font-bold">Full Stack Developer</span>, I'm passionate about coding and dedicated to
+                continually enhancing my skills with steadfast commitment.
             </div>
             <!-- bigger than mobile -->
-            <div *ngIf="screenType != 'm'" class="flex flex-row space-x-14 mt-7">
-                <a style="width: 46px;" [href]="'https://github.com/willvaritchai'">
+            <div *ngIf="screenType != 'm'" class="flex flex-row space-x-14 mt-7 mb-10">
+                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's GitHub" class="hover:animate-scale-up"
+                    style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
                 </a>
-                <a style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
+                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Facebook" class="hover:animate-scale-up"
+                    style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
                 </a>
                 <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
                 </button> -->
-                <a style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
+                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Email" class="hover:animate-scale-up"
+                    style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
                 </a>
-                <a style="width: 46px;" [href]="'tel:0814985488'">
+                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Contact" class="hover:animate-scale-up"
+                    style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
                 </a>
             </div>
             <!-- for mobile -->
-            <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7">
-                <a style="width: 46px;" [href]="'https://github.com/willvaritchai'">
+            <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7 mb-10">
+                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
                 </a>
-                <a style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
+                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
                 </a>
                 <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
                 </button> -->
-                <a style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
+                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
                 </a>
-                <a style="width: 46px;" [href]="'tel:0814985488'">
+                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
                 </a>
             </div>
 
-            <div class="mt-9 " [ngClass]="{'flex justify-center':screenType == 'm'}">
-                <button class="bg-[#01EEFF] text-white font-semibold md:text-2xl sm:text-xl md:py-4 md:px-6 sm:py-2 sm:px-3 
+            <div class="" [ngClass]="{'flex justify-center':screenType == 'm'}">
+                <button
+                    (click)="open('https://drive.google.com/file/d/1EOT91cNAgHGqe7wYh7c7hsg2itjbaATq/view?usp=drive_link')"
+                    class="bg-[#01EEFF] text-white font-semibold md:text-2xl sm:text-xl md:py-4 md:px-6 sm:py-2 sm:px-3 
                 md:rounded-3xl sm:rounded-xl hover:shadow hover:shadow-white active:bg-[#00B6C3] sm:inline-block "
                     style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">
-                    Download CV
+                    Download Resume
                 </button>
             </div>
         </div>
         <!-- right -->
         <div class="lg:-mt-8  sm:mt-9 flex justify-center">
             <!-- not mobile -->
-            <img *ngIf="screenType != 'm'" style="max-width: 475px; max-height: 461px;" src="./assets/home/me_home.png"
-                alt="me_home">
+            <img class="hover:animate-scale-up object-cover" *ngIf="screenType != 'm'"
+                style="max-width: 475px; max-height: 461px;" src="./assets/home/me_home.png" alt="me_home">
             <!-- screen: mobile -->
-            <img *ngIf="screenType == 'm'" class="" style="max-width: 250px; max-height: 250px;"
-                src="./assets/home/me_home.png" alt="me_home">
+            <img class="hover:animate-scale-up object-cover" *ngIf="screenType == 'm'" class=""
+                style="max-width: 250px; max-height: 250px;" src="./assets/home/me_home.png" alt="me_home">
         </div>
     </div>
 </div>

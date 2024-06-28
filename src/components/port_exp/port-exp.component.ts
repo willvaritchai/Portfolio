@@ -121,6 +121,8 @@ export class MyExpComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
       autoFocus: false,
       width: '100%',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
       data: { type: 'exp', detail: expDetail }
     });
 

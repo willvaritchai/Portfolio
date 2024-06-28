@@ -1,11 +1,38 @@
 <div *ngIf="receivedData.type == 'proj'">
   <p class="font-semibold italic">{{receivedData.detail.date}}</p>
   <div class="flex justify-center my-4">
-    <img class="object-cover border rounded-xl md:w-96" [src]="receivedData.detail.src" alt="exp_img">
+    <img class="object-cover border rounded-xl md:w-96" [src]="receivedData.detail.img" alt="exp_img">
   </div>
   <!-- content -->
   <div class="flex justify-center">
     <!-- แยกเนื้อหา content ตามชื่อของมัน -->
+    <div *ngIf="receivedData.detail.name == 'cert_network'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        I successfully completed my studies and earned a certificate from the Google Coursera course titled <span
+          class="font-bold">The Bits
+          and Bytes of Computer Networking.</span> Throughout the course, I gained valuable knowledge in fundamental
+        aspects of
+        networking, including system management, DNS, IP addresses, network models, and troubleshooting network issues.
+      </p>
+      <hr class="my-7 border border-[#323846]">
+      <div class="grid grid-cols-1">
+        <div class="flex justify-center mt-7 mb-2">
+          <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0"
+            (click)="open('https://drive.google.com/file/d/1cBsVDevQZs7dV8nba5OLUG6lhEM0fqer/view?usp=drive_link')">
+            <mat-icon [ngClass]="{'animate-scale-up':onHover == 1}" [svgIcon]="'general_icons:pdf'"
+              style="min-width: 59px; min-height: 59px;"></mat-icon>
+          </button>
+        </div>
+        <p class="text-center text-base text-blue-500 ">
+          <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0"
+            (click)="open('https://drive.google.com/file/d/1cBsVDevQZs7dV8nba5OLUG6lhEM0fqer/view?usp=drive_link')">
+            <span [ngClass]="{'underline font-bold':onHover == 1}">View Certificate</span>
+          </button>
+        </p>
+      </div>
+    </div>
+
     <div *ngIf="receivedData.detail.name == 'modride'"
       class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
       <p>
@@ -182,27 +209,60 @@
       <div class="grid grid-cols-2">
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://youtu.be/CABxUrGL_MM?si=j8g4Ml3ALZkPaDtv')"
+            <mat-icon (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'animate-scale-up':onHover == 1}"
+              (click)="open('https://youtu.be/CABxUrGL_MM?si=j8g4Ml3ALZkPaDtv')"
               class="cursor-pointer md:w-14 md:h-14 sm:w-12 sm:h-12" [svgIcon]="'general_icons:youtube'"
               style="width: 50px; height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span class="cursor-pointer text-blue-500 hover:underline"
+            <span (mouseover)="onHover = 1" (mouseleave)="onHover = 0" class="cursor-pointer text-blue-500"
+              [ngClass]="{'underline font-bold':onHover == 1}"
               (click)="open('https://youtu.be/CABxUrGL_MM?si=j8g4Ml3ALZkPaDtv')">About
               ModRide</span>
           </div>
         </div>
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://github.com/INT371-MOD-RIDE/MOD-RIDE.github')" class="cursor-pointer"
-              [svgIcon]="'general_icons:github'" style="min-width: 50px; min-height: 50px;"></mat-icon>
+            <mat-icon (mouseover)="onHover = 2" (mouseleave)="onHover = 0"
+              (click)="open('https://github.com/INT371-MOD-RIDE/MOD-RIDE.github')" class="cursor-pointer"
+              [ngClass]="{'animate-scale-up':onHover == 2}" [svgIcon]="'general_icons:github'"
+              style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span (click)="open('https://github.com/INT371-MOD-RIDE/MOD-RIDE.github')"
-              class="cursor-pointer text-blue-500 hover:underline">ModRide
+            <span (mouseover)="onHover = 2" (mouseleave)="onHover = 0"
+              (click)="open('https://github.com/INT371-MOD-RIDE/MOD-RIDE.github')" class="cursor-pointer text-blue-500"
+              [ngClass]="{'underline font-bold':onHover == 2}">ModRide
               GitHub</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div *ngIf="receivedData.detail.name == 'cert_support'"
+      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      <p>
+        I successfully completed my studies and received a certificate from the Google Coursera course titled <span
+          class="font-bold">Technical
+          Support Fundamentals.</span> During the course, I learned fundamental aspects of technical support such as
+        assisting
+        customers with hardware components or software systems, understanding binary code, Linux operating systems, and
+        troubleshooting techniques for technical support roles.
+      </p>
+      <hr class="my-7 border border-[#323846]">
+      <div class="grid grid-cols-1">
+        <div class="flex justify-center mt-7 mb-2">
+          <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0"
+            (click)="open('https://drive.google.com/file/d/1AFmpBDQBoJ7Cy-xWhO5iX-Mh07foM3on/view?usp=drive_link')">
+            <mat-icon [ngClass]="{'animate-scale-up':onHover == 1}" [svgIcon]="'general_icons:pdf'"
+              style="min-width: 59px; min-height: 59px;"></mat-icon>
+          </button>
+        </div>
+        <p class="text-center text-base text-blue-500 ">
+          <button (mouseover)="onHover = 1" (mouseleave)="onHover = 0"
+            (click)="open('https://drive.google.com/file/d/1AFmpBDQBoJ7Cy-xWhO5iX-Mh07foM3on/view?usp=drive_link')">
+            <span [ngClass]="{'underline font-bold':onHover == 1}">View Certificate</span>
+          </button>
+        </p>
       </div>
     </div>
 
@@ -300,11 +360,13 @@
       <div class="grid grid-cols-1">
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://github.com/OASIP-PL-5')" class="cursor-pointer"
-              [svgIcon]="'general_icons:github'" style="min-width: 50px; min-height: 50px;"></mat-icon>
+            <mat-icon (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'animate-scale-up':onHover == 1}"
+              (click)="open('https://github.com/OASIP-PL-5')" class="cursor-pointer" [svgIcon]="'general_icons:github'"
+              style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span (click)="open('https://github.com/OASIP-PL-5')" class="cursor-pointer text-blue-500 hover:underline">
+            <span (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'font-bold underline':onHover == 1}"
+              (click)="open('https://github.com/OASIP-PL-5')" class="cursor-pointer text-blue-500">
               OASIP GitHub</span>
           </div>
         </div>
@@ -388,12 +450,14 @@
       <div class="grid grid-cols-1">
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://github.com/willvaritchai/project-FUNBOOK-online-book-store')"
+            <mat-icon (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'animate-scale-up':onHover == 1}"
+              (click)="open('https://github.com/willvaritchai/project-FUNBOOK-online-book-store')"
               class="cursor-pointer" [svgIcon]="'general_icons:github'"
               style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span (click)="open('https://github.com/willvaritchai/project-FUNBOOK-online-book-store')"
+            <span (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'underline font-bold':onHover == 1}"
+              (click)="open('https://github.com/willvaritchai/project-FUNBOOK-online-book-store')"
               class="cursor-pointer text-blue-500 hover:underline">
               FUNBOOK GitHub</span>
           </div>
@@ -461,11 +525,13 @@
       <div class="grid grid-cols-1">
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://github.com/willvaritchai/WishYourGrade.git')" class="cursor-pointer"
+            <mat-icon (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'animate-scale-up':onHover == 1}"
+              (click)="open('https://github.com/willvaritchai/WishYourGrade.git')" class="cursor-pointer"
               [svgIcon]="'general_icons:github'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span (click)="open('https://github.com/willvaritchai/WishYourGrade.git')"
+            <span (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'font-bold underline':onHover == 1}"
+              (click)="open('https://github.com/willvaritchai/WishYourGrade.git')"
               class="cursor-pointer text-blue-500 hover:underline">
               WishYourGrade GitHub</span>
           </div>
@@ -483,12 +549,14 @@
       <div class="grid grid-cols-1">
         <div>
           <div class="flex justify-center items-center ">
-            <mat-icon (click)="open('https://github.com/Hello-Dolphin/hellodolphin-webproject-3-ObonFestival')"
+            <mat-icon (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'animate-scale-up':onHover == 1}"
+              (click)="open('https://github.com/Hello-Dolphin/hellodolphin-webproject-3-ObonFestival')"
               class="cursor-pointer" [svgIcon]="'general_icons:github'"
               style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="text-center mt-2">
-            <span (click)="open('https://github.com/Hello-Dolphin/hellodolphin-webproject-3-ObonFestival')"
+            <span (mouseover)="onHover = 1" (mouseleave)="onHover = 0" [ngClass]="{'font-bold underline':onHover == 1}"
+              (click)="open('https://github.com/Hello-Dolphin/hellodolphin-webproject-3-ObonFestival')"
               class="cursor-pointer text-blue-500 hover:underline">
               OBON GitHub</span>
           </div>

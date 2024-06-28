@@ -6,13 +6,14 @@
         <!-- left -->
         <div class="mt-10  " [ngClass]="{'flex justify-center': screenType=='m'}">
             <!-- not mobile -->
-            <img *ngIf="screenType != 'm'" style="max-width: 416px; max-height: 416px;"
-                src="./assets/about/0.about_profile.png" alt="me_about">
+            <img class="hover:animate-scale-up object-cover" *ngIf="screenType != 'm'"
+                style="max-width: 416px; max-height: 416px;" src="./assets/about/0.about_profile.png" alt="me_about">
             <!-- screen: mobile -->
             <div *ngIf="screenType == 'm'">
                 <span class="font-extrabold text-white lg:text-4xl sm:text-3xl flex justify-center">About&nbsp;<span
                         class="text-[#01EEFF]">Me</span></span>
-                <img class="mt-9" style="max-width: 250px; max-height: 250px;" src="./assets/about/0.about_profile.png"
+                <img class="hover:animate-scale-up object-cover" class="mt-9"
+                    style="max-width: 250px; max-height: 250px;" src="./assets/about/0.about_profile.png"
                     alt="me_about">
             </div>
         </div>
@@ -21,10 +22,14 @@
             <span class="font-extrabold text-white lg:text-4xl sm:text-3xl" *ngIf="screenType != 'm'">About <span
                     class="text-[#01EEFF]">Me</span></span>
             <div class="mt-7 text-xl sm:text-lg text-white md:text-justify sm:text-center" style="max-width: 517px;">
-                I graduated from SIT KMUTT with a 3.40 GPA. I am skilled in Full Stack Development, with experience in
-                JavaScript, TypeScript, Angular, and Java with Spring Boot. I am capable in API development, MySQL
-                management, and have an understanding of Git, Docker, and Linux. Additionally, I have effective
-                leadership, communication, problem-solving, and time management abilities.
+                I graduated from SIT KMUTT with a Bachelor of Science in Information Technology, achieving a GPA of
+                3.40. <br class="md:block sm:none">My skills lie in Full Stack Development, with a focus on JavaScript,
+                TypeScript, Angular, and
+                Java
+                with Spring Boot. <br class="md:block sm:none">I also have hands-on experience in website and RESTful
+                API development, MySQL
+                administration, Git, Docker, and Linux. Additionally, I integrate concepts of leadership, communication,
+                problem-solving, and time management to drive my work forward effectively.
             </div>
             <div class="font-bold text-white lg:text-3xl sm:text-2xl mt-7" *ngIf="screenType != 'm'">Education</div>
             <!-- bigger than mobile -->
@@ -54,7 +59,8 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center">
-                                    <button (click)="downloadTs()">
+                                    <button [matTooltipPosition]="'above'" [matTooltip]="'Download Transcript'"
+                                        (click)="downloadTs()" class="hover:animate-scale-up">
                                         <img src="./assets/about/transcript.png" alt="load_transcript"
                                             class="w-11 h-11">
                                     </button>
@@ -86,10 +92,10 @@
 
             </div>
             <div class="flex justify-center space-x-10">
-                <button (click)="edu = 'sit'" class=" w-12 h-4 rounded-xl mt-8"
-                    [ngClass]="{'bg-[#01EEFF]':edu == 'sit', 'bg-white':edu != 'sit'}"></button>
-                <button (click)="edu = 'skt'" class="bg-white w-12 h-4 rounded-xl mt-8"
-                    [ngClass]="{'bg-[#01EEFF]':edu == 'skt', 'bg-white':edu != 'skt'}"></button>
+                <button (click)="edu = 'sit'" class=" w-12 h-4 rounded-xl mt-8 "
+                    [ngClass]="{'bg-[#01EEFF]':edu == 'sit', 'bg-white hover:animate-scale-up':edu != 'sit'}"></button>
+                <button (click)="edu = 'skt'" class="bg-white w-12 h-4 rounded-xl mt-8 "
+                    [ngClass]="{'bg-[#01EEFF]':edu == 'skt', 'bg-white hover:animate-scale-up':edu != 'skt'}"></button>
             </div>
             <!-- for mobile -->
             <!-- <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7">

@@ -23,32 +23,52 @@ export class ProjectsComponent implements OnInit {
   @Input() screenType: string | undefined;
 
   projList: any[] = [
+
+    {
+      src: './assets/proj/google_cert.png',
+      img: './assets/proj/cert_network/0.png',
+      name: 'cert_network',
+      title: 'Google Certificate - Bits & Bytes of Computer Networking',
+      date: 'Jun 3, 2024'
+    },
     {
       src: './assets/proj/1.modride.png',
+      img: './assets/proj/1.modride.png',
       name: 'modride',
       title: 'MOD RIDE - Ride Sharing in KMUTT',
-      date: 'Sep 2023 - Apr 2024'
+      date: 'Sep, 2023 - Apr, 2024'
+    },
+    {
+      src: './assets/proj/google_cert.png',
+      img: './assets/proj/cert_support/0.png',
+      name: 'cert_support',
+      title: 'Google Certificate - Technical Support Fundamentals',
+      date: 'Apr 3, 2023'
     },
     {
       src: './assets/proj/2.oasip.png',
+      img: './assets/proj/2.oasip.png',
       name: 'oasip',
       title: 'OASIP: Intregrated Project',
-      date: 'Apr - Dec  2022'
+      date: 'Apr - Dec, 2022'
     },
     {
       src: './assets/proj/3.funbook.png',
+      img: './assets/proj/3.funbook.png',
       name: 'funbook',
       title: 'FUNBOOK - online book store',
-      date: 'Feb – Apr 2022'
+      date: 'Feb – Apr, 2022'
     },
     {
       src: './assets/proj/4.wish_grade.png',
+      img: './assets/proj/4.wish_grade.png',
       name: 'wyg',
       title: 'Wish Your Grade - grade calculator',
-      date: 'Apr 2022'
+      date: 'Apr, 2022'
     },
     {
       src: './assets/proj/5.obon.png',
+      img: './assets/proj/5.obon.png',
       name: 'obon',
       title: 'OBON Festival Project',
       date: 'Nov 2020'
@@ -84,7 +104,7 @@ export class ProjectsComponent implements OnInit {
       arrows: true,
       infinite: true,
       draggable: true,
-      speed: this.screenType == 'm' ? 600:900
+      speed: this.screenType == 'm' ? 600 : 900
     };
   }
 
@@ -96,7 +116,7 @@ export class ProjectsComponent implements OnInit {
       arrows: true,
       infinite: true,
       draggable: true,
-      speed: this.screenType == 'm' ? 600:900
+      speed: this.screenType == 'm' ? 600 : 900
     };
   }
 
@@ -104,6 +124,8 @@ export class ProjectsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
       autoFocus: false,
       width: '100%',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
       data: { type: 'proj', detail: projDetail }
     });
 

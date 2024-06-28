@@ -9,7 +9,7 @@ declare var window: any
 export class ExpDialogComponent implements OnInit {
     @Input() receivedData: any | undefined;
     screenType: string = ''
-
+    onHover: any
     
     
     

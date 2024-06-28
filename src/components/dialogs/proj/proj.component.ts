@@ -9,8 +9,7 @@ declare var window: any
 export class ProjDialogComponent implements OnInit {
     @Input() receivedData: any | undefined;
     screenType: string = ''
-
-
+    onHover:any
 
 
     // ----------------------------
@@ -52,4 +51,5 @@ export class ProjDialogComponent implements OnInit {
     open(filePath: string = '') {
         window.open(filePath, '_blank');
     }
+
 }

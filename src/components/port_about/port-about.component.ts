@@ -11,6 +11,7 @@ declare var window: any;
   selector: 'port-about',
   templateUrl: './port-about.component.html',
   encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./port-about.component.scss'],
 })
 export class PortAboutComponent implements OnInit {
 
@@ -21,8 +22,8 @@ export class PortAboutComponent implements OnInit {
   @Input() screenType: string | undefined;
 
 
-  edu:string = 'sit'
-  showEduDesc:boolean = false
+  edu: string = 'sit'
+  showEduDesc: boolean = false
   /**
    * Constructor
    *
@@ -45,7 +46,7 @@ export class PortAboutComponent implements OnInit {
 
   }
 
-  downloadTs(){
+  downloadTs() {
     const filePath = `https://drive.google.com/file/d/1j8y7cUW4Pcct8C8xubzz33Ib5xXx3Hft/view?usp=sharing`; // Path to your file in the assets folder
     window.open(filePath, '_blank');
   }

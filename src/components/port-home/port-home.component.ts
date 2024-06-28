@@ -78,4 +78,9 @@ export class PortHomeComponent implements OnInit {
   //     return
   //   }
   // }
+
+  open(filePath: string = '') {
+    window.open(filePath, '_blank');
+}
+
 }
