@@ -27,11 +27,14 @@
     <div class="grid lg:grid-cols-2 xl:pt-40 xl:space-x-36 md:pt-32 lg:space-x-20 md:grid-cols-1 sm:pt-28">
         <!-- left -->
         <div class="">
-            <span class="font-extrabold text-white lg:text-4xl sm:text-3xl">Varitchai Surachaitanawat</span>
-            <div class="font-extrabold text-3xl text-white sm:text-2xl">
-                I’m a <span class="text-[#01EEFF] dynamic-txts">
-                    <br *ngIf="screenType == 'm'">Full Stack Developer
-                </span>
+            <div class="md:text-left sm:text-center">
+                <span class="font-extrabold text-white lg:text-4xl sm:text-3xl ">Varitchai
+                    Surachaitanawat</span>
+                <div class="font-extrabold text-3xl text-white sm:text-2xl">
+                    I’m a <span class="text-[#01EEFF] dynamic-txts">
+                        <br *ngIf="screenType == 'm'">Full Stack Developer
+                    </span>
+                </div>
             </div>
             <div class="mt-7 text-2xl sm:text-xl text-white text-justify" style="max-width: 517px;">
                 As a <span class="font-bold">Full Stack Developer</span>, I'm passionate about coding and dedicated to
@@ -39,22 +42,26 @@
             </div>
             <!-- bigger than mobile -->
             <div *ngIf="screenType != 'm'" class="flex flex-row space-x-14 mt-7 mb-10">
-                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's GitHub" class="hover:animate-scale-up"
+                <a [matTooltipPosition]="'below'" matTooltip="GitHub" class="hover:animate-scale-up"
                     style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
                 </a>
-                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Facebook" class="hover:animate-scale-up"
+                <a [matTooltipPosition]="'below'" matTooltip="Facebook" class="hover:animate-scale-up"
                     style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
                 </a>
                 <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
                 </button> -->
-                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Email" class="hover:animate-scale-up"
-                    style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
+                <a [matTooltipPosition]="'below'" matTooltip="Email" class="hover:animate-scale-up" style="width: 46px;"
+                    [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
                 </a>
-                <a [matTooltipPosition]="'below'" matTooltip="Varitchai's Contact" class="hover:animate-scale-up"
+                <a [matTooltipPosition]="'below'" matTooltip="LinkedIn" class="hover:animate-scale-up"
+                    style="width: 46px;" [href]="'https://www.linkedin.com/in/willvaritchai/'">
+                    <img src="./assets/home/in.png" alt="linkedin">
+                </a>
+                <a [matTooltipPosition]="'below'" matTooltip="Contact: (+66) 81-498-5488" class="hover:animate-scale-up"
                     style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
                 </a>
@@ -72,6 +79,10 @@
                 </button> -->
                 <a class="hover:animate-scale-up" style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
+                </a>
+                <a class="hover:animate-scale-up" style="width: 46px;"
+                    [href]="'https://www.linkedin.com/in/willvaritchai/'">
+                    <img src="./assets/home/in.png" alt="linkedin">
                 </a>
                 <a class="hover:animate-scale-up" style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">

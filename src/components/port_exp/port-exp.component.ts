@@ -61,8 +61,8 @@ export class MyExpComponent implements OnInit {
       img: './assets/exp/4.1dolphin.png',
       name: 'dolphin',
       date: 'Nov 2020',
-      desc: 'Hello World - Dolphin\nFrontEnd team',
-      title: 'Hello World - Dolphin FrontEnd team'
+      desc: 'Hello World - Dolphin\nfront-end team',
+      title: 'Hello World - Dolphin front-end team'
     },
   ]
 

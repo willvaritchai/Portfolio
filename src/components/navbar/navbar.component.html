@@ -5,6 +5,10 @@
     }
 
     .mat-mdc-menu-item {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
         color: white !important;
     }
 
@@ -39,24 +43,28 @@
     <div class="sm:block md:hidden">
         <button [matMenuTriggerFor]="option" class="mt-1    hover:drop-shadow 
                 cursor-pointer  ">
-            <mat-icon matPrefix style="width: 32px; height: 32px;" [svgIcon]="'general_icons:menu-icon'"></mat-icon>
+            <mat-icon class="rounded-xl hover:shadow-md hover:shadow-white" matPrefix style="width: 32px; height: 32px;"
+                [svgIcon]="'general_icons:menu-icon'"></mat-icon>
         </button>
-        <mat-menu #option="matMenu" xPosition="after">
-            <button (click)="scrollTo('#home')" mat-menu-item class="active:bg-white">
-                <span class="text-sm noto-san active:text-[#01EEFF]">Home</span>
-            </button>
-            <button (click)="scrollTo('#about')" mat-menu-item class="">
-                <span class="text-sm noto-san active:text-[#01EEFF]">About</span>
-            </button>
-            <button (click)="scrollTo('#exp')" mat-menu-item class="">
-                <span class="text-sm noto-san active:text-[#01EEFF]">Experience</span>
-            </button>
-            <button (click)="scrollTo('#proj')" mat-menu-item class="">
-                <span class="text-sm noto-san active:text-[#01EEFF]">Projects</span>
-            </button>
-            <button (click)="scrollTo('#skills')" mat-menu-item class="">
-                <span class="text-sm noto-san active:text-[#01EEFF]">Skills</span>
-            </button>
+        <mat-menu class="" #option="matMenu" xPosition="after">
+            <div class="border border-white rounded-md ">
+                    <button (click)="scrollTo('#home')" mat-menu-item class="active:bg-white shadow shadow-xs shadow-white ">
+                        <span class="text-base noto-san active:text-[#01EEFF] ">Home</span>
+                    </button>
+                <button (click)="scrollTo('#about')" mat-menu-item class="shadow shadow-xs shadow-white">
+                    <span class="text-base noto-san active:text-[#01EEFF]">About</span>
+                </button>
+                <button (click)="scrollTo('#exp')" mat-menu-item class="shadow shadow-xs shadow-white">
+                    <span class="text-base noto-san active:text-[#01EEFF]">Experience</span>
+                </button>
+                <button (click)="scrollTo('#proj')" mat-menu-item class="shadow shadow-xs shadow-white">
+                    <span class="text-base noto-san active:text-[#01EEFF]">Projects</span>
+                </button>
+                <button (click)="scrollTo('#skills')" mat-menu-item class="shadow shadow-xs shadow-white">
+                    <span class="text-base noto-san active:text-[#01EEFF]">Skills</span>
+                </button>
+            </div>
+
         </mat-menu>
     </div>
 </nav>

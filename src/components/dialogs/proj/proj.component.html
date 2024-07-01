@@ -7,7 +7,7 @@
   <div class="flex justify-center">
     <!-- แยกเนื้อหา content ตามชื่อของมัน -->
     <div *ngIf="receivedData.detail.name == 'cert_network'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         I successfully completed my studies and earned a certificate from the Google Coursera course titled <span
           class="font-bold">The Bits
@@ -34,14 +34,16 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'modride'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         Modride: Ride Sharing in KMUTT is a ride-sharing web application for KMUTT users to find travel companions
         to similar destinations. It allows users to share trips, split costs, reduce traffic, and foster connections
-        between different faculties. This web application was developed using the Angular framework.
+        between different faculties. This web application was developed using the Angular front-end framework and the
+        Spring
+        Boot back-end framework.
       </p>
       <hr class="my-7 border border-[#323846]">
-      <p class="font-bold md:text-left sm:text-center text-[#F04E23]">
+      <p class="font-bold md:text-left sm:text-center text-black">
         Core Features
       </p>
       <!-- core-auth -->
@@ -109,8 +111,9 @@
       </div>
 
       <!-- tech-stack div -->
+      <hr class="my-7 border border-[#323846]">
       <div>
-        <p class="font-bold md:text-left sm:text-center text-[#F04E23]">
+        <p class="font-bold md:text-left sm:text-center text-black">
           Technology Stack
         </p>
         <!-- angular -->
@@ -119,7 +122,7 @@
             <mat-icon [svgIcon]="'general_icons:tech-angular'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Angular</span>: Front End framework used for managing Front End
+            <span class="text-[#F04E23] font-bold">Angular</span>: front-end framework used for managing front-end
             display, featuring functionalities that meet the system requirements.
           </div>
         </div>
@@ -239,7 +242,7 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'cert_support'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         I successfully completed my studies and received a certificate from the Google Coursera course titled <span
           class="font-bold">Technical
@@ -267,13 +270,14 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'oasip'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         OASIP is an online appointment website where students can schedule or modify online meeting appointments with
-        their course lecturers. This web application was developed using the Vue framework.
+        their course lecturers. This web application was developed using the Vue front-end framework and the Spring
+        Boot back-end framework.
       </p>
       <hr class="my-7 border border-[#323846]">
-      <p class="font-bold md:text-left sm:text-center text-[#F04E23]">
+      <p class="font-bold md:text-left sm:text-center text-black">
         Core Features
       </p>
       <!-- Get All Event -->
@@ -283,7 +287,7 @@
             <mat-icon [svgIcon]="'general_icons:proj-getAll'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Get All Event</span>: Displaying the list of events where students
+            <span class="text-blue-600 font-bold">Get All Event</span>: Displaying the list of events where students
             have scheduled meetings with lecturers for specific online classes.
           </div>
         </div>
@@ -298,7 +302,7 @@
             <mat-icon [svgIcon]="'general_icons:proj-booking'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Booking Event</span>: Creating events for scheduling meetings with
+            <span class="text-blue-600 font-bold">Booking Event</span>: Creating events for scheduling meetings with
             lecturers for specific classes.
           </div>
         </div>
@@ -313,7 +317,7 @@
             <mat-icon [svgIcon]="'general_icons:proj-detail'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Event Detail</span>: Checking the detailed information of the
+            <span class="text-blue-600 font-bold">Event Detail</span>: Checking the detailed information of the
             scheduled meeting events.
           </div>
         </div>
@@ -328,7 +332,7 @@
             <mat-icon [svgIcon]="'general_icons:proj-edit'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Edit Event</span>: Editing the detailed information of the scheduled
+            <span class="text-blue-600 font-bold">Edit Event</span>: Editing the detailed information of the scheduled
             meeting events.
           </div>
         </div>
@@ -348,7 +352,7 @@
             <mat-icon [svgIcon]="'general_icons:proj-cancel'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Cancel Event</span>: Canceling scheduled meeting events.
+            <span class="text-blue-600 font-bold">Cancel Event</span>: Canceling scheduled meeting events.
           </div>
         </div>
         <div class="flex justify-center mt-7">
@@ -374,7 +378,7 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'funbook'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         FUNBOOK online book store is a website that offers a wide range of books for sale online, including educational
         books and books on astrology. This web application was developed using the Vue framework.
@@ -390,7 +394,7 @@
         </ul>
       </div>
       <hr class="my-7 border border-[#323846]">
-      <p class="font-bold md:text-left sm:text-center text-[#F04E23]">
+      <p class="font-bold md:text-left sm:text-center text-black">
         Core Features
       </p>
       <!-- Search for Books -->
@@ -400,7 +404,7 @@
             <mat-icon [svgIcon]="'general_icons:searchBook'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Search for Books</span>: Users can search for books by category using
+            <span class="text-blue-600 font-bold">Search for Books</span>: Users can search for books by category using
             the search bar, specifying categories such as IT, AI, MySQL, coding, etc.
           </div>
         </div>
@@ -415,7 +419,7 @@
             <mat-icon [svgIcon]="'general_icons:wishlist'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Wishlist</span>: Users can add their favorite books to their wishlist
+            <span class="text-blue-600 font-bold">Wishlist</span>: Users can add their favorite books to their wishlist
             by clicking the heart icon on the respective book. The book will then be saved to the wishlist page, which
             includes details of each saved book.
           </div>
@@ -438,7 +442,7 @@
             <mat-icon [svgIcon]="'general_icons:remove'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Remove from Wishlist</span>: On the wishlist page, if users no longer
+            <span class="text-blue-600 font-bold">Remove from Wishlist</span>: On the wishlist page, if users no longer
             want a book, they can remove it from the wishlist by clicking the Remove button.
           </div>
         </div>
@@ -466,7 +470,7 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'wyg'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         WishYourGrade helps students assess and plan their academic performance, addressing their expectations about
         grades. This web application was developed using the Vue framework.
@@ -488,7 +492,7 @@
         <img class="object-cover border rounded-xl md:w-96" src="./assets/proj/4.wish_grade/1.png" alt="wyg#1">
       </div>
       <hr class="my-7 border border-[#323846]">
-      <p class="font-bold md:text-left sm:text-center text-[#F04E23]">
+      <p class="font-bold md:text-left sm:text-center text-black">
         Core Features
       </p>
       <!-- Add Rows -->
@@ -498,7 +502,7 @@
             <mat-icon [svgIcon]="'general_icons:wyg-add'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Add Rows</span>: Users can add more rows to accommodate the number of
+            <span class="text-blue-600 font-bold">Add Rows</span>: Users can add more rows to accommodate the number of
             subjects they wish to enter by clicking the blue button with a plus icon.
           </div>
         </div>
@@ -513,7 +517,7 @@
             <mat-icon [svgIcon]="'general_icons:wyg-reset'" style="min-width: 50px; min-height: 50px;"></mat-icon>
           </div>
           <div class="">
-            <span class="text-[#F04E23] font-bold">Reset</span>: Users can reset all the entered information by clicking
+            <span class="text-blue-600 font-bold">Reset</span>: Users can reset all the entered information by clicking
             the gray button with a cross icon.
           </div>
         </div>
@@ -540,7 +544,7 @@
     </div>
 
     <div *ngIf="receivedData.detail.name == 'obon'"
-      class=" md:w-5/6 font-normal md:text-justify sm:text-center text-black md:text-xl sm:text-base">
+      class=" md:w-5/6 font-normal text-justify text-black md:text-xl sm:text-base">
       <p>
         The Obon Festival project is a website that provides information about the Obon Festival, a Buddhist festival in
         Japan. This web application was developed using the React framework.
