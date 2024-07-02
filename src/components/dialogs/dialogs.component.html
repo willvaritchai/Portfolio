@@ -3,18 +3,36 @@
     padding-left: 1em;
     /* Adjust as needed */
   }
+
+  .text-blue-color{
+    text-shadow: 2px 2px 4px rgba(0, 117, 255, 0.5);
+  }
+  .text-pink-color{
+    text-shadow: 2px 2px 4px rgba(255, 0, 242, 0.5);
+  }
 </style>
 <div class="text-center">
   <h2
-    [ngClass]="{'bg-[#151925]': receivedData.type == 'proj', 'bg-[#323846]':receivedData.type == 'exp' || receivedData.type == 'skill'}"
-    class="px-4 py-2 md:text-xl sm:text-lg text-center  font-bold mb-4  text-white">
-    {{receivedData.detail.title}}
+    [ngClass]="{
+      'bg-[#151925]': receivedData.type == 'proj',
+      'bg-[#323846]': receivedData.type == 'exp' || receivedData.type == 'skill'
+    }"
+    class="px-4 py-2 md:text-xl sm:text-lg text-center font-bold mb-4 text-white"
+  >
+    <span *ngIf="receivedData?.detail?.skillType">
+      <span
+        [ngClass]="{
+          'text-blue-color': receivedData?.detail.skillType == 'Hard Skills',
+          'text-pink-color': receivedData?.detail.skillType == 'Soft Skills'
+        }"
+        >{{ receivedData.detail.skillType }}</span
+      >
+      | </span
+    >{{ receivedData.detail.title }}
   </h2>
   <div class="px-4 overflow-y-auto max-h-96 md:text-lg sm:text-base">
     <!-- 🔍 experience-page --------------------------------------------------------------- -->
     <exp [receivedData]="receivedData"></exp>
-
-
 
     <!-- 🔍 projects-page --------------------------------------------------------------- -->
     <proj [receivedData]="receivedData"></proj>
@@ -23,11 +41,25 @@
     <skills-dialog [receivedData]="receivedData"></skills-dialog>
   </div>
 
-
-  <div class="px-4 py-2 mt-4 text-right  text-white"
-    [ngClass]="{'bg-[#151925]': receivedData.type == 'proj', 'bg-[#323846]':receivedData.type == 'exp' || receivedData.type == 'skill'}">
-    <button (click)="closeDialog()"
-      class="px-2 py-1 bg-[#01EEFF]  rounded hover:shadow hover:shadow-white active:bg-[#00B6C3] font-semibold"><span
-        style="text-shadow: -1px -1px 0 rgb(21, 146, 133), 1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133), 1px 1px 0 rgb(21, 146, 133);">Close</span></button>
+  <div
+    class="px-4 py-2 mt-4 text-right text-white"
+    [ngClass]="{
+      'bg-[#151925]': receivedData.type == 'proj',
+      'bg-[#323846]': receivedData.type == 'exp' || receivedData.type == 'skill'
+    }"
+  >
+    <button
+      (click)="closeDialog()"
+      class="px-2 py-1 bg-[#01EEFF] rounded hover:shadow hover:shadow-white active:bg-[#00B6C3] font-semibold"
+    >
+      <span
+        style="
+          text-shadow: -1px -1px 0 rgb(21, 146, 133),
+            1px -1px 0 rgb(21, 146, 133), -1px 1px 0 rgb(21, 146, 133),
+            1px 1px 0 rgb(21, 146, 133);
+        "
+        >Close</span
+      >
+    </button>
   </div>
 </div>

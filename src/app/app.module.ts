@@ -17,6 +17,7 @@ import { ForceLogOutService } from 'src/services/force-log-out/ForceLogOut.servi
 import { GetExtraDataService } from 'src/services/get-extra-data/GetExtraData.service';
 import { NumberOnlyServiceModule } from 'src/services/number-only/NumberOnly.module';
 import { CustomDateFormatPipe } from 'src/services/custom-date-pipe/CustomDatePipeService.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -36,6 +37,7 @@ import { CustomDateFormatPipe } from 'src/services/custom-date-pipe/CustomDatePi
     FormsModule,
     CommonModule,
     MatDialogModule,
+    MatSnackBarModule
 
   ],
   exports: [RouterModule],

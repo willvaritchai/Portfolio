@@ -1,10 +1,19 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, interval } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
+import { SnackbarService } from 'src/services/SnackbarService.service';
 
 declare var window: any;
 @Component({
@@ -13,9 +22,7 @@ declare var window: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class PortHomeComponent implements OnInit {
-
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
 
   private isMsalInitialized: boolean = false;
   @Input() screenType: string | undefined;
@@ -32,22 +39,17 @@ export class PortHomeComponent implements OnInit {
     private cookieService: CookieService,
     private _changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
+    private snackbarService: SnackbarService
+  ) {}
 
-  ) {
-
-
-  }
-
-  text: string[] = ['']
+  text: string[] = [''];
 
   ngOnInit(): void {
     setTimeout(() => {
-
       this.text = ['Full Stack Developer'];
       console.log(this.text);
     }, 2000);
   }
-
 
   // open(linkType: string = '') {
   //   let filePath: string = ''
@@ -81,6 +83,18 @@ export class PortHomeComponent implements OnInit {
 
   open(filePath: string = '') {
     window.open(filePath, '_blank');
-}
+  }
 
+  copyTextToClipboard() {
+    this.snackbarService.openSnackbar('Email copied successfully !');
+
+    const textarea = document.createElement('textarea');
+    textarea.value = 'varitchai.will@gmail.com';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    this._changeDetectorRef.markForCheck()
+  }
 }

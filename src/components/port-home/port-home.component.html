@@ -57,7 +57,7 @@
                 style="width: 46px;" [href]="'https://www.linkedin.com/in/willvaritchai/'">
                 <img src="./assets/home/in.png" alt="linkedin">
                 </a>
-                <a [matTooltipPosition]="'below'" matTooltip="Email: varitchai.will@gmail.com" class="hover:animate-scale-up" style="width: 46px;"
+                <a  (click)="copyTextToClipboard()" [matTooltipPosition]="'below'" matTooltip="Email: varitchai.will@gmail.com" class="hover:animate-scale-up" style="width: 46px;"
                 [href]="'mailto:varitchai.will@gmail.com'">
                 <img src="./assets/home/email.png" alt="email">
                 </a>
@@ -68,23 +68,23 @@
             </div>
             <!-- for mobile -->
             <div *ngIf="screenType == 'm'" class="flex flex-row justify-center space-x-5 mt-7 mb-10">
-                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'https://github.com/willvaritchai'">
+                <a [matTooltipPosition]="'below'" matTooltip="GitHub" class="hover:animate-scale-up" style="width: 46px;" [href]="'https://github.com/willvaritchai'">
                     <img src="./assets/home/git.png" alt="github">
                 </a>
-                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
+                <a [matTooltipPosition]="'below'" matTooltip="Facebook" class="hover:animate-scale-up" style="width: 46px;" [href]="'https://www.facebook.com/pas.surachai'">
                     <img src="./assets/home/fb.png" alt="fb">
                 </a>
                 <!-- <button style="width: 46px;">
                     <img src="./assets/home/ig.png" alt="ig">
                 </button> -->
-                <a class="hover:animate-scale-up" style="width: 46px;"
+                <a [matTooltipPosition]="'below'" matTooltip="LinkedIn" class="hover:animate-scale-up" style="width: 46px;"
                     [href]="'https://www.linkedin.com/in/willvaritchai/'">
                     <img src="./assets/home/in.png" alt="linkedin">
                 </a>
-                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
+                <a [matTooltipPosition]="'below'" matTooltip="Email: varitchai.will@gmail.com" (click)="copyTextToClipboard()" class="hover:animate-scale-up" style="width: 46px;" [href]="'mailto:varitchai.will@gmail.com'">
                     <img src="./assets/home/email.png" alt="email">
                 </a>
-                <a class="hover:animate-scale-up" style="width: 46px;" [href]="'tel:0814985488'">
+                <a [matTooltipPosition]="'below'" matTooltip="Contact: (+66) 81-498-5488" class="hover:animate-scale-up" style="width: 46px;" [href]="'tel:0814985488'">
                     <img src="./assets/home/phone.png" alt="phone">
                 </a>
             </div>

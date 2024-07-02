@@ -46,6 +46,8 @@ export class NavbarComponent implements OnInit {
   }
 
   scrollTo(elementId: string): void {
+    console.log('scroll to: ', elementId);
+    
     const element = document.querySelector(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
