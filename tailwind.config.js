@@ -24,7 +24,8 @@ module.exports = {
       },
     },
     screens: {
-      sm: "100px", // Set small breakpoint to 614px
+      sm: "100px", 
+      t: "600px",
       md: "768px",
       lg: "1280px",
       xl: "1400px",

@@ -21,7 +21,7 @@
         <span class="sm:text-left text-2xl text-white font-extrabold hover:text-[#01EEFF] cursor-pointer"
             (click)="scrollTo('#home')">Portfolio</span>
     </div>
-    <div class="sm:hidden md:block">
+    <div class="md:hidden lg:block">
         <ul class="flex space-x-10 text-xl font-medium">
             <li>
                 <a (click)="scrollTo('#home')" class="text-white hover:text-[#01EEFF] cursor-pointer">Home</a>
@@ -40,7 +40,7 @@
             </li>
         </ul>
     </div>
-    <div class="sm:block md:hidden">
+    <div class="md:block lg:hidden">
         <button [matMenuTriggerFor]="option" class="mt-1    hover:drop-shadow 
                 cursor-pointer  ">
             <mat-icon class="rounded-xl hover:shadow-md hover:shadow-white" matPrefix style="width: 32px; height: 32px;"
